@@ -10,7 +10,7 @@
 
     <!-- SEO Meta Tags -->
     <meta name="keywords"
-        content="จริงใจเซอร์เวย์, JINGJAI SURVEY, รับสำรวจ, รับวางผังอาคาร, รับวางตำแหน่งเสาเข็ม, รับทำแผนที่, รับทำ Topographic, รับเหมาสำรวจ, รับเหมางานสำรวจ, สำรวจ, วางผังเสาเข็ม, Topographic Map, แผนที่ภูมิประเทศ, งานสำรวจ, ช่างสำรวจ, Survey, นครราชสีมา, โคราช, Total Station, GNSS, GPS, รับจ้างสำรวจ, งานวางผัง, สำรวจที่ดิน, วางผังก่อสร้าง">
+        content="จริงใจเซอร์เวย์, JINGJAI SURVEY, รับสำรวจ, รับวางผังอาคาร, รับวางตำแหน่งเสาเข็ม, รับทำแผนที่, รับทำ Topographic, รับเหมาสำรวจ, รับเหมางานสำรวจ, สำรวจ, วางผังเสาเข็ม, Topographic Map, แผนที่ภูมิประเทศ, งานสำรวจ, ช่างสำรวจ, Survey, นครราชสีมา, โคราช, Total Station, GNSS, GPS, รับจ้างสำรวจ, งานวางผัง, สำรวจที่ดิน, วางผังก่อสร้าง, AutoLISP, LISP AutoCAD, ดาวน์โหลด LISP ฟรี, AutoCAD Script, NEZ LISP, Coordinate Label AutoCAD">
     <meta name="author" content="JINGJAI SURVEY">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://jingjaisurvey.xyz/">
@@ -219,6 +219,7 @@
                                 <div className="ml-10 flex items-baseline space-x-8">
                                     <a href="#services" onClick={(e) => handleScroll(e, 'services')} className="hover:text-accent transition px-3 py-2 rounded-md font-medium">บริการของเรา</a>
                                     <a href="#portfolio" onClick={(e) => handleScroll(e, 'portfolio')} className="hover:text-accent transition px-3 py-2 rounded-md font-medium">ผลงาน</a>
+                                    <a href="#autolisp" onClick={(e) => handleScroll(e, 'autolisp')} className="hover:text-accent transition px-3 py-2 rounded-md font-medium flex items-center"><i className="fa-solid fa-code mr-1"></i>AutoLISP ฟรี</a>
                                     <a href="#quotation" onClick={(e) => handleScroll(e, 'quotation')} className="hover:text-accent transition px-3 py-2 rounded-md font-medium">ขอใบเสนอราคา</a>
                                     <a href="#contact" onClick={(e) => handleScroll(e, 'contact')} className="hover:text-accent transition px-3 py-2 rounded-md font-medium">ติดต่อเรา</a>
                                 </div>
@@ -241,6 +242,7 @@
                             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                                 <a href="#services" onClick={(e) => handleScroll(e, 'services')} className="block hover:bg-gray-700 px-3 py-2 rounded-md font-medium">บริการของเรา</a>
                                 <a href="#portfolio" onClick={(e) => handleScroll(e, 'portfolio')} className="block hover:bg-gray-700 px-3 py-2 rounded-md font-medium">ผลงาน</a>
+                                <a href="#autolisp" onClick={(e) => handleScroll(e, 'autolisp')} className="block hover:bg-gray-700 px-3 py-2 rounded-md font-medium"><i className="fa-solid fa-code mr-2"></i>AutoLISP ฟรี</a>
                                 <a href="#quotation" onClick={(e) => handleScroll(e, 'quotation')} className="block hover:bg-gray-700 px-3 py-2 rounded-md font-medium">ขอใบเสนอราคา</a>
                                 <a href="#contact" onClick={(e) => handleScroll(e, 'contact')} className="block hover:bg-gray-700 px-3 py-2 rounded-md font-medium">ติดต่อเรา</a>
                             </div>
@@ -598,6 +600,149 @@
             );
         };
 
+        // --- AutoLISP Download Component ---
+        const AutoLispDownload = () => {
+            const [downloadCount, setDownloadCount] = useState({});
+
+            const lispFiles = [
+                {
+                    id: 'nez',
+                    name: 'NEZ.lsp',
+                    title: 'NEZ Coordinate Label',
+                    description: 'แสดงพิกัด N, E, EL พร้อมลูกศรชี้ตำแหน่งบน AutoCAD สำหรับงานสำรวจ',
+                    features: [
+                        'แสดงค่าพิกัด N (Northing), E (Easting), EL (Elevation)',
+                        'ลูกศรชี้ตำแหน่งพร้อม Landing Line',
+                        'เลือกทิศทางซ้าย-ขวาได้',
+                        'รวม Object เป็น Group อัตโนมัติ'
+                    ],
+                    downloadUrl: './lisp/NEZ.lsp',
+                    icon: 'fa-map-marker-alt',
+                    version: '1.0',
+                    size: '3 KB'
+                }
+            ];
+
+            const handleDownload = (file) => {
+                setDownloadCount(prev => ({
+                    ...prev,
+                    [file.id]: (prev[file.id] || 0) + 1
+                }));
+            };
+
+            return (
+                <section id="autolisp" className="py-20 bg-gradient-to-br from-gray-900 via-navy to-gray-900">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center mb-16">
+                            <div className="inline-flex items-center justify-center w-16 h-16 bg-accent rounded-2xl mb-6 shadow-lg shadow-accent/30">
+                                <i className="fa-solid fa-code text-navy text-3xl"></i>
+                            </div>
+                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">AutoLISP ดาวน์โหลดฟรี</h2>
+                            <div className="w-20 h-1 bg-accent mx-auto mb-4"></div>
+                            <p className="text-gray-400 max-w-2xl mx-auto">
+                                สคริปต์ AutoLISP สำหรับช่างสำรวจและวิศวกร ใช้งานกับ AutoCAD ได้ทันที <br />
+                                พัฒนาจากประสบการณ์จริงในงานสำรวจ
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {lispFiles.map((file) => (
+                                <div
+                                    key={file.id}
+                                    className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-accent/50 transition-all duration-300 hover:shadow-2xl hover:shadow-accent/10 group"
+                                >
+                                    <div className="p-8">
+                                        <div className="flex items-start justify-between mb-6">
+                                            <div className="w-14 h-14 bg-gradient-to-br from-accent to-yellow-600 rounded-xl flex items-center justify-center shadow-lg shadow-accent/30 group-hover:scale-110 transition-transform">
+                                                <i className={`fa-solid ${file.icon} text-navy text-2xl`}></i>
+                                            </div>
+                                            <div className="text-right">
+                                                <span className="text-xs text-gray-500">v{file.version}</span>
+                                                <p className="text-xs text-accent font-medium">{file.size}</p>
+                                            </div>
+                                        </div>
+
+                                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-accent transition-colors">
+                                            {file.title}
+                                        </h3>
+                                        <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+                                            {file.description}
+                                        </p>
+
+                                        <ul className="space-y-2 mb-8">
+                                            {file.features.map((feature, idx) => (
+                                                <li key={idx} className="flex items-start space-x-2 text-sm">
+                                                    <i className="fa-solid fa-check text-accent mt-1 flex-shrink-0"></i>
+                                                    <span className="text-gray-300">{feature}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+
+                                        <a
+                                            href={file.downloadUrl}
+                                            download={file.name}
+                                            onClick={() => handleDownload(file)}
+                                            className="w-full bg-gradient-to-r from-accent to-yellow-500 text-navy font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:from-yellow-400 hover:to-accent transition-all shadow-lg shadow-accent/30 transform hover:scale-[1.02] active:scale-[0.98]"
+                                        >
+                                            <i className="fa-solid fa-download"></i>
+                                            ดาวน์โหลด {file.name}
+                                        </a>
+                                    </div>
+
+                                    <div className="bg-white/5 px-8 py-4 border-t border-white/10">
+                                        <div className="flex items-center justify-between text-xs text-gray-500">
+                                            <span className="flex items-center gap-1">
+                                                <i className="fa-solid fa-file-code"></i>
+                                                {file.name}
+                                            </span>
+                                            <span>AutoCAD 2010+</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+
+                            {/* Coming Soon Card */}
+                            <div className="bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-dashed border-white/20 flex flex-col items-center justify-center p-8 min-h-[400px]">
+                                <div className="w-14 h-14 bg-gray-700 rounded-xl flex items-center justify-center mb-4">
+                                    <i className="fa-solid fa-plus text-gray-500 text-2xl"></i>
+                                </div>
+                                <h3 className="text-lg font-bold text-gray-500 mb-2">เพิ่มเติมเร็วๆ นี้</h3>
+                                <p className="text-gray-600 text-sm text-center">
+                                    กำลังพัฒนาสคริปต์เพิ่มเติม<br />ติดตามได้ที่ Facebook
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Usage Instructions */}
+                        <div className="mt-16 bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                                <i className="fa-solid fa-book-open text-accent"></i>
+                                วิธีการใช้งาน AutoLISP
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                <div className="text-center">
+                                    <div className="w-10 h-10 bg-accent text-navy rounded-full flex items-center justify-center mx-auto mb-3 font-bold">1</div>
+                                    <p className="text-gray-300 text-sm">ดาวน์โหลดไฟล์ .lsp</p>
+                                </div>
+                                <div className="text-center">
+                                    <div className="w-10 h-10 bg-accent text-navy rounded-full flex items-center justify-center mx-auto mb-3 font-bold">2</div>
+                                    <p className="text-gray-300 text-sm">เปิด AutoCAD แล้วพิมพ์ <span className="text-accent font-mono">APPLOAD</span></p>
+                                </div>
+                                <div className="text-center">
+                                    <div className="w-10 h-10 bg-accent text-navy rounded-full flex items-center justify-center mx-auto mb-3 font-bold">3</div>
+                                    <p className="text-gray-300 text-sm">เลือกไฟล์ .lsp ที่ดาวน์โหลดมา</p>
+                                </div>
+                                <div className="text-center">
+                                    <div className="w-10 h-10 bg-accent text-navy rounded-full flex items-center justify-center mx-auto mb-3 font-bold">4</div>
+                                    <p className="text-gray-300 text-sm">พิมพ์ชื่อคำสั่ง เช่น <span className="text-accent font-mono">NEZ</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
         // --- QuotationForm Component ---
         const QuotationForm = () => {
             const [submitted, setSubmitted] = useState(false);
@@ -904,6 +1049,7 @@
                         <Hero />
                         <Services />
                         <Portfolio />
+                        <AutoLispDownload />
                         <QuotationForm />
                     </main>
                     <Footer />
