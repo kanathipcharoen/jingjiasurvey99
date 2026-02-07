@@ -12,6 +12,15 @@
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-KB8NHDTV');</script>
     <!-- End Google Tag Manager -->
+
+    <!-- Google Ads Conversion Tracking -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17936046628"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'AW-17936046628');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JINGJAI SURVEY (จริงใจเซอร์เวย์) - บริการสำรวจครบวงจร</title>
@@ -807,6 +816,12 @@
                         if (response.ok) {
                             setSubmitted(true);
                             setFormData({ name: '', phone: '', email: '', service: '', details: '' });
+
+                            // Google Ads Form Submission Conversion
+                            gtag('event', 'conversion', {
+                                'send_to': 'AW-17936046628/9ps6CP7SmPQbEKS0yehC'
+                            });
+
                             setTimeout(() => setSubmitted(false), 5000);
                         } else {
                             alert('เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
