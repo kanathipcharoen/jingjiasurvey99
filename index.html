@@ -127,6 +127,34 @@
             font-family: 'Prompt', sans-serif;
         }
 
+        @keyframes ken-burns {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.15);
+            }
+        }
+
+        .animate-ken-burns {
+            animation: ken-burns 20s ease-in-out infinite alternate;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            visibility: hidden;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+            visibility: visible;
+        }
+
         @keyframes bounce-sync {
 
             0%,
@@ -202,11 +230,49 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState } = React;
+        const { useState, useEffect, useRef } = React;
+
+        // --- FadeInSection Component ---
+        const FadeInSection = ({ children, delay = 0, className = "" }) => {
+            const [isVisible, setVisible] = useState(false);
+            const domRef = useRef();
+            useEffect(() => {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setVisible(true);
+                            if (domRef.current) {
+                                observer.unobserve(domRef.current);
+                            }
+                        }
+                    });
+                }, { threshold: 0.1 });
+                if (domRef.current) observer.observe(domRef.current);
+                return () => { if (domRef.current) observer.unobserve(domRef.current); };
+            }, []);
+            return (
+                <div
+                    className={`fade-in-section ${isVisible ? 'is-visible' : ''} ${className}`}
+                    style={{ transitionDelay: `${delay}ms` }}
+                    ref={domRef}
+                >
+                    {children}
+                </div>
+            );
+        };
 
         // --- Navbar Component ---
         const Navbar = () => {
             const [isOpen, setIsOpen] = useState(false);
+            const [isScrolled, setIsScrolled] = useState(false);
+
+            useEffect(() => {
+                const onScroll = () => {
+                    setIsScrolled(window.scrollY > 20);
+                };
+                window.addEventListener('scroll', onScroll);
+                return () => window.removeEventListener('scroll', onScroll);
+            }, []);
 
             const handleScroll = (e, targetId) => {
                 e.preventDefault();
@@ -227,7 +293,7 @@
             };
 
             return (
-                <nav className="bg-navy text-white sticky top-0 z-50 shadow-lg">
+                <nav className={`fixed w-full top-0 z-50 transition-all duration-300 ${isScrolled || isOpen ? 'bg-navy/95 backdrop-blur-md shadow-lg py-0 border-b border-gray-800' : 'bg-transparent py-2'} text-white`}>
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between h-20">
                             <div className="flex items-center">
@@ -242,7 +308,6 @@
                                 <div className="ml-10 flex items-baseline space-x-8">
                                     <a href="#services" onClick={(e) => handleScroll(e, 'services')} className="hover:text-accent transition px-3 py-2 rounded-md font-medium">บริการของเรา</a>
                                     <a href="#portfolio" onClick={(e) => handleScroll(e, 'portfolio')} className="hover:text-accent transition px-3 py-2 rounded-md font-medium">ผลงาน</a>
-                                    <a href="#autolisp" onClick={(e) => handleScroll(e, 'autolisp')} className="hover:text-accent transition px-3 py-2 rounded-md font-medium flex items-center"><i className="fa-solid fa-code mr-1"></i>AutoLISP ฟรี</a>
                                     <a href="#quotation" onClick={(e) => handleScroll(e, 'quotation')} className="hover:text-accent transition px-3 py-2 rounded-md font-medium">ขอใบเสนอราคา</a>
                                     <a href="#contact" onClick={(e) => handleScroll(e, 'contact')} className="hover:text-accent transition px-3 py-2 rounded-md font-medium">ติดต่อเรา</a>
                                 </div>
@@ -265,7 +330,6 @@
                             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                                 <a href="#services" onClick={(e) => handleScroll(e, 'services')} className="block hover:bg-gray-700 px-3 py-2 rounded-md font-medium">บริการของเรา</a>
                                 <a href="#portfolio" onClick={(e) => handleScroll(e, 'portfolio')} className="block hover:bg-gray-700 px-3 py-2 rounded-md font-medium">ผลงาน</a>
-                                <a href="#autolisp" onClick={(e) => handleScroll(e, 'autolisp')} className="block hover:bg-gray-700 px-3 py-2 rounded-md font-medium"><i className="fa-solid fa-code mr-2"></i>AutoLISP ฟรี</a>
                                 <a href="#quotation" onClick={(e) => handleScroll(e, 'quotation')} className="block hover:bg-gray-700 px-3 py-2 rounded-md font-medium">ขอใบเสนอราคา</a>
                                 <a href="#contact" onClick={(e) => handleScroll(e, 'contact')} className="block hover:bg-gray-700 px-3 py-2 rounded-md font-medium">ติดต่อเรา</a>
                             </div>
@@ -292,11 +356,11 @@
 
             return (
                 <header className="relative bg-navy py-24 md:py-32 overflow-hidden">
-                    <div className="absolute inset-0 opacity-20">
+                    <div className="absolute inset-0 opacity-30 bg-black">
                         <img
                             src="https://images.unsplash.com/photo-1503387762-592dee58c460?auto=format&fit=crop&q=80&w=2000"
                             alt=""
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover animate-ken-burns mix-blend-overlay"
                         />
                     </div>
                     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
@@ -305,7 +369,8 @@
                             <span className="text-accent">แม่นยำ รวดเร็ว โดยทีมงานมืออาชีพ</span>
                         </h1>
                         <p className="text-xl md:text-2xl mb-10 text-gray-300 max-w-3xl mx-auto">
-                            รับวางผังเสาเข็ม, ทำแผนที่ Topographic Map, และงานสำรวจเพื่อการก่อสร้างทุกประเภท
+                            รับวางผังเสาเข็ม, ทำแผนที่ Topographic Map, และงานสำรวจเพื่อการก่อสร้างทุกประเภท <br />
+                            <span className="text-accent font-semibold text-lg md:text-xl">ยกระดับความแม่นยำด้วยกล้อง Trimble S8 Robotic Total Station</span>
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
                             <a
@@ -317,11 +382,10 @@
                                 <i className="fa-brands fa-line text-2xl mr-2"></i> ปรึกษาฟรี (LINE)
                             </a>
                             <a
-                                href="#quotation"
-                                onClick={handleScrollToQuotation}
-                                className="bg-white text-navy font-bold py-4 px-10 rounded-full text-lg hover:bg-gray-100 transition-all border-2 border-transparent flex items-center justify-center shadow-lg"
+                                href="tel:0820025124"
+                                className="bg-white text-navy font-bold py-4 px-10 rounded-full text-lg hover:bg-gray-100 transition-all border-2 border-transparent flex items-center justify-center shadow-lg transform hover:scale-105"
                             >
-                                <i className="fa-solid fa-file-invoice-dollar mr-2"></i> ขอใบเสนอราคา
+                                <i className="fa-solid fa-phone-volume mr-2 text-accent"></i> โทรติดต่อเรา
                             </a>
                         </div>
                     </div>
@@ -337,7 +401,7 @@
                 {
                     title: "งานวางผังเสาเข็ม",
                     icon: "fa-hard-hat",
-                    description: "ตรวจสอบแนวเขตและวางตำแหน่งเสาเข็มตามแบบแปลนด้วยกล้อง Total Station",
+                    description: "ตรวจสอบแนวเขตและวางตำแหน่งเสาเข็มตามแบบแปลนด้วยเทคโนโลยีกล้อง Trimble S8 Robotic Total Station",
                     longDescription: [
                         "ตรวจสอบตำแหน่งพิกัดแนวเขตที่ดิน (Boundary Survey)",
                         "จัดทำแผนวางตำแหน่งเสาเข็มแล้วขออนุมัติผู้ว่าจ้างวางพิกัดที่คอนเฟิร์ม",
@@ -435,11 +499,282 @@
             );
         };
 
+        // --- Quote Banner Component ---
+        const QuoteBanner = () => {
+            return (
+                <section className="py-24 bg-navy relative overflow-hidden bg-fixed bg-center bg-cover" style={{ backgroundImage: "linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.95)), url('https://images.unsplash.com/photo-1541888081622-4a7434fa12b1?auto=format&fit=crop&q=80&w=2000')" }}>
+                    {/* Decorative Elements */}
+                    <div className="absolute top-0 left-0 w-32 h-32 border-t-4 border-l-4 border-accent/30 rounded-tl-3xl transform -translate-x-16 -translate-y-16"></div>
+                    <div className="absolute bottom-0 right-0 w-32 h-32 border-b-4 border-r-4 border-accent/30 rounded-br-3xl transform translate-x-16 translate-y-16"></div>
+
+                    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                        <i className="fa-solid fa-quote-left text-5xl md:text-7xl text-accent/20 absolute -top-10 md:-top-16 left-1/2 transform -translate-x-1/2"></i>
+
+                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-snug md:leading-tight mb-8 relative z-10">
+                            "งานสำรวจที่<span className="text-accent relative inline-block">แม่นยำ<div className="absolute -bottom-2 left-0 w-full h-1 bg-accent/50 rounded-full"></div></span><br className="hidden md:block" />
+                            คือรากฐานที่มองไม่เห็น<br />
+                            แต่เป็นสิ่งเดียวที่ทำให้<span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-yellow-200">ตึกตระหง่านอยู่ได้</span>"
+                        </h2>
+
+                        <div className="w-24 h-1 bg-accent mx-auto rounded-full mb-8"></div>
+
+                        <p className="text-gray-300 text-lg md:text-xl font-light tracking-wide">
+                            Jingjai Survey - ความแม่นยำที่คุณสร้างต่อได้ด้วยความสบายใจ
+                        </p>
+                    </div>
+                </section>
+            );
+        };
+
+        // --- Trimble Feature Component ---
+        const TrimbleFeature = () => {
+            const [activeImage, setActiveImage] = useState(0);
+
+            // NOTE TO USER: วิธีใส่รูปภาพ
+            // 1. นำรูปกล้อง Trimble (2 รูปที่คุณเพิ่งส่งมา) บันทึกลงในโฟลเดอร์เดียวกับไฟล์ index.html
+            // 2. ตั้งชื่อรูปแรกว่า "trimble-01.jpg" และรูปที่สองว่า "trimble-02.jpg"
+            const mediaItems = [
+                "https://img2.pic.in.th/IMG_5354.png",
+                "https://img5.pic.in.th/file/secure-sv1/EFCC100A-98A3-4830-9C92-D75F52226F09.jpg",
+                "https://img5.pic.in.th/file/secure-sv1/543D60CD-2BD4-4421-95D9-F78302683CE2.png",
+                "https://img5.pic.in.th/file/secure-sv1/111111111c294ff2c9f512cd.png"
+            ];
+
+            // Helper function to check if item is a video
+            const isVideo = (src) => src.toLowerCase().endsWith('.mp4');
+
+            const features = [
+                {
+                    title: "ความแม่นยำสูงสุด (1\" Accuracy)",
+                    icon: "fa-bullseye",
+                    text: "ทำมุมและวัดระยะได้แม่นยำระดับ 1 ฟิลิปดา ซึ่งเหนือกว่ากล้องธรรมดาทั่วไป ทำให้การสำรวจไม่มีการคลาดเคลื่อน",
+                    color: "text-blue-500"
+                },
+                {
+                    title: "ระบบอัตโนมัติ (Robotic)",
+                    icon: "fa-robot",
+                    text: "ลดข้อผิดพลาดจากสายตามนุษย์ กล้องสามารถขับเคลื่อนและหมุนหาเป้าหมายได้เองอย่างแม่นยำ",
+                    color: "text-green-500"
+                },
+                {
+                    title: "เทคโนโลยี MagDrive™",
+                    icon: "fa-bolt",
+                    text: "ระบบควบคุมการหมุนด้วยแม่เหล็กไฟฟ้า ทำให้กล้องหมุนเร็ว เงียบ ปราศจากการเสียดสี ทนทาน",
+                    color: "text-purple-500"
+                },
+                {
+                    title: "ระบบ FineLock™ เล็งเป้าฉลาด",
+                    icon: "fa-crosshairs",
+                    text: "ล็อกเป้าหมาย (Prism) ได้อย่างแม่นยำ แม้มีเป้าหมายอื่นอยู่ใกล้กัน หรือในพื้นที่สภาพแสงน้อย",
+                    color: "text-red-500"
+                }
+            ];
+
+            return (
+                <section className="py-20 bg-navy text-white relative overflow-hidden" id="trimble">
+                    <div className="absolute top-0 left-0 w-full h-full opacity-5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-repeat pointer-events-none"></div>
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                        <div className="text-center mb-16">
+                            <span className="bg-accent text-navy font-bold px-4 py-1 rounded-full text-sm inline-block mb-4 shadow-lg shadow-accent/20">OUR EQUIPMENT</span>
+                            <h2 className="text-3xl md:text-5xl font-bold mb-6">ทำไมเราถึงเลือกใช้ <span className="text-accent underline decoration-4 underline-offset-8">Trimble S8</span> ?</h2>
+                            <p className="text-gray-300 max-w-3xl mx-auto text-lg leading-relaxed">
+                                จริงใจเซอร์เวย์ยกระดับมาตรฐานงานสำรวจ ด้วยการเลือกใช้ <strong>Robotic Total Station</strong> รุ่นเรือธงอย่าง <strong>Trimble S8</strong> ที่มีสเปคสูงกว่ากล้อง Total Station ทั่วไปในท้องตลาด เพื่อให้ลูกค้าของเราได้รับผลงานที่ รวดเร็ว ถูกต้อง และได้มาตรฐานวิศวกรรมสูงสุด
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Gallery Section */}
+                            <div className="space-y-4">
+                                <div className="relative h-80 md:h-[450px] w-full rounded-2xl overflow-hidden shadow-2xl border border-gray-700 bg-gray-900 group">
+                                    {isVideo(mediaItems[activeImage]) ? (
+                                        <video
+                                            src={mediaItems[activeImage]}
+                                            autoPlay loop muted playsInline
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                    ) : (
+                                        <img
+                                            src={mediaItems[activeImage]}
+                                            alt={`Trimble S8 View ${activeImage + 1}`}
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                    )}
+                                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent pointer-events-none"></div>
+                                    <div className="absolute bottom-6 left-6 right-6 text-white flex items-center gap-4 z-10">
+                                        <div className="w-12 h-12 bg-accent/90 backdrop-blur-sm rounded-full flex items-center justify-center text-navy shrink-0 shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
+                                            {isVideo(mediaItems[activeImage]) ? <i className="fa-solid fa-video text-lg"></i> : <i className="fa-solid fa-camera text-lg"></i>}
+                                        </div>
+                                        <p className="font-bold text-lg drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] tracking-wide">ภาพการปฏิบัติงานจริงด้วยกล้อง Trimble S8</p>
+                                    </div>
+                                </div>
+                                <div className="grid grid-cols-4 gap-2 md:gap-4">
+                                    {mediaItems.map((item, idx) => (
+                                        <div
+                                            key={idx}
+                                            className={`h-20 md:h-24 rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-300 relative ${activeImage === idx ? 'border-accent shadow-[0_0_15px_rgba(250,204,21,0.5)] transform -translate-y-1' : 'border-transparent opacity-60 hover:opacity-100 hover:-translate-y-1'}`}
+                                            onClick={() => setActiveImage(idx)}
+                                        >
+                                            {isVideo(item) ? (
+                                                <>
+                                                    <video src={item} className="w-full h-full object-cover" muted />
+                                                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                                                        <i className="fa-solid fa-play text-white/80"></i>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <img src={item} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Features Section */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                {features.map((item, idx) => (
+                                    <div key={idx} className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:-translate-y-2 group h-full flex flex-col">
+                                        <div className={`w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center mb-5 group-hover:bg-accent transition-colors duration-300 shadow-inner`}>
+                                            <i className={`fa-solid ${item.icon} text-2xl ${item.color} group-hover:text-navy transition-colors`}></i>
+                                        </div>
+                                        <h3 className="text-lg font-bold text-white mb-2 group-hover:text-accent transition-colors">{item.title}</h3>
+                                        <p className="text-gray-400 leading-relaxed text-sm flex-grow">
+                                            {item.text}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Bottom Banner */}
+                        <div className="mt-16 bg-gradient-to-r from-blue-900/40 to-navy/60 rounded-3xl p-6 md:p-8 border border-blue-500/20 flex flex-col md:flex-row items-center justify-between shadow-2xl backdrop-blur-md relative overflow-hidden">
+                            <div className="absolute top-0 right-0 -mr-10 -mt-10 opacity-10 pointer-events-none">
+                                <i className="fa-solid fa-microchip text-[150px]"></i>
+                            </div>
+                            <div className="mb-6 md:mb-0 md:mr-8 flex-1 relative z-10">
+                                <h3 className="text-2xl font-bold mb-3 flex items-center gap-3">
+                                    <div className="bg-accent/20 p-2 rounded-lg text-accent">
+                                        <i className="fa-solid fa-trophy text-2xl"></i>
+                                    </div>
+                                    แตกต่างอย่างชัดเจน
+                                </h3>
+                                <p className="text-gray-300 text-sm md:text-base leading-relaxed">กล้อง Total Station ธรรมดาต้องใช้คนส่องผ่านเลนส์และหมุนด้วยมือ ซึ่งอาจเกิดความคลาดเคลื่อน แต่ <strong>Trimble S8 เป็นระบบ Robotic 100%</strong> ควบคุมและส่งข้อมูลเข้า Controller ดิจิทัลได้ทันที!</p>
+                            </div>
+                            <div className="flex-shrink-0 relative z-10 w-full md:w-auto mt-4 md:mt-0">
+                                <a href="#quotation" onClick={(e) => { e.preventDefault(); document.getElementById('quotation').scrollIntoView({ behavior: 'smooth' }) }} className="bg-accent text-navy text-center font-bold font-heading py-4 px-8 rounded-full hover:bg-yellow-400 transition-all block w-full shadow-[0_0_20px_rgba(250,204,21,0.3)] transform hover:-translate-y-1 hover:scale-105">
+                                    สัมผัสความแม่นยำวันนี้
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
         // --- Portfolio Component ---
         const Portfolio = () => {
-            const { useEffect, useRef } = React;
+            const { useEffect, useRef, useState } = React; // Added useState here
             const videoRef = useRef(null);
             const [isVideoVisible, setIsVideoVisible] = useState(false);
+            const [lightboxImage, setLightboxImage] = useState(null);
+
+            // PortfolioCard component moved inside Portfolio
+            const PortfolioCard = ({ project, setLightboxImage, videoRef }) => {
+                const isVideo = project.category === 'video' || project.isVideo;
+                const mediaItems = project.gallery && project.gallery.length > 0 ? [project.image, ...project.gallery] : [project.image];
+                const [activeIdx, setActiveIdx] = useState(0);
+
+                const categoryName = project.category === 'layout' ? 'วางผังเสาเข็ม' : project.category === 'topo' ? 'Topographic Map' : project.category === 'monthly' ? 'สำรวจรายเดือน' : 'วิดีโอ';
+
+                return (
+                    <div
+                        ref={videoRef}
+                        className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 ease-out transform hover:-translate-y-2 flex flex-col group border border-gray-100 p-2"
+                    >
+                        {/* Main Image Box */}
+                        <div className={`${isVideo ? 'h-80' : 'h-64'} rounded-xl overflow-hidden bg-gray-900 relative mb-2 shadow-inner`}>
+                            {isVideo ? (
+                                <a
+                                    href={`https://youtube.com/shorts/${project.youtubeId}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="relative w-full h-full block cursor-pointer"
+                                >
+                                    <img
+                                        src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
+                                        alt={project.title}
+                                        className="w-full h-full object-cover brightness-75 transition-transform duration-700 group-hover:scale-110"
+                                        onError={(e) => {
+                                            e.target.src = project.image;
+                                        }}
+                                    />
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="w-16 h-16 bg-red-600/90 backdrop-blur-sm text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(220,38,38,0.5)] transform transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600">
+                                            <i className="fa-solid fa-play text-2xl ml-1"></i>
+                                        </div>
+                                    </div>
+                                </a>
+                            ) : (
+                                <img
+                                    src={mediaItems[activeIdx]}
+                                    alt={project.title}
+                                    className="w-full h-full object-cover cursor-pointer group-hover:scale-105 transition-transform duration-700"
+                                    onClick={() => setLightboxImage(mediaItems[activeIdx])}
+                                />
+                            )}
+                            <div className="absolute top-3 right-3 z-10">
+                                <span className={`${isVideo ? 'bg-red-600' : 'bg-navy/80 backdrop-blur-md'} text-white px-3 py-1.5 rounded-full text-[10px] font-bold shadow-md flex items-center gap-1.5 uppercase tracking-wider`}>
+                                    {isVideo ? <><i className="fa-brands fa-youtube text-sm"></i> YouTube</> : <><i className="fa-solid fa-images text-sm"></i> Gallery</>}
+                                </span>
+                            </div>
+                            {/* Interactive overlay on hover */}
+                            {!isVideo && (
+                                <div className="absolute inset-0 bg-navy/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none flex items-center justify-center">
+                                    <div className="bg-white/90 backdrop-blur-sm text-navy px-4 py-2 rounded-full font-bold text-sm shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                        <i className="fa-solid fa-expand mr-2"></i> ขยายรูป
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Thumbnails behaving like S8 box */}
+                        {!isVideo && mediaItems.length > 1 && (
+                            <div className="grid grid-cols-4 gap-2 mb-3">
+                                {mediaItems.slice(0, 4).map((item, idx) => (
+                                    <div
+                                        key={idx}
+                                        className={`h-14 rounded-lg overflow-hidden cursor-pointer border-2 transition-all duration-300 ${activeIdx === idx ? 'border-accent shadow-[0_0_10px_rgba(250,204,21,0.5)] transform -translate-y-0.5' : 'border-transparent opacity-60 hover:opacity-100 hover:-translate-y-0.5'}`}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setActiveIdx(idx);
+                                        }}
+                                    >
+                                        <img src={item} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        <div className="px-4 pb-4 pt-2 flex-grow flex flex-col bg-white">
+                            <div className="mb-2">
+                                <span className="text-[10px] font-bold text-accent/90 uppercase tracking-widest bg-yellow-50 px-2 py-1 rounded-md">{categoryName}</span>
+                            </div>
+                            <h3 className="font-bold text-lg text-navy mb-2 leading-snug group-hover:text-blue-600 transition-colors">{project.title}</h3>
+                            <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 group-hover:line-clamp-none transition-all duration-500">{project.description}</p>
+
+                            {isVideo && (
+                                <a
+                                    href={`https://youtube.com/shorts/${project.youtubeId}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="mt-auto pt-4 w-full text-red-600 font-bold flex items-center gap-2 hover:text-red-700 transition-colors text-sm"
+                                >
+                                    <i className="fa-brands fa-youtube"></i> ชมวิดีโอแบบเต็ม
+                                </a>
+                            )}
+                        </div>
+                    </div>
+                );
+            };
 
             useEffect(() => {
                 const observer = new IntersectionObserver(
@@ -473,13 +808,53 @@
                     description: "คุณกำลังจะสร้างบ้านใช่ไหม? ดูคลิปนี้ก่อน! ปัญหาหน้างานไม่ตรงแบบ วางผังผิด ทุบสร้างใหม่ ชมคำแนะนำเบื้องต้น",
                     image: "https://img5.pic.in.th/file/secure-sv1/Whisk_qdnygdm4m2m4ajy40sombdotqwy2qtl1ymzl1sm.png",
                     isVideo: true,
-                    youtubeId: "gtQZnBVBmCw"
+                    youtubeId: "gtQZnBVBmCw",
+                    category: "video"
+                },
+                {
+                    id: 9,
+                    title: "วางตำแหน่งเสาเข็มอาคารสำนักงาน 2 ชั้น  ซ.ลาดพร้าว 101 จ.กรุงเทพมหานคร",
+                    description: "งานวางผังตำแหน่งเสาเข็มบ้านพักอาศัย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+                    image: "https://img5.pic.in.th/file/secure-sv1/-CAD_-Layout1-2.png",
+                    category: "layout",
+                    gallery: [
+
+                        "https://img5.pic.in.th/file/secure-sv1/dji_fly_20260224_123236_568_1771911281264_photo.png",
+                        "https://img2.pic.in.th/IMG_53523776272756877d12.png",
+                        "https://img2.pic.in.th/IMG_5340.png"
+                    ]
+                },
+                {
+                    id: 8,
+                    title: "วางผังเสาเข็มบ้านพักอาศัย  อ.กระทุ่มแบน จ.สมุทรสาคร",
+                    description: "งานวางผังตำแหน่งเสาเข็มบ้านพักอาศัย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+                    image: "https://img5.pic.in.th/file/secure-sv1/111111111c294ff2c9f512cd.png",
+                    category: "layout",
+                    gallery: [
+
+                        "https://img5.pic.in.th/file/secure-sv1/EFCC100A-98A3-4830-9C92-D75F52226F09.jpg",
+                        "https://img5.pic.in.th/file/secure-sv1/543D60CD-2BD4-4421-95D9-F78302683CE2.png",
+                        "https://img2.pic.in.th/5C3F0941-6A3F-4422-A507-C677747A62B9.png"
+                    ]
+                },
+                {
+                    id: 7,
+                    title: "วางผังเสาเข็มบ้านพักอาศัย ต.ดอกล้ำ อ.ปทุมรัตต์ จ.ร้อยเอ็ด",
+                    description: "งานวางผังตำแหน่งเสาเข็มบ้านพักอาศัย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+                    image: "https://img2.pic.in.th/Layout1-2.png",
+                    category: "layout",
+                    gallery: [
+                        "https://img2.pic.in.th/IMG_54592b6df55c0b516d6f.png",
+                        "https://img2.pic.in.th/IMG_5466.png",
+                        "https://img5.pic.in.th/file/secure-sv1/IMG_5465d6e40bff49fb146f.png"
+                    ]
                 },
                 {
                     id: 1,
                     title: "วางผังอาคารคุมจ่าย ปั้มน้ำมัน PT",
                     description: "งานวางผังอาคารคุมจ่าย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
                     image: "https://img2.pic.in.th/f29a7128e25a4ee2ce6002212036c088.png",
+                    category: "layout",
                     gallery: [
                         "https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_7468_250407_26.jpg",
                         "https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_7468_250407_16f83e3e43ae2602c5.jpg",
@@ -491,6 +866,7 @@
                     title: "แผนที่ TOPOGRAPHIC MAP",
                     description: "งานสำรวจภูมิประเทศ เก็บรายละเอียดเส้นชั้นความสูงสร้างแผนที่รายละเอียดสูง",
                     image: "https://img5.pic.in.th/file/secure-sv1/63551328ece50d98a0df.png",
+                    category: "topo",
                     gallery: [
                         "https://img5.pic.in.th/file/secure-sv1/-15ea16487f161f176.png",
                         "https://img5.pic.in.th/file/secure-sv1/237d8197f5f3fe8e4.png",
@@ -502,6 +878,7 @@
                     title: "งานสำรวจรายเดือน",
                     description: "โครงการก่อสร้างโรงแยกก๊าซธรรมชาติหน่วยที่ 7",
                     image: "https://img5.pic.in.th/file/secure-sv1/IMG_8461f53facef34b03de8.jpg",
+                    category: "monthly",
                     gallery: [
                         "https://img5.pic.in.th/file/secure-sv1/IMG_7435555.png",
                         "https://img2.pic.in.th/IMG_7372-1.png",
@@ -513,6 +890,7 @@
                     title: "วางตำแหน่งเสาเข็ม หอพัก 3 ชั้น",
                     description: "งานวางตำแหน่งเสาเข็ม และ ตำแหน่ง Grid Line พร้อมให้ระดับ off 1 m. รามคำแหง 53",
                     image: "https://img5.pic.in.th/file/secure-sv1/IMG_8163-1.png",
+                    category: "layout",
                     gallery: [
                         "https://img2.pic.in.th/IMG_3564-1325ced3e18eb3e23.png",
                         "https://img2.pic.in.th/IMG_3628-1.png",
@@ -524,6 +902,7 @@
                     title: "วางผังอาคารบ้านพักอาศัย จ.ปทุมธานี",
                     description: "ทำหมุดควบคุมพร้อมครอบผังบริเวณบ้านพักอาศัยแล้ววางตำแหน่งเสาเข็ม",
                     image: "https://img5.pic.in.th/file/secure-sv1/-1---Model_recover-Layout1.jpg",
+                    category: "layout",
                     gallery: [
                         "https://img5.pic.in.th/file/secure-sv1/IMG_2495.png",
                         "https://img2.pic.in.th/IMG_2492-1.png",
@@ -532,90 +911,36 @@
                 }
             ];
 
+            const [filterKey, setFilterKey] = useState('*');
+
+            const filteredProjects = filterKey === '*'
+                ? projects
+                : projects.filter(project => project.category === filterKey);
+
             return (
                 <section id="portfolio" className="py-20 bg-gray-100">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-16">
+                        <div className="text-center mb-12">
                             <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">ผลงานที่ผ่านมา</h2>
-                            <div className="w-20 h-1 bg-accent mx-auto"></div>
+                            <div className="w-20 h-1 bg-accent mx-auto mb-8"></div>
+
+                            {/* Filter Buttons */}
+                            <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+                                <button onClick={() => setFilterKey('*')} className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${filterKey === '*' ? 'bg-navy text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200'}`}>ทั้งหมด</button>
+                                <button onClick={() => setFilterKey('layout')} className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${filterKey === 'layout' ? 'bg-navy text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200'}`}>วางผังเสาเข็ม</button>
+                                <button onClick={() => setFilterKey('topo')} className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${filterKey === 'topo' ? 'bg-navy text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200'}`}>Topographic Map</button>
+                                <button onClick={() => setFilterKey('monthly')} className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${filterKey === 'monthly' ? 'bg-navy text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200'}`}>สำรวจรายเดือน</button>
+                                <button onClick={() => setFilterKey('video')} className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${filterKey === 'video' ? 'bg-navy text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200'}`}>วิดีโอแนะนำ</button>
+                            </div>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {projects.map((project) => (
-                                <div
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-500">
+                            {filteredProjects.map((project) => (
+                                <PortfolioCard
                                     key={project.id}
-                                    ref={project.isVideo ? videoRef : null}
-                                    className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 ease-out transform hover:-translate-y-2 flex flex-col group"
-                                >
-                                    <div className={`${project.isVideo ? 'h-80' : 'h-64'} overflow-hidden bg-gray-900 relative`}>
-                                        {project.isVideo ? (
-                                            <a
-                                                href={`https://youtube.com/shorts/${project.youtubeId}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="relative w-full h-full block cursor-pointer"
-                                            >
-                                                <img
-                                                    src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
-                                                    alt={project.title}
-                                                    className="w-full h-full object-cover brightness-75 transition-transform duration-700 group-hover:scale-110"
-                                                    onError={(e) => {
-                                                        e.target.src = project.image;
-                                                    }}
-                                                />
-                                                <div className="absolute inset-0 flex items-center justify-center">
-                                                    <div className="w-20 h-20 bg-red-600 text-white rounded-full flex items-center justify-center shadow-2xl transform transition-all duration-300 group-hover:scale-110 group-hover:bg-red-700">
-                                                        <i className="fa-solid fa-play text-3xl ml-1"></i>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        ) : (
-                                            <img
-                                                src={project.image}
-                                                alt={project.title}
-                                                className="w-full h-full object-cover cursor-pointer group-hover:scale-110 transition-transform duration-700"
-                                                onClick={() => window.open(project.image, '_blank')}
-                                            />
-                                        )}
-
-                                        <div className="absolute top-4 right-4">
-                                            <span className={`${project.isVideo ? 'bg-red-600 text-white' : 'bg-navy bg-opacity-70 text-white'} px-3 py-1 rounded-full text-xs font-bold shadow-md flex items-center gap-1`}>
-                                                {project.isVideo ? <><i className="fa-brands fa-youtube"></i> YouTube</> : 'Gallery'}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div className="p-8 flex-grow">
-                                        <h3 className="font-bold text-xl text-navy mb-3">{project.title}</h3>
-                                        <p className="text-gray-600 text-sm mb-4 leading-relaxed">{project.description}</p>
-
-                                        {!project.isVideo && project.gallery && project.gallery.length > 0 && (
-                                            <div className="mt-4 border-t pt-4">
-                                                <div className="grid grid-cols-3 gap-2">
-                                                    {project.gallery.map((img, idx) => (
-                                                        <div
-                                                            key={idx}
-                                                            className="h-20 rounded-lg overflow-hidden border border-gray-100 cursor-pointer hover:border-accent transition-all"
-                                                            onClick={() => window.open(img, '_blank')}
-                                                        >
-                                                            <img src={img} alt="Detail" className="w-full h-full object-cover" />
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {project.isVideo && (
-                                            <a
-                                                href={`https://youtube.com/shorts/${project.youtubeId}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="mt-4 w-full bg-red-600 text-white py-2 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-red-700 transition-all"
-                                            >
-                                                <i className="fa-brands fa-youtube"></i> ดูบน YouTube
-                                            </a>
-                                        )}
-                                    </div>
-                                </div>
+                                    project={project}
+                                    setLightboxImage={setLightboxImage}
+                                    videoRef={project.isVideo ? videoRef : null}
+                                />
                             ))}
                         </div>
                     </div>
@@ -983,8 +1308,8 @@
                                 <h3 className="text-xl font-bold mb-6">ติดต่อเรา</h3>
                                 <ul className="space-y-4">
                                     <li className="flex items-start space-x-3 group">
-                                        <i className="fa-solid fa-phone text-accent mt-1"></i>
-                                        <a href="tel:0820025124" className="text-xl font-semibold hover:text-accent transition-colors">082-002-5124</a>
+                                        <i className="fa-solid fa-phone w-6 text-accent mt-1"></i>
+                                        <a href="tel:0820025124" className="hover:text-accent font-semibold transition-colors text-xl">082-002-5124</a>
                                     </li>
                                     <li className="flex items-start space-x-3 group">
                                         <i className="fa-brands fa-line text-accent text-xl mt-1"></i>
@@ -1069,6 +1394,290 @@
             );
         };
 
+        // --- Testimonials Component ---
+        const Testimonials = () => {
+            const reviews = [
+                {
+                    name: "วินัย",
+                    role: "ผู้รับเหมาก่อสร้าง",
+                    text: "ทีมงาน Jingjai Survey ทำงานเป็นมืออาชีพมากครับ วางผังเสาเข็มได้แม่นยำและรวดเร็ว ทำให้งานก่อสร้างเดินหน้าได้ตามแผน ไร้ปัญหาหน้างาน",
+                    rating: 5
+                },
+                {
+                    name: "กิ๊ก",
+                    role: "เจ้าของบ้าน",
+                    text: "ประทับใจบริการมากค่ะ ให้คำปรึกษาดีตั้งแต่ยังไม่เริ่มงาน แนะนำจุดที่ควรระวังในการสร้างบ้าน ช่วยลดข้อผิดพลาดไปได้เยอะเลย",
+                    rating: 5
+                },
+                {
+                    name: "บริษัทรับเหมาก่อสร้าง",
+                    role: "วิศวกรโครงการ",
+                    text: "ทำงานละเอียดและรายงานผลชัดเจน เก็บ Topographic map ยอดเยี่ยมมาก นำไปใช้งานต่อในโมเดล 3D ได้ง่ายสุดๆ",
+                    rating: 5
+                }
+            ];
+
+            const [showForm, setShowForm] = useState(false);
+            const [submitted, setSubmitted] = useState(false);
+            const [isSubmitting, setIsSubmitting] = useState(false);
+            const [rating, setRating] = useState(5);
+            const [hoverRating, setHoverRating] = useState(0);
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                setIsSubmitting(true);
+                // Simulate an API call
+                setTimeout(() => {
+                    setIsSubmitting(false);
+                    setSubmitted(true);
+                    setTimeout(() => {
+                        setShowForm(false);
+                        setSubmitted(false);
+                    }, 3000);
+                }, 1000);
+            };
+
+            return (
+                <section className="py-20 bg-white">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">เสียงตอบรับจากลูกค้า</h2>
+                            <div className="w-20 h-1 bg-accent mx-auto mb-4"></div>
+                            <p className="text-gray-600">ความประทับใจของผู้ใช้บริการจริงใจเซอร์เวย์</p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {reviews.map((review, idx) => (
+                                <div key={idx} className="bg-gray-50 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full transform hover:-translate-y-1">
+                                    <div className="flex text-accent mb-4 text-xl">
+                                        {[...Array(review.rating)].map((_, i) => (
+                                            <i key={i} className="fa-solid fa-star"></i>
+                                        ))}
+                                    </div>
+                                    <p className="text-gray-700 mb-6 italic flex-grow">"{review.text}"</p>
+                                    <div className="flex items-center gap-4 mt-auto">
+                                        <div className="w-12 h-12 bg-navy rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                            {review.name.charAt(0)}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-navy">{review.name}</h4>
+                                            <p className="text-sm text-gray-500">{review.role}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Leave a Review Button */}
+                        {!showForm && (
+                            <div className="text-center mt-12">
+                                <button
+                                    onClick={() => setShowForm(true)}
+                                    className="bg-navy text-white font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition-all shadow-lg flex items-center justify-center mx-auto gap-2"
+                                >
+                                    <i className="fa-solid fa-pen-to-square"></i> เขียนรีวิวของคุณ
+                                </button>
+                            </div>
+                        )}
+
+                        {/* Review Form */}
+                        {showForm && (
+                            <div className="mt-12 max-w-2xl mx-auto bg-gray-50 p-8 rounded-2xl shadow-inner border border-gray-200 relative">
+                                <button
+                                    onClick={() => setShowForm(false)}
+                                    className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors"
+                                >
+                                    <i className="fa-solid fa-times text-xl"></i>
+                                </button>
+
+                                <h3 className="text-2xl font-bold text-navy mb-6 text-center">บอกเล่าความประทับใจของคุณ</h3>
+
+                                {submitted ? (
+                                    <div className="bg-green-100 text-green-700 p-6 rounded-xl text-center flex flex-col items-center animate-fade-in">
+                                        <i className="fa-solid fa-circle-check text-4xl mb-4"></i>
+                                        <p className="font-bold text-lg">ขอบคุณสำหรับรีวิวครับ!</p>
+                                        <p>ความคิดเห็นของคุณคือกำลังใจของทีมงานเรา</p>
+                                    </div>
+                                ) : (
+                                    <form onSubmit={handleSubmit} className="space-y-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-bold text-gray-700 mb-2">ชื่อ - นามสกุล หรือ ชื่อบริษัท *</label>
+                                                <input type="text" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all" placeholder="จงใจ เซอร์เวย์" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-bold text-gray-700 mb-2">บทบาท/ตำแหน่ง</label>
+                                                <input type="text" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all" placeholder="เช่น เจ้าของบ้าน, ผู้รับเหมา" />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-bold text-gray-700 mb-2">ความพึงพอใจ *</label>
+                                            <div className="flex gap-2 text-3xl">
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <i
+                                                        key={star}
+                                                        className={`fa-solid fa-star cursor-pointer transition-all duration-200 transform hover:scale-110 ${star <= (hoverRating || rating) ? 'text-accent' : 'text-gray-300'
+                                                            }`}
+                                                        onClick={() => setRating(star)}
+                                                        onMouseEnter={() => setHoverRating(star)}
+                                                        onMouseLeave={() => setHoverRating(0)}
+                                                    ></i>
+                                                ))}
+                                            </div>
+                                            <p className="text-xs text-gray-500 mt-2">คลิกเพื่อระบุความประทับใจ ({rating} ดาว)</p>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-bold text-gray-700 mb-2">รายละเอียดรีวิว *</label>
+                                            <textarea required rows="4" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all resize-none" placeholder="ประทับใจในบริการด้านไหนบ้าง..."></textarea>
+                                        </div>
+
+                                        <button
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                            className={`w-full font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 ${isSubmitting ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-accent text-navy hover:bg-yellow-500 hover:shadow-lg hover:-translate-y-1'}`}
+                                        >
+                                            {isSubmitting ? (
+                                                <><i className="fa-solid fa-spinner fa-spin"></i> กำลังส่งข้อมูล...</>
+                                            ) : (
+                                                <><i className="fa-solid fa-paper-plane"></i> ส่งรีวิว</>
+                                            )}
+                                        </button>
+                                        <p className="text-xs text-center text-gray-400 mt-2">* ข้อมูลของคุณอาจถูกนำไปแสดงในหน้าเว็บไซต์</p>
+                                    </form>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </section>
+            );
+        };
+
+        // --- Facebook Integration Component ---
+        const FacebookSection = () => {
+            const facebookPageUrl = "https://www.facebook.com/jingjaisurvey";
+
+            return (
+                <section className="py-24 bg-navy relative overflow-hidden" id="facebook">
+                    {/* Premium Background Effects */}
+                    <div className="absolute top-0 left-0 w-full h-full opacity-5 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] bg-repeat pointer-events-none"></div>
+                    <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-[#1877F2] rounded-full mix-blend-screen filter blur-[150px] opacity-20 pointer-events-none"></div>
+                    <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-accent rounded-full mix-blend-screen filter blur-[150px] opacity-10 pointer-events-none"></div>
+
+                    {/* Giant Watermark Icon */}
+                    <i className="fa-brands fa-facebook absolute -right-20 top-20 text-[400px] text-white/5 pointer-events-none transform -rotate-12"></i>
+
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                        <div className="text-center mb-16">
+                            <span className="bg-[#1877F2]/20 text-[#1877F2] font-bold px-4 py-1 rounded-full text-sm inline-block mb-4 border border-[#1877F2]/30 uppercase tracking-widest hidden md:inline-block">Social Media Updates</span>
+                        </div>
+
+                        <div className="bg-white/5 backdrop-blur-xl rounded-[2.5rem] shadow-2xl border border-white/10 p-8 md:p-12 lg:p-16 overflow-hidden relative">
+                            {/* Inner glow */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+
+                            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 items-center relative z-10">
+                                {/* Text Content */}
+                                <div className="lg:col-span-2 space-y-8">
+                                    <div>
+                                        <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-[#1877F2] to-[#2fb3ff] rounded-2xl text-white mb-6 shadow-lg shadow-[#1877F2]/30 transform -rotate-3">
+                                            <i className="fa-brands fa-facebook-f text-3xl"></i>
+                                        </div>
+                                        <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">
+                                            อัปเดตผลงาน<br />
+                                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1877F2] to-[#42a5f5]">ล่าสุดจากหน้างาน</span>
+                                        </h2>
+                                    </div>
+
+                                    <p className="text-gray-300 leading-relaxed text-lg">
+                                        ติดตามความเคลื่อนไหว ภาพบรรยากาศการทำงานจริง และเกร็ดความรู้เรื่องงานสำรวจรังวัด มั่นใจในคุณภาพด้วยผลงานที่อัปเดตอย่างต่อเนื่อง
+                                    </p>
+
+                                    <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                                        <a
+                                            href={facebookPageUrl}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="bg-gradient-to-r from-[#1877F2] to-[#0e5aed] text-white font-bold py-4 px-8 rounded-full shadow-[0_4px_15px_rgba(24,119,242,0.4)] hover:shadow-[0_8px_25px_rgba(24,119,242,0.6)] transition-all duration-300 transform-gpu hover:-translate-y-1 flex items-center justify-center gap-3 overflow-hidden relative group antialiased"
+                                        >
+                                            <div className="absolute inset-0 bg-white/20 transform-gpu -translate-x-full group-hover:translate-x-full transition-transform duration-500 ease-out"></div>
+                                            <i className="fa-brands fa-facebook text-2xl transform-gpu group-hover:rotate-12 transition-transform duration-300 relative z-10"></i>
+                                            <span className="relative z-10 tracking-wide text-lg">เปิดหน้าแฟนเพจ</span>
+                                        </a>
+                                        <a
+                                            href="http://m.me/jingjaisurvey"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="bg-white/10 text-white font-bold py-4 px-8 rounded-full hover:bg-white/20 transition-all duration-300 border border-white/20 hover:border-white/50 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] transform-gpu hover:-translate-y-1 flex items-center justify-center gap-3 relative group antialiased"
+                                        >
+                                            <i className="fa-brands fa-facebook-messenger text-[#00B2FF] text-2xl transform-gpu group-hover:-rotate-12 group-hover:scale-110 transition-transform duration-300"></i>
+                                            <span className="tracking-wide text-lg">ทักแชทสอบถาม</span>
+                                        </a>
+                                    </div>
+
+                                    <div className="flex items-center gap-5 mt-8 pt-8 border-t border-white/10">
+                                        <div className="flex -space-x-4">
+                                            <img className="w-12 h-12 rounded-full border-2 border-navy relative z-30 object-cover transform hover:-translate-y-2 hover:scale-110 hover:z-40 transition-all duration-300 shadow-md cursor-pointer" src="https://images.unsplash.com/photo-1541888081622-4a7434fa12b1?auto=format&fit=crop&w=100&q=80" alt="Work 1" />
+                                            <img className="w-12 h-12 rounded-full border-2 border-navy relative z-20 object-cover transform hover:-translate-y-2 hover:scale-110 hover:z-40 transition-all duration-300 shadow-md cursor-pointer" src="https://images.unsplash.com/photo-1503387762-592dee58c460?auto=format&fit=crop&w=100&q=80" alt="Work 2" />
+                                            <img className="w-12 h-12 rounded-full border-2 border-navy relative z-10 object-cover transform hover:-translate-y-2 hover:scale-110 hover:z-40 transition-all duration-300 shadow-md cursor-pointer" src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=100&q=80" alt="Work 3" />
+                                            <div className="w-12 h-12 rounded-full border-2 border-navy relative z-0 bg-accent flex items-center justify-center text-navy font-bold text-xs transform hover:-translate-y-2 hover:scale-110 hover:z-40 transition-all duration-300 shadow-xl cursor-pointer hover:shadow-accent/50">
+                                                +99
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <div className="flex text-accent text-sm mb-1 group cursor-default">
+                                                <i className="fa-solid fa-star transform group-hover:scale-125 group-hover:-translate-y-1 transition-all duration-200 delay-0"></i>
+                                                <i className="fa-solid fa-star transform group-hover:scale-125 group-hover:-translate-y-1 transition-all duration-200 delay-75"></i>
+                                                <i className="fa-solid fa-star transform group-hover:scale-125 group-hover:-translate-y-1 transition-all duration-200 delay-100"></i>
+                                                <i className="fa-solid fa-star transform group-hover:scale-125 group-hover:-translate-y-1 transition-all duration-200 delay-150"></i>
+                                                <i className="fa-solid fa-star transform group-hover:scale-125 group-hover:-translate-y-1 transition-all duration-200 delay-200"></i>
+                                            </div>
+                                            <p className="text-sm text-gray-400 font-medium tracking-wide">ลูกค้าไว้วางใจใช้บริการมากมาย</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Facebook Plugin Iframe */}
+                                <div className="lg:col-span-3 h-full min-h-[500px] flex items-center justify-center relative">
+                                    {/* Hover Glow Effect */}
+                                    <div className="absolute inset-0 bg-gradient-to-r from-[#1877F2]/30 to-purple-500/30 rounded-3xl filter blur-2xl transform scale-95 opacity-50 hidden md:block"></div>
+
+                                    <div className="w-full max-w-[500px] bg-white rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-gray-200 relative z-10 transition-shadow duration-500 hover:shadow-[0_20px_60px_rgba(24,119,242,0.6)]">
+                                        <div className="h-10 bg-gray-100 border-b border-gray-200 flex items-center px-4 gap-2">
+                                            <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                                            <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                            <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                                            <div className="ml-2 px-3 py-1 bg-white rounded-md text-[10px] text-gray-500 font-mono tracking-widest uppercase border border-gray-200 shadow-sm flex items-center gap-1">
+                                                <i className="fa-solid fa-satellite-dish text-[#1877F2]"></i> LIVE FEED
+                                            </div>
+                                            <div className="ml-auto flex items-center gap-2 text-[#1877F2]">
+                                                <i className="fa-solid fa-circle-check"></i>
+                                                <span className="text-[10px] font-bold">Official Page</span>
+                                            </div>
+                                        </div>
+                                        <div className="bg-white flex justify-center w-full min-h-[500px] relative">
+                                            <iframe
+                                                src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(facebookPageUrl)}&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId`}
+                                                width="500"
+                                                height="500"
+                                                style={{ border: 'none', overflow: 'hidden', width: '100%', backgroundColor: 'white' }}
+                                                scrolling="no"
+                                                frameBorder="0"
+                                                allowFullScreen="true"
+                                                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                                                title="Facebook Page Plugin"
+                                                className="bg-white"
+                                            ></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
         // --- App Component ---
         const App = () => {
             return (
@@ -1076,10 +1685,13 @@
                     <Navbar />
                     <main className="flex-grow">
                         <Hero />
-                        <Services />
-                        <Portfolio />
-                        <AutoLispDownload />
-                        <QuotationForm />
+                        <FadeInSection><Services /></FadeInSection>
+                        <FadeInSection><QuoteBanner /></FadeInSection>
+                        <FadeInSection><TrimbleFeature /></FadeInSection>
+                        <FadeInSection><Portfolio /></FadeInSection>
+                        <FadeInSection><FacebookSection /></FadeInSection>
+                        <FadeInSection><Testimonials /></FadeInSection>
+                        <FadeInSection><QuotationForm /></FadeInSection>
                     </main>
                     <Footer />
                     <FloatingActionButton />
