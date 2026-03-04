@@ -1833,6 +1833,37 @@
 
         // --- App Component ---
         const App = () => {
+            // Global Conversion Tracking for Google Ads
+            useEffect(() => {
+                const handleConversionClick = (e) => {
+                    const link = e.target.closest('a');
+                    if (!link) return;
+                    const href = link.getAttribute('href') || '';
+
+                    // LINE Click Conversion
+                    if (href.includes('line.me')) {
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-17936046628/cPI6CPjSmPQbEKS0yehC'
+                        });
+                    }
+                    // Call Click Conversion
+                    else if (href.startsWith('tel:')) {
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-17936046628/PD9NCPVSnPQbEKS0yehC'
+                        });
+                    }
+                    // Facebook Click Conversion
+                    else if (href.includes('facebook.com') || href.includes('m.me')) {
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-17936046628/vVy2CNKpL_QbEKS0yehC'
+                        });
+                    }
+                };
+
+                document.addEventListener('click', handleConversionClick);
+                return () => document.removeEventListener('click', handleConversionClick);
+            }, []);
+
             return (
                 <div className="flex flex-col min-h-screen">
                     <Navbar />
