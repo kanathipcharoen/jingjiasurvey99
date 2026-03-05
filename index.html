@@ -1097,7 +1097,7 @@
         const QuotationForm = () => {
             const [submitted, setSubmitted] = useState(false);
             const [isLoading, setIsLoading] = useState(false);
-            const [formData, setFormData] = useState({ name: '', phone: '', email: '', service: '', details: '' });
+            const [formData, setFormData] = useState({ name: '', phone: '', email: '', service: '', details: '', pdpaConsent: false });
             const [errors, setErrors] = useState({});
 
             const serviceLabels = {
@@ -1115,6 +1115,7 @@
                     newErrors.email = 'รูปแบบอีเมลไม่ถูกต้อง';
                 }
                 if (!formData.service) newErrors.service = 'กรุณาเลือกบริการ';
+                if (!formData.pdpaConsent) newErrors.pdpaConsent = 'กรุณายินยอมให้เก็บข้อมูลก่อนส่ง';
                 setErrors(newErrors);
                 return Object.keys(newErrors).length === 0;
             };
@@ -1142,11 +1143,17 @@
 
                         if (response.ok) {
                             setSubmitted(true);
-                            setFormData({ name: '', phone: '', email: '', service: '', details: '' });
+                            setFormData({ name: '', phone: '', email: '', service: '', details: '', pdpaConsent: false });
 
                             // Google Ads Form Submission Conversion
                             gtag('event', 'conversion', {
                                 'send_to': 'AW-17936046628/9ps6CP7SmPQbEKS0yehC'
+                            });
+                            window.dataLayer = window.dataLayer || [];
+                            window.dataLayer.push({
+                                'event': 'form_submission',
+                                'form_type': 'quotation_request',
+                                'service_type': serviceLabels[formData.service] || formData.service
                             });
 
                             setTimeout(() => setSubmitted(false), 5000);
@@ -1251,6 +1258,19 @@
                                                 onChange={e => setFormData({ ...formData, details: e.target.value })}
                                             ></textarea>
                                         </div>
+                                        <div className="flex items-start space-x-3 bg-blue-50 p-4 rounded-lg border border-blue-200">
+                                            <input
+                                                type="checkbox"
+                                                id="pdpa-consent"
+                                                checked={formData.pdpaConsent}
+                                                onChange={e => setFormData({ ...formData, pdpaConsent: e.target.checked })}
+                                                className="mt-1 w-5 h-5 text-accent border-gray-300 rounded focus:ring-accent cursor-pointer flex-shrink-0"
+                                            />
+                                            <label htmlFor="pdpa-consent" className="text-sm text-gray-600 cursor-pointer leading-relaxed">
+                                                ข้าพเจ้ายินยอมให้ <strong>JINGJAI SURVEY</strong> เก็บรวบรวมและใช้ข้อมูลส่วนบุคคลข้างต้น เพื่อติดต่อกลับและจัดทำใบเสนอราคา ตาม <span className="text-navy font-semibold">พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA)</span>
+                                            </label>
+                                        </div>
+                                        {errors.pdpaConsent && <span className="text-red-500 text-xs mt-1 block">{errors.pdpaConsent}</span>}
                                         <button
                                             type="submit"
                                             disabled={isLoading}
@@ -1833,7 +1853,7 @@
 
         // --- App Component ---
         const App = () => {
-            // Global Conversion Tracking for Google Ads
+            // Global Conversion Tracking for Google Ads + GTM DataLayer
             useEffect(() => {
                 const handleConversionClick = (e) => {
                     const link = e.target.closest('a');
@@ -1845,17 +1865,35 @@
                         gtag('event', 'conversion', {
                             'send_to': 'AW-17936046628/cPI6CPjSmPQbEKS0yehC'
                         });
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            'event': 'contact_click',
+                            'contact_method': 'LINE',
+                            'click_location': link.closest('section')?.id || link.closest('footer') ? 'footer' : link.closest('.fixed') ? 'floating_button' : 'hero'
+                        });
                     }
                     // Call Click Conversion
                     else if (href.startsWith('tel:')) {
                         gtag('event', 'conversion', {
                             'send_to': 'AW-17936046628/PD9NCPVSnPQbEKS0yehC'
                         });
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            'event': 'contact_click',
+                            'contact_method': 'phone_call',
+                            'click_location': link.closest('section')?.id || link.closest('footer') ? 'footer' : link.closest('.fixed') ? 'floating_button' : 'hero'
+                        });
                     }
-                    // Facebook Click Conversion
+                    // Facebook / Messenger Click Conversion
                     else if (href.includes('facebook.com') || href.includes('m.me')) {
                         gtag('event', 'conversion', {
                             'send_to': 'AW-17936046628/vVy2CNKpL_QbEKS0yehC'
+                        });
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            'event': 'contact_click',
+                            'contact_method': href.includes('m.me') ? 'messenger' : 'facebook_page',
+                            'click_location': link.closest('section')?.id || link.closest('footer') ? 'footer' : link.closest('.fixed') ? 'floating_button' : 'other'
                         });
                     }
                 };
