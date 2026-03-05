@@ -2,6 +2,20 @@
 <html lang="th">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Preconnect to critical third-party origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://elfsightcdn.com">
+    <link rel="dns-prefetch" href="https://img2.pic.in.th">
+    <link rel="dns-prefetch" href="https://img5.pic.in.th">
+
     <!-- Google Tag Manager -->
     <script>(function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
@@ -21,8 +35,7 @@
         gtag('js', new Date());
         gtag('config', 'AW-17936046628');
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>รับสำรวจวางผัง สำรวจครบวงจร ทำแผนที่ Topo | จริงใจเซอร์เวย์ JINGJAI SURVEY</title>
     <meta name="description"
         content="รับงานสำรวจวางผัง สำรวจครบวงจร ทำแผนที่ Topo (Topographic Map) วางผังเสาเข็ม ถ่ายระดับ สำรวจเพื่อการก่อสร้าง ด้วยกล้อง Trimble S8 Robotic Total Station แม่นยำระดับ 1 ฟิลิปดา บริการทั่วประเทศ โทร 082-002-5124 | จริงใจเซอร์เวย์">
@@ -201,14 +214,20 @@
         }
     </script>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Font Awesome (loaded async to prevent render-blocking) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    </noscript>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts (already preconnected above) -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet">
+    </noscript>
 
     <!-- React -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -554,6 +573,7 @@
                     title: "งานสำรวจวางผัง / วางผังเสาเข็ม",
                     icon: "fa-hard-hat",
                     description: "รับสำรวจวางผังเสาเข็ม วางผังอาคาร ตรวจสอบแนวเขตและวางตำแหน่งเสาเข็มตามแบบแปลนด้วยเทคโนโลยีกล้อง Trimble S8 Robotic Total Station",
+                    landingPage: "landing-piling.html",
                     longDescription: [
                         "ตรวจสอบตำแหน่งพิกัดแนวเขตที่ดิน (Boundary Survey)",
                         "จัดทำแผนวางตำแหน่งเสาเข็มแล้วขออนุมัติผู้ว่าจ้างวางพิกัดที่คอนเฟิร์ม",
@@ -566,6 +586,7 @@
                     title: "ทำแผนที่ Topo / แผนที่ภูมิประเทศ",
                     icon: "fa-map-marked-alt",
                     description: "จัดทำแผนที่ Topographic Map (แผนที่ Topo) สำหรับงานออกแบบวิศวกรรม พร้อมเขียนแบบ 3D สามารถนำไปทำงานต่อ ใน SketchUp ได้ทันที",
+                    landingPage: "landing-topo.html",
                     longDescription: [
                         "จัดทำแผนที่เส้นชั้นความสูง (Contour Map)",
                         "สำรวจรายละเอียดทางกายภาพ เช่น ถนน อาคาร ต้นไม้ และเสาไฟฟ้า",
@@ -638,6 +659,12 @@
                                             ))}
                                         </ul>
                                     </div>
+
+                                    {activeIndex === idx && service.landingPage && (
+                                        <a href={service.landingPage} className="mt-4 block w-full text-center bg-accent text-navy font-bold py-3 rounded-xl hover:bg-yellow-500 transition-all shadow-lg text-sm" onClick={(e) => e.stopPropagation()}>
+                                            <i className="fa-solid fa-arrow-right mr-2"></i> ดูรายละเอียดเพิ่มเติม
+                                        </a>
+                                    )}
 
                                     <div className={`mt-6 text-xs font-bold flex items-center tracking-wider uppercase ${activeIndex === idx ? 'text-accent' : 'text-navy opacity-80'}`}>
                                         {activeIndex === idx ? 'ปิดรายละเอียด' : 'อ่านรายละเอียดเพิ่มเติม'}
@@ -1416,160 +1443,17 @@
             );
         };
 
-        // --- Testimonials Component ---
         const Testimonials = () => {
-            const reviews = [
-                {
-                    name: "วินัย",
-                    role: "ผู้รับเหมาก่อสร้าง",
-                    text: "ทีมงาน Jingjai Survey ทำงานเป็นมืออาชีพมากครับ วางผังเสาเข็มได้แม่นยำและรวดเร็ว ทำให้งานก่อสร้างเดินหน้าได้ตามแผน ไร้ปัญหาหน้างาน",
-                    rating: 5
-                },
-                {
-                    name: "กิ๊ก",
-                    role: "เจ้าของบ้าน",
-                    text: "ประทับใจบริการมากค่ะ ให้คำปรึกษาดีตั้งแต่ยังไม่เริ่มงาน แนะนำจุดที่ควรระวังในการสร้างบ้าน ช่วยลดข้อผิดพลาดไปได้เยอะเลย",
-                    rating: 5
-                },
-                {
-                    name: "บริษัทรับเหมาก่อสร้าง",
-                    role: "วิศวกรโครงการ",
-                    text: "ทำงานละเอียดและรายงานผลชัดเจน เก็บ Topographic map ยอดเยี่ยมมาก นำไปใช้งานต่อในโมเดล 3D ได้ง่ายสุดๆ",
-                    rating: 5
-                }
-            ];
-
-            const [showForm, setShowForm] = useState(false);
-            const [submitted, setSubmitted] = useState(false);
-            const [isSubmitting, setIsSubmitting] = useState(false);
-            const [rating, setRating] = useState(5);
-            const [hoverRating, setHoverRating] = useState(0);
-
-            const handleSubmit = (e) => {
-                e.preventDefault();
-                setIsSubmitting(true);
-                // Simulate an API call
-                setTimeout(() => {
-                    setIsSubmitting(false);
-                    setSubmitted(true);
-                    setTimeout(() => {
-                        setShowForm(false);
-                        setSubmitted(false);
-                    }, 3000);
-                }, 1000);
-            };
-
             return (
                 <section className="py-20 bg-white">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-16">
+                        <div className="text-center mb-12">
                             <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">เสียงตอบรับจากลูกค้า</h2>
                             <div className="w-20 h-1 bg-accent mx-auto mb-4"></div>
-                            <p className="text-gray-600">ความประทับใจของผู้ใช้บริการจริงใจเซอร์เวย์</p>
+                            <p className="text-gray-600">รีวิวจริงจาก Google Business Profile อัปเดตอัตโนมัติ</p>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {reviews.map((review, idx) => (
-                                <div key={idx} className="bg-gray-50 rounded-2xl p-8 shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full transform hover:-translate-y-1">
-                                    <div className="flex text-accent mb-4 text-xl">
-                                        {[...Array(review.rating)].map((_, i) => (
-                                            <i key={i} className="fa-solid fa-star"></i>
-                                        ))}
-                                    </div>
-                                    <p className="text-gray-700 mb-6 italic flex-grow">"{review.text}"</p>
-                                    <div className="flex items-center gap-4 mt-auto">
-                                        <div className="w-12 h-12 bg-navy rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                            {review.name.charAt(0)}
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-navy">{review.name}</h4>
-                                            <p className="text-sm text-gray-500">{review.role}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Leave a Review Button */}
-                        {!showForm && (
-                            <div className="text-center mt-12">
-                                <button
-                                    onClick={() => setShowForm(true)}
-                                    className="bg-navy text-white font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition-all shadow-lg flex items-center justify-center mx-auto gap-2"
-                                >
-                                    <i className="fa-solid fa-pen-to-square"></i> เขียนรีวิวของคุณ
-                                </button>
-                            </div>
-                        )}
-
-                        {/* Review Form */}
-                        {showForm && (
-                            <div className="mt-12 max-w-2xl mx-auto bg-gray-50 p-8 rounded-2xl shadow-inner border border-gray-200 relative">
-                                <button
-                                    onClick={() => setShowForm(false)}
-                                    className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors"
-                                >
-                                    <i className="fa-solid fa-times text-xl"></i>
-                                </button>
-
-                                <h3 className="text-2xl font-bold text-navy mb-6 text-center">บอกเล่าความประทับใจของคุณ</h3>
-
-                                {submitted ? (
-                                    <div className="bg-green-100 text-green-700 p-6 rounded-xl text-center flex flex-col items-center animate-fade-in">
-                                        <i className="fa-solid fa-circle-check text-4xl mb-4"></i>
-                                        <p className="font-bold text-lg">ขอบคุณสำหรับรีวิวครับ!</p>
-                                        <p>ความคิดเห็นของคุณคือกำลังใจของทีมงานเรา</p>
-                                    </div>
-                                ) : (
-                                    <form onSubmit={handleSubmit} className="space-y-4">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div>
-                                                <label className="block text-sm font-bold text-gray-700 mb-2">ชื่อ - นามสกุล หรือ ชื่อบริษัท *</label>
-                                                <input type="text" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all" placeholder="จงใจ เซอร์เวย์" />
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-bold text-gray-700 mb-2">บทบาท/ตำแหน่ง</label>
-                                                <input type="text" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all" placeholder="เช่น เจ้าของบ้าน, ผู้รับเหมา" />
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label className="block text-sm font-bold text-gray-700 mb-2">ความพึงพอใจ *</label>
-                                            <div className="flex gap-2 text-3xl">
-                                                {[1, 2, 3, 4, 5].map((star) => (
-                                                    <i
-                                                        key={star}
-                                                        className={`fa-solid fa-star cursor-pointer transition-all duration-200 transform hover:scale-110 ${star <= (hoverRating || rating) ? 'text-accent' : 'text-gray-300'
-                                                            }`}
-                                                        onClick={() => setRating(star)}
-                                                        onMouseEnter={() => setHoverRating(star)}
-                                                        onMouseLeave={() => setHoverRating(0)}
-                                                    ></i>
-                                                ))}
-                                            </div>
-                                            <p className="text-xs text-gray-500 mt-2">คลิกเพื่อระบุความประทับใจ ({rating} ดาว)</p>
-                                        </div>
-
-                                        <div>
-                                            <label className="block text-sm font-bold text-gray-700 mb-2">รายละเอียดรีวิว *</label>
-                                            <textarea required rows="4" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-all resize-none" placeholder="ประทับใจในบริการด้านไหนบ้าง..."></textarea>
-                                        </div>
-
-                                        <button
-                                            type="submit"
-                                            disabled={isSubmitting}
-                                            className={`w-full font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 ${isSubmitting ? 'bg-gray-400 text-white cursor-not-allowed' : 'bg-accent text-navy hover:bg-yellow-500 hover:shadow-lg hover:-translate-y-1'}`}
-                                        >
-                                            {isSubmitting ? (
-                                                <><i className="fa-solid fa-spinner fa-spin"></i> กำลังส่งข้อมูล...</>
-                                            ) : (
-                                                <><i className="fa-solid fa-paper-plane"></i> ส่งรีวิว</>
-                                            )}
-                                        </button>
-                                        <p className="text-xs text-center text-gray-400 mt-2">* ข้อมูลของคุณอาจถูกนำไปแสดงในหน้าเว็บไซต์</p>
-                                    </form>
-                                )}
-                            </div>
-                        )}
+                        {/* Elfsight Google Reviews Widget - Auto-updates from Google Business */}
+                        <div className="elfsight-app-674d9cef-241b-4818-a704-7a9d9eef67d7" data-elfsight-app-lazy></div>
                     </div>
                 </section>
             );
@@ -1927,6 +1811,9 @@
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
+
+    <!-- Elfsight Google Reviews Widget (loaded last to not block rendering) -->
+    <script src="https://elfsightcdn.com/platform.js" defer></script>
 </body>
 
 </html>
