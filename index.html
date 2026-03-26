@@ -12,9 +12,7 @@
     <link rel="preconnect" href="https://unpkg.com">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="dns-prefetch" href="https://elfsightcdn.com">
-    <link rel="dns-prefetch" href="https://img2.pic.in.th">
-    <link rel="dns-prefetch" href="https://img5.pic.in.th">
+
 
     <!-- Google Tag Manager -->
     <script>(function (w, d, s, l, i) {
@@ -46,6 +44,8 @@
     <meta name="author" content="JINGJAI SURVEY">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://jingjaisurvey.com/">
+    <link rel="alternate" hreflang="th" href="https://jingjaisurvey.com/" />
+    <link rel="alternate" type="text/plain" href="https://jingjaisurvey.com/llms.txt" title="LLM-friendly content" />
     <link rel="icon" type="image/jpeg" href="https://img2.pic.in.th/IMG_3887.jpg">
     <link rel="apple-touch-icon" href="https://img2.pic.in.th/IMG_3887.jpg">
 
@@ -101,6 +101,13 @@
         "openingHours": "Mo-Su 08:00-18:00",
         "priceRange": "฿฿",
         "image": "https://img2.pic.in.th/IMG_5651.png",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "12",
+            "bestRating": "5",
+            "worstRating": "1"
+        },
         "sameAs": [
             "https://www.facebook.com/jingjaisurvey",
             "https://line.me/ti/p/~kanathipcharoen"
@@ -390,6 +397,20 @@
                     href="https://line.me/ti/p/~kanathipcharoen">kanathipcharoen</a> | Facebook: <a
                     href="https://www.facebook.com/jingjaisurvey">JINGJAI SURVEY</a></p>
             <p>ที่อยู่: 160/18 ถนน พายัพทิศ 4 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา 30000</p>
+            <h2>รีวิวจากลูกค้า — ⭐ 4.9/5 (12 รีวิว Google)</h2>
+            <p>"บริการดีมากครับ รวดเร็ว ใส่ใจรายละเอียด ราคาเป็นธรรม" — ลูกค้า Google Reviews</p>
+            <h2>ราคาบริการ (โดยประมาณ)</h2>
+            <ul>
+                <li>วางผังเสาเข็ม บ้านพักอาศัย: เริ่มต้น 3,000-8,000 บาท</li>
+                <li>ทำแผนที่ Topo พื้นที่ 1-5 ไร่: เริ่มต้น 8,000-20,000 บาท</li>
+                <li>ถ่ายระดับ: เริ่มต้น 3,000-6,000 บาท</li>
+            </ul>
+            <h2>บทความให้ความรู้</h2>
+            <ul>
+                <li><a href="blog-piling-layout.html">วางผังเสาเข็ม คืออะไร? ขั้นตอน ราคา อุปกรณ์ ครบจบ [2026]</a></li>
+                <li><a href="blog-topo-map.html">ทำแผนที่ Topo คืออะไร? Topographic Map ทำไมต้องทำก่อนสร้าง [2026]</a></li>
+                <li><a href="blog-survey-price.html">ราคางานสำรวจ 2026 — วางผัง ทำแผนที่ Topo ถ่ายระดับ ราคาเท่าไหร่?</a></li>
+            </ul>
         </div>
     </noscript>
 
@@ -678,49 +699,22 @@
             );
         };
 
-        // --- Quote Banner Component ---
-        const QuoteBanner = () => {
-            return (
-                <section className="py-24 bg-navy relative overflow-hidden bg-fixed bg-center bg-cover" style={{ backgroundImage: "linear-gradient(rgba(10, 25, 47, 0.85), rgba(10, 25, 47, 0.95)), url('https://images.unsplash.com/photo-1541888081622-4a7434fa12b1?auto=format&fit=crop&q=80&w=2000')" }}>
-                    {/* Decorative Elements */}
-                    <div className="absolute top-0 left-0 w-32 h-32 border-t-4 border-l-4 border-accent/30 rounded-tl-3xl transform -translate-x-16 -translate-y-16"></div>
-                    <div className="absolute bottom-0 right-0 w-32 h-32 border-b-4 border-r-4 border-accent/30 rounded-br-3xl transform translate-x-16 translate-y-16"></div>
-
-                    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                        <i className="fa-solid fa-quote-left text-5xl md:text-7xl text-accent/20 absolute -top-10 md:-top-16 left-1/2 transform -translate-x-1/2"></i>
-
-                        <h2 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-snug md:leading-tight mb-8 relative z-10">
-                            "งานสำรวจที่<span className="text-accent relative inline-block">แม่นยำ<div className="absolute -bottom-2 left-0 w-full h-1 bg-accent/50 rounded-full"></div></span><br className="hidden md:block" />
-                            คือรากฐานที่มองไม่เห็น<br />
-                            แต่เป็นสิ่งเดียวที่ทำให้<span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-yellow-200">ตึกตระหง่านอยู่ได้</span>"
-                        </h2>
-
-                        <div className="w-24 h-1 bg-accent mx-auto rounded-full mb-8"></div>
-
-                        <p className="text-gray-300 text-lg md:text-xl font-light tracking-wide">
-                            Jingjai Survey - ความแม่นยำที่คุณสร้างต่อได้ด้วยความสบายใจ
-                        </p>
-                    </div>
-                </section>
-            );
-        };
 
         // --- Trimble Feature Component ---
         const TrimbleFeature = () => {
             const [activeImage, setActiveImage] = useState(0);
 
             // NOTE TO USER: วิธีใส่รูปภาพ
-            // 1. นำรูปกล้อง Trimble (2 รูปที่คุณเพิ่งส่งมา) บันทึกลงในโฟลเดอร์เดียวกับไฟล์ index.html
-            // 2. ตั้งชื่อรูปแรกว่า "trimble-01.jpg" และรูปที่สองว่า "trimble-02.jpg"
+            // 1. นำรูปกล้อง Trimble บันทึกลงในโฟลเดอร์ images/trimble/
             const mediaItems = [
-                "https://img2.pic.in.th/IMG_5354.png",
-                "https://img5.pic.in.th/file/secure-sv1/EFCC100A-98A3-4830-9C92-D75F52226F09.jpg",
-                "https://img5.pic.in.th/file/secure-sv1/543D60CD-2BD4-4421-95D9-F78302683CE2.png",
-                "https://img5.pic.in.th/file/secure-sv1/111111111c294ff2c9f512cd.png"
+                "images/trimble/copy_85D6567E-163F-493A-A18E-BA9804AF1E68.mov",
+                "images/trimble/วางผังเสาเข็ม (1).jpg",
+                "images/trimble/วางผังเสาเข็ม (2).jpg",
+                "images/trimble/วางผังเสาเข็ม (4).jpg"
             ];
 
             // Helper function to check if item is a video
-            const isVideo = (src) => src.toLowerCase().endsWith('.mp4');
+            const isVideo = (src) => src.toLowerCase().endsWith('.mp4') || src.toLowerCase().endsWith('.mov');
 
             const features = [
                 {
@@ -851,26 +845,67 @@
 
         // --- Portfolio Component ---
         const Portfolio = () => {
-            const { useEffect, useRef, useState } = React; // Added useState here
+            const { useEffect, useRef, useState } = React;
             const videoRef = useRef(null);
             const [isVideoVisible, setIsVideoVisible] = useState(false);
-            const [lightboxImage, setLightboxImage] = useState(null);
+            const [lightboxData, setLightboxData] = useState(null);
 
-            // PortfolioCard component moved inside Portfolio
-            const PortfolioCard = ({ project, setLightboxImage, videoRef }) => {
+            // --- Lightbox Modal ---
+            const LightboxModal = ({ data, onClose }) => {
+                const [currentIdx, setCurrentIdx] = useState(data.startIdx || 0);
+                const images = data.images || [];
+
+                useEffect(() => {
+                    const handleKey = (e) => {
+                        if (e.key === 'Escape') onClose();
+                        if (e.key === 'ArrowRight') setCurrentIdx(prev => (prev + 1) % images.length);
+                        if (e.key === 'ArrowLeft') setCurrentIdx(prev => (prev - 1 + images.length) % images.length);
+                    };
+                    window.addEventListener('keydown', handleKey);
+                    document.body.style.overflow = 'hidden';
+                    return () => { window.removeEventListener('keydown', handleKey); document.body.style.overflow = ''; };
+                }, [images.length]);
+
+                return (
+                    <div className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4" onClick={onClose}>
+                        <button onClick={onClose} className="absolute top-4 right-4 text-white text-3xl hover:text-accent transition-colors z-10">&times;</button>
+                        {images.length > 1 && (
+                            <>
+                                <button onClick={(e) => { e.stopPropagation(); setCurrentIdx(prev => (prev - 1 + images.length) % images.length); }} className="absolute left-4 text-white text-4xl hover:text-accent transition-colors z-10">&#10094;</button>
+                                <button onClick={(e) => { e.stopPropagation(); setCurrentIdx(prev => (prev + 1) % images.length); }} className="absolute right-4 text-white text-4xl hover:text-accent transition-colors z-10">&#10095;</button>
+                            </>
+                        )}
+                        <img src={images[currentIdx]} alt="" className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-2xl" onClick={(e) => e.stopPropagation()} />
+                    </div>
+                );
+            };
+
+            // --- Minimalist PortfolioCard with Auto-Slide ---
+            const PortfolioCard = ({ project, videoRef }) => {
                 const isVideo = project.category === 'video' || project.isVideo;
                 const mediaItems = project.gallery && project.gallery.length > 0 ? [project.image, ...project.gallery] : [project.image];
                 const [activeIdx, setActiveIdx] = useState(0);
+                const intervalRef = useRef(null);
 
                 const categoryName = project.category === 'layout' ? 'วางผังเสาเข็ม' : project.category === 'topo' ? 'Topographic Map' : project.category === 'monthly' ? 'สำรวจรายเดือน' : 'วิดีโอ';
+
+                // Auto-slide always active
+                useEffect(() => {
+                    if (!isVideo && mediaItems.length > 1) {
+                        intervalRef.current = setInterval(() => {
+                            setActiveIdx(prev => (prev + 1) % mediaItems.length);
+                        }, 3000);
+                    }
+                    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+                }, [isVideo, mediaItems.length]);
 
                 return (
                     <div
                         ref={videoRef}
-                        className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 ease-out transform hover:-translate-y-2 flex flex-col group border border-gray-100 p-2"
+                        className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 ease-out transform hover:-translate-y-2 flex flex-col group border border-gray-100"
                     >
-                        {/* Main Image Box */}
-                        <div className={`${isVideo ? 'h-80' : 'h-64'} rounded-xl overflow-hidden bg-gray-900 relative mb-2 shadow-inner`}>
+                        {/* Main Image Box with Fade Transition */}
+                        <div className={`${isVideo ? 'h-80' : 'h-64'} overflow-hidden bg-gray-900 relative`}>
                             {isVideo ? (
                                 <a
                                     href={`https://youtube.com/shorts/${project.youtubeId}`}
@@ -882,9 +917,7 @@
                                         src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
                                         alt={project.title}
                                         className="w-full h-full object-cover brightness-75 transition-transform duration-700 group-hover:scale-110"
-                                        onError={(e) => {
-                                            e.target.src = project.image;
-                                        }}
+                                        onError={(e) => { e.target.src = project.image; }}
                                     />
                                     <div className="absolute inset-0 flex items-center justify-center">
                                         <div className="w-16 h-16 bg-red-600/90 backdrop-blur-sm text-white rounded-full flex items-center justify-center shadow-[0_4px_15px_rgba(220,38,38,0.5)] transform transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600">
@@ -893,44 +926,37 @@
                                     </div>
                                 </a>
                             ) : (
-                                <img
-                                    src={mediaItems[activeIdx]}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover cursor-pointer group-hover:scale-105 transition-transform duration-700"
-                                    onClick={() => setLightboxImage(mediaItems[activeIdx])}
-                                />
+                                <>
+                                    {mediaItems.map((item, idx) => (
+                                        <img
+                                            key={idx}
+                                            src={item}
+                                            alt={project.title}
+                                            className={`absolute inset-0 w-full h-full object-cover cursor-pointer transition-opacity duration-700 ${idx === activeIdx ? 'opacity-100' : 'opacity-0'}`}
+                                            onClick={() => setLightboxData({ images: mediaItems, startIdx: idx })}
+                                        />
+                                    ))}
+                                </>
                             )}
-                            <div className="absolute top-3 right-3 z-10">
-                                <span className={`${isVideo ? 'bg-red-600' : 'bg-navy/80 backdrop-blur-md'} text-white px-3 py-1.5 rounded-full text-[10px] font-bold shadow-md flex items-center gap-1.5 uppercase tracking-wider`}>
-                                    {isVideo ? <><i className="fa-brands fa-youtube text-sm"></i> YouTube</> : <><i className="fa-solid fa-images text-sm"></i> Gallery</>}
-                                </span>
-                            </div>
+                            {/* Subtle bottom gradient */}
+                            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
+                            {/* Slide indicator dots */}
+                            {!isVideo && mediaItems.length > 1 && (
+                                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                                    {mediaItems.map((_, idx) => (
+                                        <div key={idx} className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === activeIdx ? 'bg-white scale-125 shadow-lg' : 'bg-white/50'}`}></div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
-                        {/* Thumbnails behaving like S8 box */}
-                        {!isVideo && mediaItems.length > 1 && (
-                            <div className="grid grid-cols-4 gap-2 mb-3">
-                                {mediaItems.slice(0, 4).map((item, idx) => (
-                                    <div
-                                        key={idx}
-                                        className={`h-14 rounded-lg overflow-hidden cursor-pointer border-2 transition-all duration-300 ${activeIdx === idx ? 'border-accent shadow-[0_0_10px_rgba(250,204,21,0.5)] transform -translate-y-0.5' : 'border-transparent opacity-60 hover:opacity-100 hover:-translate-y-0.5'}`}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setActiveIdx(idx);
-                                        }}
-                                    >
-                                        <img src={item} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-
-                        <div className="px-4 pb-4 pt-2 flex-grow flex flex-col bg-white">
+                        {/* Clean info section */}
+                        <div className="px-5 pb-5 pt-4 flex-grow flex flex-col bg-white">
                             <div className="mb-2">
                                 <span className="text-[10px] font-bold text-accent/90 uppercase tracking-widest bg-yellow-50 px-2 py-1 rounded-md">{categoryName}</span>
                             </div>
                             <h3 className="font-bold text-lg text-navy mb-2 leading-snug group-hover:text-blue-600 transition-colors">{project.title}</h3>
-                            <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 group-hover:line-clamp-none transition-all duration-500">{project.description}</p>
+                            <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">{project.description}</p>
 
                             {isVideo && (
                                 <a
@@ -974,147 +1000,201 @@
 
             const projects = [
                 {
-                    id: 6,
-                    title: "คุณกำลังจะสร้างบ้านใช่ไหม ",
-                    description: "คุณกำลังจะสร้างบ้านใช่ไหม? ดูคลิปนี้ก่อน! ปัญหาหน้างานไม่ตรงแบบ วางผังผิด ทุบสร้างใหม่ ชมคำแนะนำเบื้องต้น",
-                    image: "https://img5.pic.in.th/file/secure-sv1/Whisk_qdnygdm4m2m4ajy40sombdotqwy2qtl1ymzl1sm.png",
-                    isVideo: true,
-                    youtubeId: "gtQZnBVBmCw",
-                    category: "video"
-                },
-                {
                     id: 9,
-                    title: "วางตำแหน่งเสาเข็มอาคารสำนักงาน 2 ชั้น  ซ.ลาดพร้าว 101 จ.กรุงเทพมหานคร",
-                    description: "งานวางผังตำแหน่งเสาเข็มบ้านพักอาศัย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
-                    image: "https://img5.pic.in.th/file/secure-sv1/-CAD_-Layout1-2.png",
+                    title: "วางตำแหน่งเสาเข็มอาคารสำนักงาน 2 ชั้น ซ.ลาดพร้าว 101 จ.กรุงเทพมหานคร",
+                    description: "งานวางผังตำแหน่งเสาเข็มอาคารสำนักงาน ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+                    image: "images/portfolio/project-9/วางผังเสาเข็ม (1).jpg",
                     category: "layout",
                     gallery: [
-
-                        "https://img5.pic.in.th/file/secure-sv1/dji_fly_20260224_123236_568_1771911281264_photo.png",
-                        "https://img2.pic.in.th/IMG_53523776272756877d12.png",
-                        "https://img2.pic.in.th/IMG_5340.png"
+                        "images/portfolio/project-9/วางผังเสาเข็ม (2).png",
+                        "images/portfolio/project-9/วางผังเสาเข็ม (3).png",
+                        "images/portfolio/project-9/วางผังเสาเข็ม (4).png"
                     ]
                 },
                 {
-                    id: 8,
-                    title: "วางผังเสาเข็มบ้านพักอาศัย  อ.กระทุ่มแบน จ.สมุทรสาคร",
-                    description: "งานวางผังตำแหน่งเสาเข็มบ้านพักอาศัย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
-                    image: "https://img5.pic.in.th/file/secure-sv1/111111111c294ff2c9f512cd.png",
+                    id: 3,
+                    title: "วางตำแหน่งเสาเข็มบ้านพักอาศัย สามโคก จ.ปทุมธานี ",
+                    description: "งานวางตำแหน่งเสาเข็ม และ ตำแหน่ง Grid Line พร้อมให้ระดับ off 1 m. รามคำแหง 53",
+                    image: "images/portfolio/project-3/วางผังเสาเข็ม (1).jpg",
                     category: "layout",
                     gallery: [
-
-                        "https://img5.pic.in.th/file/secure-sv1/EFCC100A-98A3-4830-9C92-D75F52226F09.jpg",
-                        "https://img5.pic.in.th/file/secure-sv1/543D60CD-2BD4-4421-95D9-F78302683CE2.png",
-                        "https://img2.pic.in.th/5C3F0941-6A3F-4422-A507-C677747A62B9.png"
+                        "images/portfolio/project-3/วางผังเสาเข็ม (2).jpg",
+                        "images/portfolio/project-3/วางผังเสาเข็ม (3).jpg",
+                        "images/portfolio/project-3/วางผังเสาเข็ม (4).jpg"
+                    ]
+                },
+                {
+                    id: 10,
+                    title: "วางผังเสาเข็มบ้านพักอาศัย วาริชภูมิ จ.สกลนคร",
+                    description: "งานวางผังเสาเข็มอาคาร ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+                    image: "images/portfolio/project-6/วางผังเสาเข็ม  (1).jpg",
+                    category: "layout",
+                    gallery: [
+                        "images/portfolio/project-6/วางผังเสาเข็ม  (2).jpg",
+                        "images/portfolio/project-6/วางผังเสาเข็ม  (3).jpg",
+                        "images/portfolio/project-6/วางผังเสาเข็ม  (4).jpg"
                     ]
                 },
                 {
                     id: 7,
-                    title: "วางผังเสาเข็มบ้านพักอาศัย ต.ดอกล้ำ อ.ปทุมรัตต์ จ.ร้อยเอ็ด",
+                    title: "วางผังเสาเข็มบ้านพักอาศัย อ.กระทุ่มแบน จ.สมุทรสาคร",
                     description: "งานวางผังตำแหน่งเสาเข็มบ้านพักอาศัย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
-                    image: "https://img2.pic.in.th/Layout1-2.png",
+                    image: "images/portfolio/project-7/วางผังเสาเข็ม (1).jpeg",
                     category: "layout",
                     gallery: [
-                        "https://img2.pic.in.th/IMG_54592b6df55c0b516d6f.png",
-                        "https://img2.pic.in.th/IMG_5466.png",
-                        "https://img5.pic.in.th/file/secure-sv1/IMG_5465d6e40bff49fb146f.png"
+                        "images/portfolio/project-7/วางผังเสาเข็ม (2).jpeg",
+                        "images/portfolio/project-7/วางผังเสาเข็ม (3).png",
+                        "images/portfolio/project-7/วางผังเสาเข็ม (4).png"
                     ]
                 },
                 {
                     id: 1,
-                    title: "วางผังอาคารคุมจ่าย ปั้มน้ำมัน PT",
-                    description: "งานวางผังอาคารคุมจ่าย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
-                    image: "https://img2.pic.in.th/f29a7128e25a4ee2ce6002212036c088.png",
+                    title: "วางผังฐาน Battery Swapping Station ",
+                    description: "งานวางผังฐาน Battery Swapping Station ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+                    image: "images/portfolio/project-1/วางผังเสาเข็ม (1).jpg",
                     category: "layout",
                     gallery: [
-                        "https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_7468_250407_26.jpg",
-                        "https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_7468_250407_16f83e3e43ae2602c5.jpg",
-                        "https://img5.pic.in.th/file/secure-sv1/LINE_ALBUM_7468_250407_5.jpg"
+                        "images/portfolio/project-1/วางผังเสาเข็ม (2).jpg",
+                        "images/portfolio/project-1/วางผังเสาเข็ม (3).jpg",
+                        "images/portfolio/project-1/วางผังเสาเข็ม (4).jpg"
                     ]
                 },
                 {
                     id: 5,
                     title: "แผนที่ TOPOGRAPHIC MAP",
                     description: "งานสำรวจภูมิประเทศ เก็บรายละเอียดเส้นชั้นความสูงสร้างแผนที่รายละเอียดสูง",
-                    image: "https://img5.pic.in.th/file/secure-sv1/63551328ece50d98a0df.png",
+                    image: "images/portfolio/project-5/สำรวจTopo (1).jpg",
                     category: "topo",
                     gallery: [
-                        "https://img5.pic.in.th/file/secure-sv1/-15ea16487f161f176.png",
-                        "https://img5.pic.in.th/file/secure-sv1/237d8197f5f3fe8e4.png",
-                        "https://img5.pic.in.th/file/secure-sv1/3891d99cdfa1f60cd.png"
+                        "images/portfolio/project-5/สำรวจTopo (1).png",
+                        "images/portfolio/project-5/สำรวจTopo (2).jpg",
+                        "images/portfolio/project-5/สำรวจTopo (3).jpg"
                     ]
                 },
                 {
                     id: 2,
-                    title: "งานสำรวจรายเดือน",
-                    description: "โครงการก่อสร้างโรงแยกก๊าซธรรมชาติหน่วยที่ 7",
-                    image: "https://img5.pic.in.th/file/secure-sv1/IMG_8461f53facef34b03de8.jpg",
-                    category: "monthly",
+                    title: "แผนที่ TOPOGRAPHIC MAP",
+                    description: "งานสำรวจภูมิประเทศ เก็บรายละเอียดเส้นชั้นความสูงสร้างแผนที่รายละเอียดสูงและคิดปริมาณดินถม",
+                    image: "images/portfolio/project-2/สำรวจTopo (1).jpg",
+                    category: "topo",
                     gallery: [
-                        "https://img5.pic.in.th/file/secure-sv1/IMG_7435555.png",
-                        "https://img2.pic.in.th/IMG_7372-1.png",
-                        "https://img2.pic.in.th/IMG_775056.png"
-                    ]
-                },
-                {
-                    id: 3,
-                    title: "วางตำแหน่งเสาเข็ม หอพัก 3 ชั้น",
-                    description: "งานวางตำแหน่งเสาเข็ม และ ตำแหน่ง Grid Line พร้อมให้ระดับ off 1 m. รามคำแหง 53",
-                    image: "https://img5.pic.in.th/file/secure-sv1/IMG_8163-1.png",
-                    category: "layout",
-                    gallery: [
-                        "https://img2.pic.in.th/IMG_3564-1325ced3e18eb3e23.png",
-                        "https://img2.pic.in.th/IMG_3628-1.png",
-                        "https://s.imgz.io/2026/01/17/IMG_3577-16c07afac51610935.png",
+                        "images/portfolio/project-2/สำรวจTopo (1).png",
+                        "images/portfolio/project-2/สำรวจTopo (2).jpg",
+                        "images/portfolio/project-2/สำรวจTopo (2).png"
                     ]
                 },
                 {
                     id: 4,
                     title: "วางผังอาคารบ้านพักอาศัย จ.ปทุมธานี",
                     description: "ทำหมุดควบคุมพร้อมครอบผังบริเวณบ้านพักอาศัยแล้ววางตำแหน่งเสาเข็ม",
-                    image: "https://img5.pic.in.th/file/secure-sv1/-1---Model_recover-Layout1.jpg",
+                    image: "images/portfolio/project-4/วางผังเสาเข็ม (1).jpg",
                     category: "layout",
                     gallery: [
-                        "https://img5.pic.in.th/file/secure-sv1/IMG_2495.png",
-                        "https://img2.pic.in.th/IMG_2492-1.png",
-                        "https://img2.pic.in.th/IMG_2483.png",
+                        "images/portfolio/project-4/วางผังเสาเข็ม (2).jpg",
+                        "images/portfolio/project-4/วางผังเสาเข็ม (3).jpg",
+                        "images/portfolio/project-4/วางผังเสาเข็ม (4).jpg"
                     ]
-                }
+                },
+                {
+                    id: 8,
+                    title: "วางผังเสาเข็มบ้านพักอาศัย ต.ดอกล้ำ อ.ปทุมรัตต์ จ.ร้อยเอ็ด",
+                    description: "งานวางผังตำแหน่งเสาเข็มบ้านพักอาศัย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+                    image: "images/portfolio/project-8/วางผัง_ (1).JPG",
+                    category: "layout",
+                    gallery: [
+                        "images/portfolio/project-8/วางผัง_ (2).JPG",
+                        "images/portfolio/project-8/วางผัง_ (2).png",
+                        "images/portfolio/project-8/วางผัง_ (3).JPG"
+                    ]
+                },
             ];
 
             const [filterKey, setFilterKey] = useState('*');
+            const [visibleCount, setVisibleCount] = useState(6);
+
+            const handleFilterChange = (key) => {
+                setFilterKey(key);
+                setVisibleCount(6);
+            };
 
             const filteredProjects = filterKey === '*'
                 ? projects
                 : projects.filter(project => project.category === filterKey);
 
+            const filterButtons = [
+                { key: '*', label: 'ทั้งหมด', icon: 'fa-th-large' },
+                { key: 'layout', label: 'วางผังเสาเข็ม', icon: 'fa-building' },
+                { key: 'topo', label: 'Topographic Map', icon: 'fa-map' },
+                { key: 'monthly', label: 'สำรวจรายเดือน', icon: 'fa-calendar' },
+                { key: 'video', label: 'วิดีโอแนะนำ', icon: 'fa-video' },
+            ];
+
             return (
-                <section id="portfolio" className="py-20 bg-gray-100">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-12">
-                            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">ผลงานที่ผ่านมา</h2>
-                            <div className="w-20 h-1 bg-accent mx-auto mb-8"></div>
+                <section id="portfolio" className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #f0f4f8 0%, #e2e8f0 50%, #f0f4f8 100%)' }}>
+                    {/* Decorative background elements */}
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 w-96 h-96 bg-navy/5 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                        {/* Section Header */}
+                        <div className="text-center mb-16">
+                            <span className="bg-navy/10 text-navy font-bold px-4 py-1.5 rounded-full text-sm inline-block mb-4 uppercase tracking-widest">Our Portfolio</span>
+                            <h2 className="text-4xl md:text-5xl font-extrabold text-navy mb-5 leading-tight">
+                                ผลงาน<span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-yellow-500">ที่ผ่านมา</span>
+                            </h2>
+                            <div className="flex items-center justify-center gap-2 mb-8">
+                                <div className="w-12 h-1 bg-gray-300 rounded-full"></div>
+                                <div className="w-20 h-1.5 bg-gradient-to-r from-accent to-yellow-400 rounded-full"></div>
+                                <div className="w-12 h-1 bg-gray-300 rounded-full"></div>
+                            </div>
+                            <p className="text-gray-500 max-w-2xl mx-auto text-lg">รวมผลงานสำรวจวางผัง ทำแผนที่ Topo และงานสำรวจรายเดือน จากโครงการจริงทั่วประเทศ</p>
 
                             {/* Filter Buttons */}
-                            <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
-                                <button onClick={() => setFilterKey('*')} className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${filterKey === '*' ? 'bg-navy text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200'}`}>ทั้งหมด</button>
-                                <button onClick={() => setFilterKey('layout')} className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${filterKey === 'layout' ? 'bg-navy text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200'}`}>วางผังเสาเข็ม</button>
-                                <button onClick={() => setFilterKey('topo')} className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${filterKey === 'topo' ? 'bg-navy text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200'}`}>Topographic Map</button>
-                                <button onClick={() => setFilterKey('monthly')} className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${filterKey === 'monthly' ? 'bg-navy text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200'}`}>สำรวจรายเดือน</button>
-                                <button onClick={() => setFilterKey('video')} className={`px-6 py-2 rounded-full font-semibold transition-all duration-300 ${filterKey === 'video' ? 'bg-navy text-white shadow-lg scale-105' : 'bg-white text-gray-600 hover:bg-gray-200'}`}>วิดีโอแนะนำ</button>
+                            <div className="flex flex-wrap justify-center gap-2 md:gap-3 mt-10">
+                                {filterButtons.map(btn => (
+                                    <button
+                                        key={btn.key}
+                                        onClick={() => handleFilterChange(btn.key)}
+                                        className={`px-5 md:px-6 py-2.5 rounded-xl font-semibold transition-all duration-400 flex items-center gap-2 text-sm ${filterKey === btn.key
+                                            ? 'bg-gradient-to-r from-navy to-blue-700 text-white shadow-lg shadow-navy/30 scale-105 -translate-y-0.5'
+                                            : 'bg-white text-gray-600 hover:bg-white hover:shadow-md hover:-translate-y-0.5 border border-gray-200'}`}
+                                    >
+                                        <i className={`fa-solid ${btn.icon} text-xs ${filterKey === btn.key ? 'text-accent' : 'text-gray-400'}`}></i>
+                                        {btn.label}
+                                    </button>
+                                ))}
                             </div>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-500">
-                            {filteredProjects.map((project) => (
+
+                        {/* Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {filteredProjects.slice(0, visibleCount).map((project) => (
                                 <PortfolioCard
                                     key={project.id}
                                     project={project}
-                                    setLightboxImage={setLightboxImage}
                                     videoRef={project.isVideo ? videoRef : null}
                                 />
                             ))}
                         </div>
+
+                        {/* Load More Button */}
+                        {visibleCount < filteredProjects.length && (
+                            <div className="text-center mt-12 mb-4">
+                                <button
+                                    onClick={() => setVisibleCount(prev => prev + 6)}
+                                    className="bg-transparent border-2 border-accent text-navy font-bold py-3 px-8 rounded-full hover:bg-accent transition-all duration-300 flex items-center justify-center mx-auto"
+                                >
+                                    <i className="fa-solid fa-arrow-down mr-2"></i> ดูผลงานเพิ่มเติม
+                                </button>
+                            </div>
+                        )}
+
                     </div>
+
+                    {/* Lightbox Modal */}
+                    {lightboxData && (
+                        <LightboxModal data={lightboxData} onClose={() => setLightboxData(null)} />
+                    )}
                 </section>
             );
         };
@@ -1444,16 +1524,148 @@
         };
 
         const Testimonials = () => {
+            const [activeReview, setActiveReview] = useState(0);
+
+            const reviews = [
+                {
+                    name: "Chakapun Chaiyapuck",
+                    rating: 5,
+                    text: "มีความรับผิดชอบและตั้งใจทำงานดีมากๆ ใครหาวิศวกร Survey วางผัง คลอบผัง กำหนดตำแหน่งเสาเข็ม แนะนำทีมงานของน้องกันเลยครับ รับรองคุ้มค่าจ้างแน่นอน :)",
+                    initial: "C",
+                    color: "bg-blue-500"
+                },
+                {
+                    name: "Nonpawit Pannok",
+                    rating: 5,
+                    text: "ทีมงานมืออาชีพ ให้คำปรึกษาดี ทำงานตรงเวลา คุณภาพเกินคาดครับ",
+                    initial: "N",
+                    color: "bg-green-500"
+                },
+                {
+                    name: "วรพล ชุ่มที",
+                    rating: 5,
+                    text: "รวดเร็วทันใจ ไว้มีโอกาสจะเรียกใช้อีกครับ",
+                    initial: "ว",
+                    color: "bg-purple-500"
+                },
+                {
+                    name: "สิริธร เตยพุทรา",
+                    rating: 5,
+                    text: "คุณภาพมากๆ ประสบการณ์โดยวิศวกรสำรวจสายตรง",
+                    initial: "ส",
+                    color: "bg-red-500"
+                },
+                {
+                    name: "Lerpong Klaifon",
+                    rating: 5,
+                    text: "งานละเอียด ได้มาตรฐาน มั่นใจในผลลัพธ์ครับ",
+                    initial: "L",
+                    color: "bg-indigo-500"
+                },
+                {
+                    name: "วัชรพงศ์ เตชะกุดีวรรณ",
+                    rating: 5,
+                    text: "น้องๆบริการดี พูดจา ดี",
+                    initial: "ว",
+                    color: "bg-teal-500"
+                }
+            ];
+
+            // Auto-scroll reviews
+            useEffect(() => {
+                const timer = setInterval(() => {
+                    setActiveReview(prev => (prev + 1) % reviews.length);
+                }, 5000);
+                return () => clearInterval(timer);
+            }, []);
+
+            const StarRating = ({ rating }) => (
+                <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                        <i key={i} className={`fa-solid fa-star text-sm ${i < rating ? 'text-yellow-400' : 'text-gray-300'}`}></i>
+                    ))}
+                </div>
+            );
+
             return (
-                <section className="py-20 bg-white">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-12">
-                            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">เสียงตอบรับจากลูกค้า</h2>
-                            <div className="w-20 h-1 bg-accent mx-auto mb-4"></div>
-                            <p className="text-gray-600">รีวิวจริงจาก Google Business Profile อัปเดตอัตโนมัติ</p>
+                <section className="py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+                    {/* Decorative elements */}
+                    <div className="absolute top-10 left-10 text-accent/5 pointer-events-none">
+                        <i className="fa-solid fa-quote-left text-[200px]"></i>
+                    </div>
+
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                        {/* Header with Google branding */}
+                        <div className="text-center mb-16">
+                            <div className="flex items-center justify-center gap-3 mb-4">
+                                <img src="https://www.google.com/favicon.ico" alt="Google" className="w-6 h-6" />
+                                <span className="text-gray-500 font-medium text-sm uppercase tracking-widest">Google Reviews</span>
+                            </div>
+                            <h2 className="text-3xl md:text-5xl font-extrabold text-navy mb-5 leading-tight">
+                                เสียงตอบรับ<span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-yellow-500">จากลูกค้า</span>
+                            </h2>
+                            <div className="flex items-center justify-center gap-2 mb-6">
+                                <div className="w-12 h-1 bg-gray-300 rounded-full"></div>
+                                <div className="w-20 h-1.5 bg-gradient-to-r from-accent to-yellow-400 rounded-full"></div>
+                                <div className="w-12 h-1 bg-gray-300 rounded-full"></div>
+                            </div>
+
+                            {/* Overall Rating */}
+                            <div className="inline-flex items-center gap-4 bg-white rounded-2xl px-8 py-4 shadow-lg border border-gray-100">
+                                <span className="text-4xl font-extrabold text-navy">4.9</span>
+                                <div className="text-left">
+                                    <div className="flex gap-1 mb-1">
+                                        {[...Array(5)].map((_, i) => (
+                                            <i key={i} className="fa-solid fa-star text-yellow-400 text-lg"></i>
+                                        ))}
+                                    </div>
+                                    <p className="text-gray-500 text-sm">จาก 12 รีวิวบน Google</p>
+                                </div>
+                            </div>
                         </div>
-                        {/* Elfsight Google Reviews Widget - Auto-updates from Google Business */}
-                        <div className="elfsight-app-674d9cef-241b-4818-a704-7a9d9eef67d7" data-elfsight-app-lazy></div>
+
+                        {/* Review Cards Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                            {reviews.map((review, idx) => (
+                                <a
+                                    key={idx}
+                                    href="https://www.google.com/maps/place/%E0%B8%88%E0%B8%A3%E0%B8%B4%E0%B8%87%E0%B9%83%E0%B8%88%E0%B9%80%E0%B8%8B%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B9%80%E0%B8%A7%E0%B8%A2%E0%B9%8C+-+%E0%B8%A3%E0%B8%B1%E0%B8%9A%E0%B8%AA%E0%B8%B3%E0%B8%A3%E0%B8%A7%E0%B8%88%E0%B8%A7%E0%B8%B2%E0%B8%87%E0%B8%9C%E0%B8%B1%E0%B8%87+%E0%B8%97%E0%B8%B3%E0%B9%81%E0%B8%9C%E0%B8%99%E0%B8%97%E0%B8%B5%E0%B9%88+Topo/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`block bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-500 border border-gray-100 hover:-translate-y-2 cursor-pointer no-underline ${idx === activeReview ? 'ring-2 ring-accent/50 shadow-xl -translate-y-1' : ''}`}
+                                >
+                                    {/* Review Header */}
+                                    <div className="flex items-center gap-4 mb-4">
+                                        <div className={`w-12 h-12 ${review.color} rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md`}>
+                                            {review.initial}
+                                        </div>
+                                        <div className="flex-1">
+                                            <h4 className="font-bold text-navy text-sm">{review.name}</h4>
+                                            <StarRating rating={review.rating} />
+                                        </div>
+                                        <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5 opacity-60" />
+                                    </div>
+
+                                    {/* Review Text */}
+                                    <p className="text-gray-600 text-sm leading-relaxed">
+                                        "{review.text}"
+                                    </p>
+                                </a>
+                            ))}
+                        </div>
+
+                        {/* CTA to leave a review */}
+                        <div className="text-center">
+                            <a
+                                href="https://g.page/r/CQ_eB_YfSurvey/review"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 bg-white border-2 border-navy text-navy font-bold py-3 px-8 rounded-full hover:bg-navy hover:text-white transition-all duration-300 shadow-md"
+                            >
+                                <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
+                                เขียนรีวิวให้เราบน Google
+                            </a>
+                        </div>
                     </div>
                 </section>
             );
@@ -1589,52 +1801,9 @@
             return (
                 <section id="about" className="py-20 bg-white">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center mb-16">
-                            <span className="bg-navy/10 text-navy font-bold px-4 py-1 rounded-full text-sm inline-block mb-4">ABOUT US</span>
-                            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">บริการสำรวจครบวงจร | จริงใจเซอร์เวย์</h2>
-                            <div className="w-20 h-1 bg-accent mx-auto mb-4"></div>
-                            <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
-                                จริงใจเซอร์เวย์ (JINGJAI SURVEY) คือผู้เชี่ยวชาญด้าน<strong>งานสำรวจวางผัง</strong> <strong>สำรวจครบวงจร</strong> และ<strong>ทำแผนที่ Topo</strong> (แผนที่ภูมิประเทศ) ให้บริการครบคลุมทุกงานสำรวจสำหรับโครงการก่อสร้าง โดยใช้กล้อง Trimble S8 Robotic Total Station ที่มีความแม่นยำระดับ 1 ฟิลิปดา (สูงกว่ากล้อง Total Station ทั่วไปในท้องตลาด) บริการทั่วประเทศไทย ตั้งแต่บ้านพักอาศัยไปจนถึงโครงการขนาดใหญ่
-                            </p>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {/* Card 1 */}
-                            <div className="bg-gradient-to-br from-navy to-blue-900 rounded-2xl p-8 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                                <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center mb-6 shadow-lg">
-                                    <i className="fa-solid fa-hard-hat text-navy text-2xl"></i>
-                                </div>
-                                <h3 className="text-xl font-bold mb-4 text-accent">งานสำรวจวางผัง</h3>
-                                <p className="text-gray-300 leading-relaxed text-sm">
-                                    รับสำรวจวางผังเสาเข็ม วางผังอาคาร วางผังก่อสร้าง ตรวจสอบแนวเขตที่ดิน วางตำแหน่งเสาเข็มและ Grid Line ตามแบบวิศวกรรม เก็บค่า Pile Deviation หลังตอกเข็ม พร้อมจัดทำรายงาน As-built Piling ครบวงจร
-                                </p>
-                            </div>
-
-                            {/* Card 2 */}
-                            <div className="bg-gradient-to-br from-navy to-blue-900 rounded-2xl p-8 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                                <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center mb-6 shadow-lg">
-                                    <i className="fa-solid fa-map-marked-alt text-navy text-2xl"></i>
-                                </div>
-                                <h3 className="text-xl font-bold mb-4 text-accent">ทำแผนที่ Topographic (แผนที่ Topo)</h3>
-                                <p className="text-gray-300 leading-relaxed text-sm">
-                                    รับทำแผนที่ Topo (แผนที่ภูมิประเทศ) พร้อมเส้นชั้นความสูง (Contour Map) สำหรับงานออกแบบวิศวกรรมและสถาปัตยกรรม สำรวจรายละเอียด ถนน อาคาร ต้นไม้ เสาไฟฟ้า ท่อระบาย คำนวณปริมาณดินตัด-ดินถม ส่งมอบไฟล์ CAD (.dwg), PDF, SketchUp (.skp)
-                                </p>
-                            </div>
-
-                            {/* Card 3 */}
-                            <div className="bg-gradient-to-br from-navy to-blue-900 rounded-2xl p-8 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                                <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center mb-6 shadow-lg">
-                                    <i className="fa-solid fa-drafting-compass text-navy text-2xl"></i>
-                                </div>
-                                <h3 className="text-xl font-bold mb-4 text-accent">สำรวจเพื่อการก่อสร้าง</h3>
-                                <p className="text-gray-300 leading-relaxed text-sm">
-                                    สำรวจครบวงจรสำหรับงานก่อสร้าง ถ่ายระดับ (Leveling) เช็คแนวดิ่ง สร้างหมุดควบคุม (Control Network) ตรวจสอบแบบจริง (As-built Survey) และงาน Monitoring Survey ติดตามความเคลื่อนไหวของโครงสร้าง
-                                </p>
-                            </div>
-                        </div>
 
                         {/* Why Choose Us */}
-                        <div className="mt-16 bg-gray-50 rounded-2xl p-8 md:p-12 border border-gray-200">
+                        <div className="bg-gray-50 rounded-2xl p-8 md:p-12 border border-gray-200">
                             <h3 className="text-2xl font-bold text-navy mb-8 text-center">ทำไมต้องเลือกจริงใจเซอร์เวย์?</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                                 {[
@@ -1793,7 +1962,7 @@
                         <Hero />
                         <FadeInSection><Services /></FadeInSection>
                         <FadeInSection><AboutSection /></FadeInSection>
-                        <FadeInSection><QuoteBanner /></FadeInSection>
+                        
                         <FadeInSection><TrimbleFeature /></FadeInSection>
                         <FadeInSection><Portfolio /></FadeInSection>
                         <FadeInSection><FacebookSection /></FadeInSection>
