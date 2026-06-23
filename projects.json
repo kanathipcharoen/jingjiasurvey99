@@ -3,9 +3,13 @@
     "id": 11,
     "title": "สำรวจจัดทำแผนที่ภูมิประเทศ (Topographic Map) ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา",
     "description": "งานสำรวจรังวัดและจัดทำแผนที่ภูมิประเทศ มาตราส่วน 1:600 พื้นที่ 2 ไร่ 2 งาน 81.2 ตารางวา พร้อมเส้นชั้นความสูงและตารางหมุดควบคุม",
-    "image": "images/portfolio/project-11/1.png",
+    "image": "images/portfolio/project-11/1.jpg",
     "category": "topo",
-    "gallery": []
+    "gallery": [
+      "images/portfolio/project-11/2.jpg",
+      "images/portfolio/project-11/3.jpg",
+      "images/portfolio/project-11/4.jpg"
+    ]
   },
   {
     "id": 9,
