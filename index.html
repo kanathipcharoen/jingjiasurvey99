@@ -998,7 +998,7 @@
                 };
             }, []);
 
-            const projects = [
+            const DEFAULT_PROJECTS = [
                 {
                     id: 9,
                     title: "วางตำแหน่งเสาเข็มอาคารสำนักงาน 2 ชั้น ซ.ลาดพร้าว 101 จ.กรุงเทพมหานคร",
@@ -1108,6 +1108,14 @@
                     ]
                 },
             ];
+
+            const [projects, setProjects] = useState(DEFAULT_PROJECTS);
+            useEffect(() => {
+                fetch('projects.json?v=' + Date.now())
+                    .then(r => r.ok ? r.json() : null)
+                    .then(d => { if (Array.isArray(d) && d.length) setProjects(d); })
+                    .catch(() => { });
+            }, []);
 
             const [filterKey, setFilterKey] = useState('*');
             const [visibleCount, setVisibleCount] = useState(6);

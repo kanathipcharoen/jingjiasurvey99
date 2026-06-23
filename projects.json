@@ -1,0 +1,110 @@
+[
+  {
+    "id": 9,
+    "title": "วางตำแหน่งเสาเข็มอาคารสำนักงาน 2 ชั้น ซ.ลาดพร้าว 101 จ.กรุงเทพมหานคร",
+    "description": "งานวางผังตำแหน่งเสาเข็มอาคารสำนักงาน ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+    "image": "images/portfolio/project-9/วางผังเสาเข็ม (1).jpg",
+    "category": "layout",
+    "gallery": [
+      "images/portfolio/project-9/วางผังเสาเข็ม (2).png",
+      "images/portfolio/project-9/วางผังเสาเข็ม (3).png",
+      "images/portfolio/project-9/วางผังเสาเข็ม (4).png"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "วางตำแหน่งเสาเข็มบ้านพักอาศัย สามโคก จ.ปทุมธานี ",
+    "description": "งานวางตำแหน่งเสาเข็ม และ ตำแหน่ง Grid Line พร้อมให้ระดับ off 1 m. รามคำแหง 53",
+    "image": "images/portfolio/project-3/วางผังเสาเข็ม (1).jpg",
+    "category": "layout",
+    "gallery": [
+      "images/portfolio/project-3/วางผังเสาเข็ม (2).jpg",
+      "images/portfolio/project-3/วางผังเสาเข็ม (3).jpg",
+      "images/portfolio/project-3/วางผังเสาเข็ม (4).jpg"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "วางผังเสาเข็มบ้านพักอาศัย วาริชภูมิ จ.สกลนคร",
+    "description": "งานวางผังเสาเข็มอาคาร ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+    "image": "images/portfolio/project-6/วางผังเสาเข็ม  (1).jpg",
+    "category": "layout",
+    "gallery": [
+      "images/portfolio/project-6/วางผังเสาเข็ม  (2).jpg",
+      "images/portfolio/project-6/วางผังเสาเข็ม  (3).jpg",
+      "images/portfolio/project-6/วางผังเสาเข็ม  (4).jpg"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "วางผังเสาเข็มบ้านพักอาศัย อ.กระทุ่มแบน จ.สมุทรสาคร",
+    "description": "งานวางผังตำแหน่งเสาเข็มบ้านพักอาศัย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+    "image": "images/portfolio/project-7/วางผังเสาเข็ม (1).jpeg",
+    "category": "layout",
+    "gallery": [
+      "images/portfolio/project-7/วางผังเสาเข็ม (2).jpeg",
+      "images/portfolio/project-7/วางผังเสาเข็ม (3).png",
+      "images/portfolio/project-7/วางผังเสาเข็ม (4).png"
+    ]
+  },
+  {
+    "id": 1,
+    "title": "วางผังฐาน Battery Swapping Station ",
+    "description": "งานวางผังฐาน Battery Swapping Station ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+    "image": "images/portfolio/project-1/วางผังเสาเข็ม (1).jpg",
+    "category": "layout",
+    "gallery": [
+      "images/portfolio/project-1/วางผังเสาเข็ม (2).jpg",
+      "images/portfolio/project-1/วางผังเสาเข็ม (3).jpg",
+      "images/portfolio/project-1/วางผังเสาเข็ม (4).jpg"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "แผนที่ TOPOGRAPHIC MAP",
+    "description": "งานสำรวจภูมิประเทศ เก็บรายละเอียดเส้นชั้นความสูงสร้างแผนที่รายละเอียดสูง",
+    "image": "images/portfolio/project-5/สำรวจTopo (1).jpg",
+    "category": "topo",
+    "gallery": [
+      "images/portfolio/project-5/สำรวจTopo (1).png",
+      "images/portfolio/project-5/สำรวจTopo (2).jpg",
+      "images/portfolio/project-5/สำรวจTopo (3).jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "แผนที่ TOPOGRAPHIC MAP",
+    "description": "งานสำรวจภูมิประเทศ เก็บรายละเอียดเส้นชั้นความสูงสร้างแผนที่รายละเอียดสูงและคิดปริมาณดินถม",
+    "image": "images/portfolio/project-2/สำรวจTopo (1).jpg",
+    "category": "topo",
+    "gallery": [
+      "images/portfolio/project-2/สำรวจTopo (1).png",
+      "images/portfolio/project-2/สำรวจTopo (2).jpg",
+      "images/portfolio/project-2/สำรวจTopo (2).png"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "วางผังอาคารบ้านพักอาศัย จ.ปทุมธานี",
+    "description": "ทำหมุดควบคุมพร้อมครอบผังบริเวณบ้านพักอาศัยแล้ววางตำแหน่งเสาเข็ม",
+    "image": "images/portfolio/project-4/วางผังเสาเข็ม (1).jpg",
+    "category": "layout",
+    "gallery": [
+      "images/portfolio/project-4/วางผังเสาเข็ม (2).jpg",
+      "images/portfolio/project-4/วางผังเสาเข็ม (3).jpg",
+      "images/portfolio/project-4/วางผังเสาเข็ม (4).jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "วางผังเสาเข็มบ้านพักอาศัย ต.ดอกล้ำ อ.ปทุมรัตต์ จ.ร้อยเอ็ด",
+    "description": "งานวางผังตำแหน่งเสาเข็มบ้านพักอาศัย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
+    "image": "images/portfolio/project-8/วางผัง_ (1).JPG",
+    "category": "layout",
+    "gallery": [
+      "images/portfolio/project-8/วางผัง_ (2).JPG",
+      "images/portfolio/project-8/วางผัง_ (2).png",
+      "images/portfolio/project-8/วางผัง_ (3).JPG"
+    ]
+  }
+]
