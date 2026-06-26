@@ -1,7 +1,7 @@
 # JINGJAI SURVEY (จริงใจเซอร์เวย์)
 
 ## About
-JINGJAI SURVEY (จริงใจเซอร์เวย์) is a professional land surveying company based in Nakhon Ratchasima (Korat), Thailand. We specialize in comprehensive surveying services for construction projects using Trimble S8 Robotic Total Station with 1-arc-second accuracy — the highest precision available.
+JINGJAI SURVEY (จริงใจเซอร์เวย์) is a professional land surveying company based in Nakhon Ratchasima (Korat), Thailand. We specialize in comprehensive surveying services for construction projects using Trimble S8 Robotic Total Station with 1-arc-second accuracy and a GNSS RTK satellite receiver — the highest precision available.
 
 ## Services
 1. **Pile Layout Survey (วางผังเสาเข็ม)**: Setting out pile positions, building layouts, boundary checks, Grid Line positioning, Pile Deviation reports, and As-built Piling documentation.
@@ -13,9 +13,10 @@ JINGJAI SURVEY (จริงใจเซอร์เวย์) is a professional
 - Trimble S8 Robotic Total Station (1" accuracy)
 - MagDrive™ servo technology
 - FineLock™ precision targeting
+- GNSS RTK satellite receiver (Real-Time Kinematic, centimeter-level accuracy) for large-area surveys and control point work
 
 ## Service Area
-All provinces in Thailand. Headquarters: 160/18 Phayap Thit 4 Road, Nai Mueang, Mueang Nakhon Ratchasima, Nakhon Ratchasima 30000
+All provinces in Thailand, with strong coverage in the Northeastern region (Isan), the Central region, and the Eastern region including Rayong and Chonburi. Headquarters: 160/18 Phayap Thit 4 Road, Nai Mueang, Mueang Nakhon Ratchasima, Nakhon Ratchasima 30000
 
 ## Contact
 - Phone: 082-002-5124
@@ -37,7 +38,7 @@ Q: How long does a Topographic Map take?
 A: For areas of 1-5 rai (0.4-2 acres), field survey takes 1-2 days and drafting takes 2-3 days. Deliverables include CAD, PDF, and SketchUp files.
 
 Q: What area do you serve?
-A: We serve all provinces in Thailand. Based in Nakhon Ratchasima (Korat), we travel nationwide for projects.
+A: We serve all provinces in Thailand. Based in Nakhon Ratchasima (Korat), we cover the Northeastern (Isan), Central, and Eastern regions (including Rayong and Chonburi) and travel nationwide for projects.
 
 Q: How much does pile layout cost?
 A: Pricing depends on the number of piles, project size, and location. Contact us at 082-002-5124 for a free quote within 24 hours.
