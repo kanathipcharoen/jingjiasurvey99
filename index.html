@@ -55,7 +55,7 @@
     <meta property="og:title" content="รับสำรวจวางผัง สำรวจครบวงจร ทำแผนที่ Topo | จริงใจเซอร์เวย์">
     <meta property="og:description"
         content="รับงานสำรวจวางผัง สำรวจครบวงจร ทำแผนที่ Topo วางผังเสาเข็ม ถ่ายระดับ ด้วยกล้อง Trimble S8 แม่นยำสูงสุด บริการทั่วประเทศ โทร 082-002-5124">
-    <meta property="og:image" content="https://img2.pic.in.th/IMG_5651.png">
+    <meta property="og:image" content="https://jingjaisurvey.com/IMG_5651.png">
     <meta property="og:locale" content="th_TH">
     <meta property="og:site_name" content="JINGJAI SURVEY - จริงใจเซอร์เวย์">
 
@@ -65,7 +65,7 @@
     <meta name="twitter:title" content="รับสำรวจวางผัง สำรวจครบวงจร ทำแผนที่ Topo | จริงใจเซอร์เวย์">
     <meta name="twitter:description"
         content="รับงานสำรวจวางผัง สำรวจครบวงจร ทำแผนที่ Topo วางผังเสาเข็ม ถ่ายระดับ ด้วยกล้อง Trimble S8 แม่นยำสูงสุด บริการทั่วประเทศ">
-    <meta name="twitter:image" content="https://img2.pic.in.th/IMG_5651.png">
+    <meta name="twitter:image" content="https://jingjaisurvey.com/IMG_5651.png">
 
     <!-- Additional SEO -->
     <meta name="geo.region" content="TH-30">
@@ -100,7 +100,7 @@
         },
         "openingHours": "Mo-Su 08:00-18:00",
         "priceRange": "฿฿",
-        "image": "https://img2.pic.in.th/IMG_5651.png",
+        "image": "https://jingjaisurvey.com/IMG_5651.png",
         "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "4.9",
@@ -565,8 +565,10 @@
                     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white flex flex-col items-center">
                         <div className="w-full max-w-5xl mx-auto mb-10 shadow-2xl rounded-2xl overflow-hidden border-4 border-accent/50 group cursor-pointer" onClick={handleScrollToQuotation}>
                             <img
-                                src="https://img2.pic.in.th/IMG_5651.png"
+                                src="/IMG_5651.png"
                                 alt="โปรโมชั่น Jingjai Survey รับสำรวจวางผัง สำรวจครบวงจร ทำแผนที่ Topo"
+                                fetchpriority="high"
+                                decoding="async"
                                 className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
                             />
                         </div>
@@ -930,6 +932,8 @@
                                     <img
                                         src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
                                         alt={project.title}
+                                        loading="lazy"
+                                        decoding="async"
                                         className="w-full h-full object-cover brightness-75 transition-transform duration-700 group-hover:scale-110"
                                         onError={(e) => { e.target.src = project.image; }}
                                     />
@@ -946,6 +950,8 @@
                                             key={idx}
                                             src={item}
                                             alt={project.title}
+                                            loading="lazy"
+                                            decoding="async"
                                             className={`absolute inset-0 w-full h-full object-cover cursor-pointer transition-opacity duration-700 ${idx === activeIdx ? 'opacity-100' : 'opacity-0'}`}
                                             onClick={() => setLightboxData({ images: mediaItems, startIdx: idx })}
                                         />
