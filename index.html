@@ -1946,6 +1946,42 @@
         };
 
         // --- App Component ---
+        /* ทีมช่างสำรวจการ์ตูน 3 สาย: กล้อง Total Station / GNSS RTK / โดรน */
+        const CrewSection = () => {
+            const crew = [
+                { img: 'images/char-ts.webp', w: 388, h: 700, title: 'กล้อง Total Station', sub: 'วางผังเสาเข็ม • ถ่ายระดับ', text: 'วัดให้แม่น งานเดินได้ตรงจุด ด้วยกล้อง Trimble S8 แม่นยำระดับ 1"' },
+                { img: 'images/char-rtk.webp', w: 425, h: 600, title: 'GNSS RTK', sub: 'พิกัดแม่นยำ รวดเร็ว', text: 'แม่นยำ รวดเร็ว ครอบคลุมทุกพื้นที่ เหมาะกับงานรังวัดและวางหมุดอ้างอิง' },
+                { img: 'images/char-girl.webp', w: 361, h: 600, drone: true, title: 'โดรนสำรวจ', sub: 'แผนที่ Topo มุมสูง', text: 'มุมสูง เห็นได้มากกว่า เพื่องานสำรวจที่ดีกว่า สำหรับทำแผนที่ภูมิประเทศ' }
+            ];
+            return (
+                <section id="crew" className="py-20 bg-gradient-to-b from-sky-50 to-white overflow-hidden">
+                    <style>{`@keyframes crewBob{0%,100%{transform:translateY(0) rotate(-.8deg)}50%{transform:translateY(-8px) rotate(.8deg)}}@keyframes crewDrone{0%,100%{transform:translate(0,0) rotate(-3deg)}50%{transform:translate(-8px,-12px) rotate(3deg)}}@media (prefers-reduced-motion:reduce){.crew-img,.crew-drone{animation:none!important}}`}</style>
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl md:text-4xl font-extrabold text-navy mb-3">ช่างสำรวจครบ ทุกเครื่องมือ</h2>
+                            <p className="text-gray-600 max-w-2xl mx-auto">เลือกเครื่องมือให้เหมาะกับหน้างาน ทั้งกล้อง Total Station, GNSS RTK และโดรน เพื่อผลงานที่แม่นยำและส่งมอบตรงเวลา</p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {crew.map((c, i) => (
+                                <div key={c.title} className="relative bg-white rounded-3xl shadow-lg border border-sky-100 pt-8 px-6 pb-8 text-center hover:shadow-2xl transition-shadow">
+                                    <div className="relative h-64 flex items-end justify-center mb-5">
+                                        <img src={c.img} width={c.w} height={c.h} loading="lazy" decoding="async" alt={`การ์ตูนช่างสำรวจ ${c.title}`} className="crew-img h-full w-auto object-contain" style={{ animation: `crewBob ${2.6 + i * 0.3}s ease-in-out infinite`, transformOrigin: '50% 100%', filter: 'drop-shadow(0 6px 8px rgba(15,23,42,.18))' }} />
+                                        {c.drone && <img src="images/item-drone.webp" width="546" height="200" loading="lazy" decoding="async" alt="" className="crew-drone absolute -top-1 right-2 w-28" style={{ animation: 'crewDrone 2.4s ease-in-out infinite' }} />}
+                                    </div>
+                                    <h3 className="text-xl font-extrabold text-navy">{c.title}</h3>
+                                    <div className="text-accent font-semibold mb-2">{c.sub}</div>
+                                    <p className="text-sm text-gray-600 leading-relaxed">{c.text}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="text-center mt-10">
+                            <a href="#quotation" className="inline-flex items-center gap-2 bg-accent text-navy font-extrabold rounded-full px-8 py-3 shadow-lg hover:scale-105 transition-transform">ขอใบเสนอราคา <i className="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
         /* วิดีโออินโทรกราฟิก (หน้า intro-video.html ฝังด้วย iframe: โหลดเร็ว ไม่ผ่าน Babel) */
         const PromoEmbed = () => (
             <section id="why-us-video" className="py-16 bg-gray-50" aria-label="คลิปสั้น ทำไมต้องจ้างจริงใจเซอร์เวย์ และจ้างแล้วได้อะไรบ้าง">
@@ -2048,6 +2084,7 @@
                     <main className="flex-grow">
                         <Hero />
                         <FadeInSection><Services /></FadeInSection>
+                        <FadeInSection><CrewSection /></FadeInSection>
                         <FadeInSection><PromoEmbed /></FadeInSection>
                         <FadeInSection><AboutSection /></FadeInSection>
                         
