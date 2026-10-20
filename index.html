@@ -564,7 +564,7 @@
                 <header className="relative bg-navy pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden">
                     <div className="absolute inset-0 opacity-30 bg-black">
                         <img
-                            src="https://images.unsplash.com/photo-1503387762-592dee58c460?auto=format&fit=crop&q=80&w=2000"
+                            src="https://images.unsplash.com/photo-1503387762-592dee58c460?auto=format&fit=crop&q=70&w=1200"
                             alt="งานสำรวจวางผัง สำรวจครบวงจร ทำแผนที่ Topo - JINGJAI SURVEY"
                             className="w-full h-full object-cover animate-ken-burns mix-blend-overlay"
                         />
@@ -572,7 +572,7 @@
                     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white flex flex-col items-center">
                         <div className="w-full max-w-5xl mx-auto mb-10 shadow-2xl rounded-2xl overflow-hidden border-4 border-accent/50 group cursor-pointer" onClick={handleScrollToQuotation}>
                             <img
-                                src="/IMG_5651.png"
+                                src="/IMG_5651.webp"
                                 alt="โปรโมชั่น Jingjai Survey รับสำรวจวางผัง สำรวจครบวงจร ทำแผนที่ Topo"
                                 fetchpriority="high"
                                 decoding="async"
@@ -731,9 +731,9 @@
             // 1. นำรูปกล้อง Trimble บันทึกลงในโฟลเดอร์ images/trimble/
             const mediaItems = [
                 "images/trimble/copy_85D6567E-163F-493A-A18E-BA9804AF1E68.mov",
-                "images/trimble/วางผังเสาเข็ม (1).jpg",
-                "images/trimble/วางผังเสาเข็ม (2).jpg",
-                "images/trimble/วางผังเสาเข็ม (4).jpg"
+                "images/trimble/วางผังเสาเข็ม (1).jpg.webp",
+                "images/trimble/วางผังเสาเข็ม (2).jpg.webp",
+                "images/trimble/วางผังเสาเข็ม (4).jpg.webp"
             ];
 
             // Helper function to check if item is a video
@@ -774,7 +774,7 @@
 
             return (
                 <section className="py-20 bg-navy text-white relative overflow-hidden" id="trimble">
-                    <div className="absolute top-0 left-0 w-full h-full opacity-5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-repeat pointer-events-none"></div>
+                    <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none"></div>
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                         <div className="text-center mb-16">
                             <span className="bg-accent text-navy font-bold px-4 py-1 rounded-full text-sm inline-block mb-4 shadow-lg shadow-accent/20">OUR EQUIPMENT</span>
@@ -818,7 +818,7 @@
                                         >
                                             {isVideo(item) ? (
                                                 <>
-                                                    <video src={item} className="w-full h-full object-cover" muted />
+                                                    <video src={item} preload="none" className="w-full h-full object-cover" muted />
                                                     <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                                                         <i className="fa-solid fa-play text-white/80"></i>
                                                     </div>
@@ -1036,108 +1036,108 @@
                     id: 9,
                     title: "วางตำแหน่งเสาเข็มอาคารสำนักงาน 2 ชั้น ซ.ลาดพร้าว 101 จ.กรุงเทพมหานคร",
                     description: "งานวางผังตำแหน่งเสาเข็มอาคารสำนักงาน ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
-                    image: "images/portfolio/project-9/วางผังเสาเข็ม (1).jpg",
+                    image: "images/portfolio/project-9/วางผังเสาเข็ม (1).jpg.webp",
                     category: "layout",
                     gallery: [
-                        "images/portfolio/project-9/วางผังเสาเข็ม (2).png",
-                        "images/portfolio/project-9/วางผังเสาเข็ม (3).png",
-                        "images/portfolio/project-9/วางผังเสาเข็ม (4).png"
+                        "images/portfolio/project-9/วางผังเสาเข็ม (2).png.webp",
+                        "images/portfolio/project-9/วางผังเสาเข็ม (3).png.webp",
+                        "images/portfolio/project-9/วางผังเสาเข็ม (4).png.webp"
                     ]
                 },
                 {
                     id: 3,
                     title: "วางตำแหน่งเสาเข็มบ้านพักอาศัย สามโคก จ.ปทุมธานี ",
                     description: "งานวางตำแหน่งเสาเข็ม และ ตำแหน่ง Grid Line พร้อมให้ระดับ off 1 m. รามคำแหง 53",
-                    image: "images/portfolio/project-3/วางผังเสาเข็ม (1).jpg",
+                    image: "images/portfolio/project-3/วางผังเสาเข็ม (1).jpg.webp",
                     category: "layout",
                     gallery: [
-                        "images/portfolio/project-3/วางผังเสาเข็ม (2).jpg",
-                        "images/portfolio/project-3/วางผังเสาเข็ม (3).jpg",
-                        "images/portfolio/project-3/วางผังเสาเข็ม (4).jpg"
+                        "images/portfolio/project-3/วางผังเสาเข็ม (2).jpg.webp",
+                        "images/portfolio/project-3/วางผังเสาเข็ม (3).jpg.webp",
+                        "images/portfolio/project-3/วางผังเสาเข็ม (4).jpg.webp"
                     ]
                 },
                 {
                     id: 10,
                     title: "วางผังเสาเข็มบ้านพักอาศัย วาริชภูมิ จ.สกลนคร",
                     description: "งานวางผังเสาเข็มอาคาร ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
-                    image: "images/portfolio/project-6/วางผังเสาเข็ม  (1).jpg",
+                    image: "images/portfolio/project-6/วางผังเสาเข็ม  (1).jpg.webp",
                     category: "layout",
                     gallery: [
-                        "images/portfolio/project-6/วางผังเสาเข็ม  (2).jpg",
-                        "images/portfolio/project-6/วางผังเสาเข็ม  (3).jpg",
-                        "images/portfolio/project-6/วางผังเสาเข็ม  (4).jpg"
+                        "images/portfolio/project-6/วางผังเสาเข็ม  (2).jpg.webp",
+                        "images/portfolio/project-6/วางผังเสาเข็ม  (3).jpg.webp",
+                        "images/portfolio/project-6/วางผังเสาเข็ม  (4).jpg.webp"
                     ]
                 },
                 {
                     id: 7,
                     title: "วางผังเสาเข็มบ้านพักอาศัย อ.กระทุ่มแบน จ.สมุทรสาคร",
                     description: "งานวางผังตำแหน่งเสาเข็มบ้านพักอาศัย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
-                    image: "images/portfolio/project-7/วางผังเสาเข็ม (1).jpeg",
+                    image: "images/portfolio/project-7/วางผังเสาเข็ม (1).jpeg.webp",
                     category: "layout",
                     gallery: [
-                        "images/portfolio/project-7/วางผังเสาเข็ม (2).jpeg",
-                        "images/portfolio/project-7/วางผังเสาเข็ม (3).png",
-                        "images/portfolio/project-7/วางผังเสาเข็ม (4).png"
+                        "images/portfolio/project-7/วางผังเสาเข็ม (2).jpeg.webp",
+                        "images/portfolio/project-7/วางผังเสาเข็ม (3).png.webp",
+                        "images/portfolio/project-7/วางผังเสาเข็ม (4).png.webp"
                     ]
                 },
                 {
                     id: 1,
                     title: "วางผังฐาน Battery Swapping Station ",
                     description: "งานวางผังฐาน Battery Swapping Station ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
-                    image: "images/portfolio/project-1/วางผังเสาเข็ม (1).jpg",
+                    image: "images/portfolio/project-1/วางผังเสาเข็ม (1).jpg.webp",
                     category: "layout",
                     gallery: [
-                        "images/portfolio/project-1/วางผังเสาเข็ม (2).jpg",
-                        "images/portfolio/project-1/วางผังเสาเข็ม (3).jpg",
-                        "images/portfolio/project-1/วางผังเสาเข็ม (4).jpg"
+                        "images/portfolio/project-1/วางผังเสาเข็ม (2).jpg.webp",
+                        "images/portfolio/project-1/วางผังเสาเข็ม (3).jpg.webp",
+                        "images/portfolio/project-1/วางผังเสาเข็ม (4).jpg.webp"
                     ]
                 },
                 {
                     id: 5,
                     title: "แผนที่ TOPOGRAPHIC MAP",
                     description: "งานสำรวจภูมิประเทศ เก็บรายละเอียดเส้นชั้นความสูงสร้างแผนที่รายละเอียดสูง",
-                    image: "images/portfolio/project-5/สำรวจTopo (1).jpg",
+                    image: "images/portfolio/project-5/สำรวจTopo (1).jpg.webp",
                     category: "topo",
                     gallery: [
-                        "images/portfolio/project-5/สำรวจTopo (1).png",
-                        "images/portfolio/project-5/สำรวจTopo (2).jpg",
-                        "images/portfolio/project-5/สำรวจTopo (3).jpg"
+                        "images/portfolio/project-5/สำรวจTopo (1).png.webp",
+                        "images/portfolio/project-5/สำรวจTopo (2).jpg.webp",
+                        "images/portfolio/project-5/สำรวจTopo (3).jpg.webp"
                     ]
                 },
                 {
                     id: 2,
                     title: "แผนที่ TOPOGRAPHIC MAP",
                     description: "งานสำรวจภูมิประเทศ เก็บรายละเอียดเส้นชั้นความสูงสร้างแผนที่รายละเอียดสูงและคิดปริมาณดินถม",
-                    image: "images/portfolio/project-2/สำรวจTopo (1).jpg",
+                    image: "images/portfolio/project-2/สำรวจTopo (1).jpg.webp",
                     category: "topo",
                     gallery: [
-                        "images/portfolio/project-2/สำรวจTopo (1).png",
-                        "images/portfolio/project-2/สำรวจTopo (2).jpg",
-                        "images/portfolio/project-2/สำรวจTopo (2).png"
+                        "images/portfolio/project-2/สำรวจTopo (1).png.webp",
+                        "images/portfolio/project-2/สำรวจTopo (2).jpg.webp",
+                        "images/portfolio/project-2/สำรวจTopo (2).png.webp"
                     ]
                 },
                 {
                     id: 4,
                     title: "วางผังอาคารบ้านพักอาศัย จ.ปทุมธานี",
                     description: "ทำหมุดควบคุมพร้อมครอบผังบริเวณบ้านพักอาศัยแล้ววางตำแหน่งเสาเข็ม",
-                    image: "images/portfolio/project-4/วางผังเสาเข็ม (1).jpg",
+                    image: "images/portfolio/project-4/วางผังเสาเข็ม (1).jpg.webp",
                     category: "layout",
                     gallery: [
-                        "images/portfolio/project-4/วางผังเสาเข็ม (2).jpg",
-                        "images/portfolio/project-4/วางผังเสาเข็ม (3).jpg",
-                        "images/portfolio/project-4/วางผังเสาเข็ม (4).jpg"
+                        "images/portfolio/project-4/วางผังเสาเข็ม (2).jpg.webp",
+                        "images/portfolio/project-4/วางผังเสาเข็ม (3).jpg.webp",
+                        "images/portfolio/project-4/วางผังเสาเข็ม (4).jpg.webp"
                     ]
                 },
                 {
                     id: 8,
                     title: "วางผังเสาเข็มบ้านพักอาศัย ต.ดอกล้ำ อ.ปทุมรัตต์ จ.ร้อยเอ็ด",
                     description: "งานวางผังตำแหน่งเสาเข็มบ้านพักอาศัย ตรวจสอบพิกัดและระยะตามแบบวิศวกรรมอย่างละเอียด",
-                    image: "images/portfolio/project-8/วางผัง_ (1).JPG",
+                    image: "images/portfolio/project-8/วางผัง_ (1).JPG.webp",
                     category: "layout",
                     gallery: [
-                        "images/portfolio/project-8/วางผัง_ (2).JPG",
-                        "images/portfolio/project-8/วางผัง_ (2).png",
-                        "images/portfolio/project-8/วางผัง_ (3).JPG"
+                        "images/portfolio/project-8/วางผัง_ (2).JPG.webp",
+                        "images/portfolio/project-8/วางผัง_ (2).png.webp",
+                        "images/portfolio/project-8/วางผัง_ (3).JPG.webp"
                     ]
                 },
             ];
@@ -1719,7 +1719,7 @@
             return (
                 <section className="py-24 bg-navy relative overflow-hidden" id="facebook">
                     {/* Premium Background Effects */}
-                    <div className="absolute top-0 left-0 w-full h-full opacity-5 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] bg-repeat pointer-events-none"></div>
+                    <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none"></div>
                     <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-[#1877F2] rounded-full mix-blend-screen filter blur-[150px] opacity-20 pointer-events-none"></div>
                     <div className="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-accent rounded-full mix-blend-screen filter blur-[150px] opacity-10 pointer-events-none"></div>
 
