@@ -1946,6 +1946,186 @@
         };
 
         // --- App Component ---
+        /* ===== วิดีโออินโทรกราฟิก: ทำไมต้องจ้างเรา / จ้างเราได้อะไรบ้าง (แอนิเมชันโค้ดล้วน ไม่มีไฟล์วิดีโอ) ===== */
+        const PROMO_DUR = 5500;
+        const PROMO_CSS = `
+            .pv-in { opacity: 0; transform: translateY(18px); animation: pvIn .6s ease-out forwards; }
+            .pv-pop { opacity: 0; transform: scale(.6); animation: pvPop .5s cubic-bezier(.2,1.4,.4,1) forwards; }
+            .pv-line { transform-origin: left center; transform: scaleX(0); animation: pvLine 1.6s ease-out forwards; }
+            .pv-bar { transform-origin: left center; transform: scaleX(0); animation: pvLine linear forwards; }
+            .pv-slide { animation: pvSlide 1.6s ease-in-out .9s forwards; }
+            .pv-pulse { animation: pvPulse 1.4s ease-in-out infinite; }
+            @keyframes pvIn { to { opacity: 1; transform: none; } }
+            @keyframes pvPop { to { opacity: 1; transform: scale(1); } }
+            @keyframes pvLine { to { transform: scaleX(1); } }
+            @keyframes pvSlide { to { transform: translate(14px, 11px); } }
+            @keyframes pvPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+            @media (prefers-reduced-motion: reduce) {
+                .pv-in, .pv-pop, .pv-line { animation-duration: .01s; animation-delay: 0s !important; }
+                .pv-pulse, .pv-slide { animation: none; }
+            }
+        `;
+
+        const PromoVideo = () => {
+            const [scene, setScene] = useState(0);
+            const [playing, setPlaying] = useState(false);
+            const [run, setRun] = useState(0); // เปลี่ยนค่าเพื่อรีสตาร์ทฉากปัจจุบัน
+            const rootRef = useRef();
+            const TOTAL = 6;
+
+            // เล่นอัตโนมัติเมื่อเลื่อนมาเห็น และหยุดเมื่อพ้นจอ
+            useEffect(() => {
+                const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                const obs = new IntersectionObserver(([e]) => {
+                    if (e.isIntersecting) { if (!reduce) setPlaying(true); }
+                    else setPlaying(false);
+                }, { threshold: 0.4 });
+                if (rootRef.current) obs.observe(rootRef.current);
+                return () => obs.disconnect();
+            }, []);
+
+            // ไปฉากถัดไปตามเวลา (วนกลับฉากแรก)
+            useEffect(() => {
+                if (!playing) return;
+                const t = setTimeout(() => setScene(s => (s + 1) % TOTAL), PROMO_DUR);
+                return () => clearTimeout(t);
+            }, [playing, scene, run]);
+
+            const go = (n) => { setScene(n); setRun(r => r + 1); };
+            const toggle = () => { setPlaying(p => !p); setRun(r => r + 1); };
+            const d = (ms) => ({ animationDelay: `${ms}ms` });
+
+            const piles = [];
+            for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) piles.push([60 + c * 70, 50 + r * 55, r === 1 && c === 2]);
+
+            const scenes = [
+                // 1) ปัญหา
+                <div key="s0" className="text-center">
+                    <p className="pv-in text-accent font-semibold mb-2" style={d(0)}>ก่อนเริ่มก่อสร้าง</p>
+                    <h3 className="pv-in text-2xl md:text-4xl font-extrabold leading-tight mb-6" style={d(250)}>ตำแหน่งผิดไปนิดเดียว<br />อาจต้องแก้งานทั้งชุด</h3>
+                    <svg viewBox="0 0 340 190" className="mx-auto w-64 md:w-80" aria-hidden="true">
+                        {piles.map(([x, y, off], i) => (
+                            <g key={i}>
+                                <circle cx={x + 10} cy={y + 8} r="13" fill="none" stroke="#f59e0b" strokeWidth="1.5" strokeDasharray="3 3" opacity=".55" />
+                                <g className={off ? 'pv-slide' : ''}>
+                                    <circle className="pv-pop" style={{ ...d(700 + i * 90), transformOrigin: `${x + 10}px ${y + 8}px` }} cx={x + 10} cy={y + 8} r="9" fill={off ? '#ef4444' : '#38bdf8'} />
+                                </g>
+                            </g>
+                        ))}
+                    </svg>
+                    <p className="pv-in text-red-300 text-sm md:text-base mt-3" style={d(2400)}>เสาเข็มต้นเดียวเยื้อง = เสียทั้งเวลาและงบ</p>
+                </div>,
+                // 2) ทำไมต้องเลือกเรา
+                <div key="s1" className="text-center">
+                    <h3 className="pv-in text-2xl md:text-4xl font-extrabold mb-8" style={d(0)}>ทำไมต้อง <span className="text-accent">จริงใจเซอร์เวย์</span></h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
+                        {[
+                            ['fa-bullseye', 'แม่นยำระดับ 1"', 'กล้อง Trimble S8 Robotic Total Station + GNSS RTK'],
+                            ['fa-location-dot', 'กรุงเทพฯ–ปริมณฑล', 'พื้นที่ให้บริการหลัก พร้อมรับงานทั่วประเทศ'],
+                            ['fa-headset', 'ตอบไว ราคาชัดเจน', 'แจ้งราคาเบื้องต้นภายใน 24 ชั่วโมง']
+                        ].map(([ic, t, s], i) => (
+                            <div key={t} className="pv-in bg-white/10 border border-white/15 rounded-2xl p-5" style={d(400 + i * 350)}>
+                                <div className="w-11 h-11 rounded-xl bg-accent text-navy flex items-center justify-center mb-3"><i className={`fa-solid ${ic}`}></i></div>
+                                <div className="font-bold text-lg">{t}</div>
+                                <div className="text-sm text-blue-100 mt-1">{s}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>,
+                // 3) บริการ
+                <div key="s2" className="text-center">
+                    <h3 className="pv-in text-2xl md:text-4xl font-extrabold mb-8" style={d(0)}>จ้างเรา ได้งานอะไรบ้าง</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {[
+                            ['fa-location-crosshairs', 'วางผังเสาเข็ม / อาคาร'],
+                            ['fa-map', 'แผนที่ภูมิประเทศ Topo'],
+                            ['fa-arrows-up-down', 'ถ่ายระดับ / เช็คแนวดิ่ง'],
+                            ['fa-helmet-safety', 'สำรวจเพื่อการก่อสร้าง']
+                        ].map(([ic, t], i) => (
+                            <div key={t} className="pv-pop bg-white/10 border border-white/15 rounded-2xl p-5" style={d(300 + i * 300)}>
+                                <i className={`fa-solid ${ic} text-3xl text-accent mb-3`}></i>
+                                <div className="font-semibold leading-snug">{t}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>,
+                // 4) ส่งมอบ
+                <div key="s3" className="max-w-xl mx-auto">
+                    <h3 className="pv-in text-2xl md:text-4xl font-extrabold mb-6 text-center" style={d(0)}>สิ่งที่คุณได้รับ</h3>
+                    <ul className="space-y-3">
+                        {[
+                            'รายงานผลการสำรวจ พร้อมแปลนตำแหน่ง',
+                            'ไฟล์ CAD (.dwg) นำไปใช้งานต่อได้ทันที',
+                            'ไฟล์ PDF และ SketchUp',
+                            'ตารางค่าพิกัด (Excel) ของจุดที่สำรวจ'
+                        ].map((t, i) => (
+                            <li key={t} className="pv-in flex items-center gap-3 bg-white/10 border border-white/15 rounded-xl px-4 py-3" style={d(400 + i * 450)}>
+                                <span className="w-7 h-7 rounded-full bg-green-500 text-white flex items-center justify-center shrink-0"><i className="fa-solid fa-check text-sm"></i></span>
+                                <span>{t}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>,
+                // 5) ขั้นตอน
+                <div key="s4" className="text-center">
+                    <h3 className="pv-in text-2xl md:text-4xl font-extrabold mb-8" style={d(0)}>ทำงานง่าย 3 ขั้นตอน</h3>
+                    <div className="relative max-w-3xl mx-auto">
+                        <div className="hidden md:block absolute top-7 left-[16%] right-[16%] h-1 bg-white/10"><div className="pv-line h-1 bg-accent" style={d(500)}></div></div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+                            {[
+                                ['1', 'ส่งแบบ / ทักไลน์', 'ได้ราคาเบื้องต้นภายใน 24 ชม.'],
+                                ['2', 'ลงพื้นที่สำรวจ', 'วัดด้วยกล้องและ GNSS RTK'],
+                                ['3', 'ส่งมอบงาน', 'รายงาน + ไฟล์ CAD ครบ']
+                            ].map(([n, t, s], i) => (
+                                <div key={n} className="pv-in" style={d(500 + i * 600)}>
+                                    <div className="w-14 h-14 mx-auto rounded-full bg-accent text-navy text-2xl font-extrabold flex items-center justify-center mb-3">{n}</div>
+                                    <div className="font-bold text-lg">{t}</div>
+                                    <div className="text-sm text-blue-100">{s}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>,
+                // 6) CTA
+                <div key="s5" className="text-center">
+                    <h3 className="pv-in text-2xl md:text-4xl font-extrabold mb-2" style={d(0)}>ขอราคาวันนี้</h3>
+                    <p className="pv-in text-blue-100 mb-8" style={d(300)}>บอกขนาดงานและพื้นที่ แล้วเราประเมินให้ภายใน 24 ชั่วโมง</p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <span className="pv-pulse inline-block"><a href="tel:0820025124" className="pv-in flex items-center justify-center gap-2 bg-accent text-navy font-extrabold rounded-full px-8 py-4 text-lg" style={d(600)}><i className="fa-solid fa-phone"></i> 082-002-5124</a></span>
+                        <a href="https://line.me/ti/p/~kanathipcharoen" target="_blank" rel="noopener noreferrer" className="pv-in inline-flex items-center justify-center gap-2 bg-green-500 text-white font-extrabold rounded-full px-8 py-4 text-lg" style={d(900)}><i className="fa-brands fa-line text-2xl"></i> LINE: kanathipcharoen</a>
+                    </div>
+                </div>
+            ];
+
+            return (
+                <section id="why-us-video" className="py-16 bg-gray-50" aria-label="ทำไมต้องจ้างจริงใจเซอร์เวย์ และจ้างแล้วได้อะไรบ้าง">
+                    <style>{PROMO_CSS}</style>
+                    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div ref={rootRef} className="relative rounded-3xl overflow-hidden shadow-2xl text-white" style={{ background: 'linear-gradient(135deg, #12264a 0%, #1a365d 55%, #234a7d 100%)' }}>
+                            <div className="px-6 pt-10 pb-20 md:px-12 md:pt-12 md:pb-20 min-h-[460px] md:min-h-[480px] flex items-center justify-center">
+                                <div key={`${scene}-${run}`} className="w-full">{scenes[scene]}</div>
+                            </div>
+                            {/* แถบควบคุมแบบวิดีโอ */}
+                            <div className="absolute left-0 right-0 bottom-0 bg-black/25 px-4 py-3 flex items-center gap-3">
+                                <button onClick={toggle} className="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center shrink-0" aria-label={playing ? 'หยุดชั่วคราว' : 'เล่น'}>
+                                    <i className={`fa-solid ${playing ? 'fa-pause' : 'fa-play'} text-sm`}></i>
+                                </button>
+                                <div className="flex gap-1.5 flex-1">
+                                    {Array.from({ length: TOTAL }).map((_, n) => (
+                                        <button key={n} onClick={() => go(n)} className="relative h-1.5 flex-1 rounded bg-white/20 overflow-hidden" aria-label={`ไปฉากที่ ${n + 1}`}>
+                                            {n < scene && <span className="absolute inset-0 bg-accent"></span>}
+                                            {n === scene && <span key={`${scene}-${run}-${playing}`} className="pv-bar absolute inset-0 bg-accent" style={{ animationDuration: `${PROMO_DUR}ms`, animationPlayState: playing ? 'running' : 'paused' }}></span>}
+                                        </button>
+                                    ))}
+                                </div>
+                                <span className="text-xs text-blue-100 tabular-nums">{scene + 1}/{TOTAL}</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
         const ARTICLES = [
             { href: 'blog-piling-layout.html', title: 'วางผังเสาเข็มคืออะไร? ขั้นตอน ราคา อุปกรณ์', desc: 'ทำความเข้าใจงานวางผังเสาเข็มก่อนเริ่มก่อสร้าง', icon: 'fa-location-crosshairs' },
             { href: 'blog-topo-map.html', title: 'ทำแผนที่ Topo คืออะไร? ทำไมต้องทำก่อนสร้าง', desc: 'แผนที่ภูมิประเทศสำหรับออกแบบและคำนวณงานดิน', icon: 'fa-map' },
@@ -2034,6 +2214,7 @@
                     <main className="flex-grow">
                         <Hero />
                         <FadeInSection><Services /></FadeInSection>
+                        <FadeInSection><PromoVideo /></FadeInSection>
                         <FadeInSection><AboutSection /></FadeInSection>
                         
                         <FadeInSection><TrimbleFeature /></FadeInSection>
