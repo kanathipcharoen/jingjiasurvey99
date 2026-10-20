@@ -120,7 +120,8 @@
   /* ปุ่มเสียง */
   .mute { position: absolute; right: 4cqw; bottom: 3cqw; z-index: 6; width: 12cqw; height: 12cqw; border-radius: 50%; border: .8cqw solid #fff; background: #1f2937; color: #fff; font-size: 5.6cqw; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 0 .35cqw #1f2937; }
   .mute.on { background: #22c55e; }
-  .hint { position: absolute; right: 18cqw; bottom: 5cqw; z-index: 6; background: #fff; color: var(--navy); font-weight: 800; font-size: 3.8cqw; padding: 1.4cqw 3cqw; border-radius: 2cqw; box-shadow: 0 0 0 .35cqw #1f2937; animation: floaty2 1.2s ease-in-out infinite; }
+  .vsw { right: 17.5cqw; background: #7c3aed; font-size: 5.4cqw; }
+  .hint { position: absolute; right: 31cqw; bottom: 5cqw; z-index: 6; background: #fff; color: var(--navy); font-weight: 800; font-size: 3.8cqw; padding: 1.4cqw 3cqw; border-radius: 2cqw; box-shadow: 0 0 0 .35cqw #1f2937; animation: floaty2 1.2s ease-in-out infinite; }
   .hint::after { content:''; position:absolute; right: -1.2cqw; top: 50%; margin-top: -1.2cqw; width: 2.4cqw; height: 2.4cqw; background:#fff; transform: rotate(45deg); box-shadow: 1px -1px 0 #1f2937; }
   @keyframes floaty2 { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-1.2cqw); } }
 
@@ -156,6 +157,7 @@
 
   <div class="chips" id="chips"></div>
   <div class="hint ui" id="hint">แตะเพื่อฟังเสียงพากย์ 🔊</div>
+  <div class="mute vsw ui" id="vsw" role="button" aria-label="สลับเสียงพากย์ ชาย/หญิง" title="สลับเสียงชาย/หญิง">👨</div>
   <div class="mute ui" id="mute" role="button" aria-label="เปิด/ปิดเสียงบรรยาย" aria-pressed="false">🔇</div>
 </div>
 
@@ -173,7 +175,7 @@
       card: 'LIVE' },
     { mood: 'worry', ms: 7000, banner: 'ผิดนิดเดียว!', bannerCls: 'red', chips: [['y', 'เสาเข็มเยื้องตำแหน่ง'], ['r', 'แก้ที เสียทั้งเวลาและงบ!']],
       speak: 'ถ้าตำแหน่งเสาเข็มผิดไปนิดเดียว ต้องแก้งาน เสียทั้งเวลาและงบประมาณเลยนะ',
-      card: (function () { var o = '<svg viewBox="0 0 220 150" style="width:100%;height:100%">'; for (var r = 0; r < 3; r++) for (var c = 0; c < 4; c++) { var x = 40 + c * 46, y = 24 + r * 36, off = (r === 1 && c === 2); o += '<circle cx="' + x + '" cy="' + y + '" r="13" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4"/><circle class="in" style="animation-delay:' + (0.3 + (r * 4 + c) * 0.08) + 's;transform-origin:' + (x + (off ? 12 : 0)) + 'px ' + (y + (off ? 9 : 0)) + 'px" cx="' + (x + (off ? 12 : 0)) + '" cy="' + (y + (off ? 9 : 0)) + '" r="9" fill="' + (off ? '#ef4444' : '#38bdf8') + '" stroke="#1f2937" stroke-width="2"/>'; } return o + '<g class="in" style="animation-delay:1.6s"><rect x="60" y="116" width="100" height="28" rx="8" fill="#fff" stroke="#ef4444" stroke-width="2.4"/><text x="110" y="135" text-anchor="middle" font-family="Prompt,Tahoma" font-weight="800" font-size="14" fill="#ef4444">เยื้องศูนย์!</text></g></svg>'; })() },
+      card: (function () { var o = '<svg viewBox="0 0 220 150" style="width:100%;height:100%">'; for (var r = 0; r < 3; r++) for (var c = 0; c < 4; c++) { var x = 40 + c * 46, y = 24 + r * 36, off = (r === 1 && c === 2); o += '<circle cx="' + x + '" cy="' + y + '" r="13" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 4"/><circle class="in" style="animation-delay:' + (0.3 + (r * 4 + c) * 0.08) + 's;transform-origin:' + (x + (off ? 12 : 0)) + 'px ' + (y + (off ? 9 : 0)) + 'px" cx="' + (x + (off ? 12 : 0)) + '" cy="' + (y + (off ? 9 : 0)) + '" r="9" fill="' + (off ? '#ef4444' : '#38bdf8') + '" stroke="#1f2937" stroke-width="2"/>'; } return o + '<g class="in" data-c="0" style="animation-delay:1.6s"><rect x="60" y="116" width="100" height="28" rx="8" fill="#fff" stroke="#ef4444" stroke-width="2.4"/><text x="110" y="135" text-anchor="middle" font-family="Prompt,Tahoma" font-weight="800" font-size="14" fill="#ef4444">เยื้องศูนย์!</text></g></svg>'; })() },
     { mood: '', cast: 'rtk', ms: 8000, banner: 'ทำไมต้องจริงใจเซอร์เวย์?', chips: [['y', 'แม่นยำระดับ 1 ฟิลิปดา'], ['r', 'Trimble S8 + GNSS RTK']],
       speak: 'เพราะเราใช้กล้อง ทริมเบิล เอสแปด แม่นยำระดับหนึ่งฟิลิปดา คู่กับ จีเอ็นเอสเอส อาร์ทีเค ได้ตำแหน่งที่เชื่อถือได้',
       card: '<div class="col"><div class="row in" style="animation-delay:.3s"><div class="ic">🎯</div><div>แม่นยำระดับ 1"<small>กล้อง Trimble S8 Robotic Total Station</small></div></div><div class="row in" style="animation-delay:.9s"><div class="ic">📡</div><div>GNSS RTK<small>ตำแหน่งพิกัดที่เชื่อถือได้</small></div></div><div class="row in" style="animation-delay:1.5s"><div class="ic">📐</div><div>ช่างสำรวจมืออาชีพ<small>ตรวจงานทุกขั้นตอน</small></div></div></div>' },
@@ -227,11 +229,17 @@
   var TOTAL = S.length, cur = Math.min(S.length - 1, parseInt(Q.get('scene') || '0', 10) || 0), sound = false, started = false, timer = null, playing = true, finished = false;
 
   // ===== เสียงพากย์ไทย: ไฟล์ mp3 ต่อฉาก (audio/scene-N.mp3) เล่นเหมือนกันทุกเครื่อง =====
-  var AUD = [];
+  var voiceKey = Q.get('voice') || (function () { try { return localStorage.getItem('jj_voice'); } catch (e) { return null; } })() || 'm';
+  var BASE = voiceKey === 'f' ? 'audio/f/' : 'audio/', AUD = [], TM = [];
   function audioFor(i) {
-    if (!AUD[i]) { AUD[i] = new Audio('audio/scene-' + (i + 1) + '.mp3'); AUD[i].preload = 'auto'; }
+    if (!AUD[i]) { AUD[i] = new Audio(BASE + 'scene-' + (i + 1) + '.mp3'); AUD[i].preload = 'auto'; }
     return AUD[i];
   }
+  // โหลดล่วงหน้าทุกฉาก (ประมาณ 400 KB) เพื่อให้เสียงเริ่มพร้อมภาพ ไม่ช้ากว่า
+  function preloadAudio() { for (var i = 0; i < 8; i++) audioFor(i).load(); }
+  function loadTiming() { fetch(BASE + 'timing.json').then(function (r) { return r.json(); }).then(function (j) { TM = j; }).catch(function () {}); }
+  loadTiming();
+  function dur(i) { return TM[i] ? TM[i].dur : S[i].ms / 1000; }
 
   function build() {
     dotsEl.innerHTML = S.map(function () { return '<i></i>'; }).join('');
@@ -239,7 +247,7 @@
   function paintDots() {
     var d = dotsEl.children;
     for (var i = 0; i < d.length; i++) d[i].className = i < cur ? 'done' : (i === cur ? 'cur' : '');
-    if (d[cur]) d[cur].style.setProperty('--dur', S[cur].ms + 'ms');
+    if (d[cur]) d[cur].style.setProperty('--dur', ((dur(cur) + 0.8) * 1000) + 'ms');
   }
   function show() {
     var s = S[cur];
@@ -248,6 +256,12 @@
     sceneEl.innerHTML = '<div class="banner' + (s.bannerCls ? ' ' + s.bannerCls : '') + (s.banner.length > 14 ? ' sm' : '') + '">' + s.banner + '</div><div class="card"><div class="card-inner">' + cardHTML + '</div></div>';
     chipsEl.innerHTML = s.chips.map(function (c, i) { return '<div class="chip ' + c[0] + '" style="animation-delay:' + (0.5 + i * 0.55) + 's">' + c[1] + '</div>'; }).join('');
     mascot.setAttribute('class', 'mascot ' + (s.mood === 'hide' ? '' : s.mood)); stage.classList.toggle('nomascot', s.mood === 'hide');
+    var T = TM[cur];
+    if (T) {
+      chipsEl.querySelectorAll('.chip').forEach(function (el, i) { if (T.chips[i] != null) el.style.animationDelay = T.chips[i] + 's'; });
+      var els = sceneEl.querySelectorAll('.card-inner .col > .in, .card-inner .trio > .in, .card-inner [data-c]');
+      els.forEach(function (el, i) { if (T.items[i] != null) el.style.animationDelay = T.items[i] + 's'; });
+    }
     paintDots();
   }
   function next() {
@@ -262,22 +276,37 @@
     AUD.forEach(function (a) { if (a) { a.onended = null; a.onerror = null; a.pause(); } });
     mascot.classList.remove('talk'); stage.classList.remove('speaking');
   }
+  var runId = 0;
   function run() {
-    clearTimeout(timer); stopSpeech(); show();
-    if (!playing || Q.get('hold')) return;
-    var s = S[cur];
+    clearTimeout(timer); stopSpeech();
+    var id = ++runId;
+    if (!playing || Q.get('hold')) { show(); return; }
     if (sound) {
       var a = audioFor(cur), my = cur;
-      try { a.currentTime = 0; } catch (e) {}
-      var done = function () { if (my !== cur) return; mascot.classList.remove('talk'); stage.classList.remove('speaking'); clearTimeout(timer); timer = setTimeout(next, 900); };
-      a.onended = done;
-      a.onerror = function () { if (my !== cur) return; hintEl.textContent = 'โหลดเสียงไม่สำเร็จ'; hintEl.style.display = 'block'; clearTimeout(timer); timer = setTimeout(next, s.ms); };
-      timer = setTimeout(next, 25000); // กันค้าง
-      var pr = a.play();
-      if (pr && pr.then) pr.then(function () { if (my === cur) { mascot.classList.add('talk'); stage.classList.add('speaking'); } })
-        .catch(function () { if (my !== cur) return; setSound(false); hintEl.textContent = 'แตะปุ่มลำโพงเพื่อเปิดเสียง'; hintEl.style.display = 'block'; clearTimeout(timer); timer = setTimeout(next, s.ms); });
+      var go = function () {
+        if (id !== runId) return;
+        try { a.currentTime = 0; } catch (e) {}
+        var done = function () { if (id !== runId) return; mascot.classList.remove('talk'); stage.classList.remove('speaking'); clearTimeout(timer); timer = setTimeout(next, 600); };
+        a.onended = done;
+        a.onerror = function () { if (id !== runId) return; hintEl.textContent = 'โหลดเสียงไม่สำเร็จ'; hintEl.style.display = 'block'; clearTimeout(timer); timer = setTimeout(next, (dur(my) + 0.8) * 1000); };
+        timer = setTimeout(next, 30000); // กันค้าง
+        // ภาพเริ่มเมื่อเสียง 'เริ่มดังจริง' (event playing) เพื่อให้ตรงกันที่สุด
+        a.onplaying = function () { if (id !== runId) return; a.onplaying = null; show(); mascot.classList.add('talk'); stage.classList.add('speaking'); };
+        var pr = a.play();
+        if (pr && pr.catch) pr
+          .catch(function () { if (id !== runId) return; setSound(false); hintEl.textContent = 'แตะปุ่มลำโพงเพื่อเปิดเสียง'; hintEl.style.display = 'block'; clearTimeout(timer); timer = setTimeout(next, (dur(my) + 0.8) * 1000); });
+      };
+      if (a.readyState >= 3) go();
+      else {
+        show(); // ระหว่างรอโหลด แสดงเฉพาะหัวเรื่อง (ภาพทั้งหมดจะเริ่มใหม่พร้อมเสียง)
+        sceneEl.style.visibility = 'hidden'; chipsEl.style.visibility = 'hidden';
+        var started2 = false, fire = function () { if (started2) return; started2 = true; sceneEl.style.visibility = ''; chipsEl.style.visibility = ''; go(); };
+        a.addEventListener('canplaythrough', fire, { once: true });
+        setTimeout(fire, 4000);
+      }
     } else {
-      timer = setTimeout(next, s.ms);
+      show();
+      timer = setTimeout(next, (dur(cur) + 0.8) * 1000);
     }
   }
   function setSound(on) {
@@ -287,10 +316,19 @@
     muteEl.setAttribute('aria-pressed', sound ? 'true' : 'false');
     if (sound) hintEl.style.display = 'none';
   }
+  var vswEl = document.getElementById('vsw');
+  vswEl.textContent = voiceKey === 'f' ? '👩' : '👨';
+  vswEl.addEventListener('click', function (e) {
+    e.stopPropagation();
+    voiceKey = voiceKey === 'f' ? 'm' : 'f';
+    try { localStorage.setItem('jj_voice', voiceKey); } catch (x) {}
+    stopSpeech(); AUD = []; BASE = voiceKey === 'f' ? 'audio/f/' : 'audio/'; vswEl.textContent = voiceKey === 'f' ? '👩' : '👨';
+    loadTiming(); if (started) { preloadAudio(); setSound(true); setTimeout(run, 300); }
+  });
   muteEl.addEventListener('click', function (e) { e.stopPropagation(); setSound(!sound); run(); });
   stage.addEventListener('click', function (e) {
     if (e.target.closest && e.target.closest('a')) return;
-    if (!started) { started = true; if (!sound) setSound(true); playing = true; stage.classList.remove('paused'); run(); return; }
+    if (!started) { started = true; preloadAudio(); if (!sound) setSound(true); playing = true; stage.classList.remove('paused'); run(); return; }
     // แตะเพื่อหยุด/เล่นต่อ
     playing = !playing; stage.classList.toggle('paused', !playing);
     if (playing) run(); else { clearTimeout(timer); stopSpeech(); }
@@ -298,6 +336,7 @@
 
   // เล่นอัตโนมัติ (เงียบ) เมื่อมองเห็น และหยุดเมื่อพ้นจอ
   build(); show(); paintDots();
+  (window.requestIdleCallback || function (f) { setTimeout(f, 1500); })(preloadAudio);
   if (REC) { hintEl.style.display = 'none'; playing = false; stage.classList.add('paused'); sceneEl.innerHTML = '<div class="banner">แตะหน้าจอเพื่อเริ่มอัด</div>'; chipsEl.innerHTML = ''; }
   else {
     var io = new IntersectionObserver(function (en) {
