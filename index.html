@@ -1947,7 +1947,67 @@
 
         // --- App Component ---
         /* ===== วิดีโออินโทรกราฟิก: ทำไมต้องจ้างเรา / จ้างเราได้อะไรบ้าง (แอนิเมชันโค้ดล้วน ไม่มีไฟล์วิดีโอ) ===== */
-        const PROMO_DUR = 5500;
+        const SCENE_MS = [6500, 8000, 7500, 7500, 7000, 6500];
+        // say = คำบรรยายสั้นในช่องคำพูด, speak = ข้อความที่ให้เสียงอ่าน (เขียนให้ออกเสียงเป็นธรรมชาติ)
+        const SCENE_TALK = [
+            { mood: 'worry', say: 'ก่อนสร้าง ตำแหน่งผิดนิดเดียว ก็แก้ยากนะ!', speak: 'ก่อนเริ่มก่อสร้าง ตำแหน่งผิดไปนิดเดียว อาจต้องแก้งานทั้งชุดนะครับ' },
+            { mood: 'happy', say: 'กล้องแม่นระดับ 1 ฟิลิปดา ตอบไวใน 24 ชม.!', speak: 'ทำไมต้องจริงใจเซอร์เวย์ แม่นยำระดับหนึ่งฟิลิปดา ครอบคลุมกรุงเทพและปริมณฑล และตอบกลับไวภายในยี่สิบสี่ชั่วโมง' },
+            { mood: 'happy', say: 'วางผัง Topo ถ่ายระดับ ครบจบในที่เดียว', speak: 'จ้างเรา ได้ทั้งงานวางผังเสาเข็ม แผนที่ภูมิประเทศ ถ่ายระดับ และงานสำรวจเพื่อการก่อสร้าง' },
+            { mood: 'happy', say: 'ส่งมอบครบ ทั้งรายงานและไฟล์ CAD!', speak: 'ส่งมอบครบ ทั้งรายงานผล ไฟล์แคด พีดีเอฟ สเก็ตช์อัพ และตารางพิกัดเอ็กเซล' },
+            { mood: 'happy', say: 'ง่ายนิดเดียว แค่ 3 ขั้นตอน', speak: 'ทำงานง่ายๆ สามขั้นตอน ส่งแบบหรือทักไลน์ ลงพื้นที่สำรวจ แล้วรับงานได้เลย' },
+            { mood: 'wave', say: 'ทักมาได้เลยนะ ยินดีให้บริการ!', speak: 'ขอราคาวันนี้ โทรหรือทักไลน์ได้เลยครับ เราประเมินให้ภายในยี่สิบสี่ชั่วโมง' }
+        ];
+
+        /* น้องช่างสำรวจ: การ์ตูน SVG ส่องกล้อง Total Station (ภาพวาดเอง ไม่มีไฟล์รูป) */
+        const SurveyorMascot = ({ mood = 'happy', talking = false }) => (
+            <svg viewBox="0 0 170 190" className="w-24 md:w-32 shrink-0" aria-hidden="true">
+                {/* ขาตั้งกล้อง */}
+                <g stroke="#8b5e34" strokeWidth="4" strokeLinecap="round">
+                    <line x1="124" y1="104" x2="100" y2="182" /><line x1="124" y1="104" x2="126" y2="184" /><line x1="124" y1="104" x2="152" y2="182" />
+                </g>
+                {/* ตัวกล้อง */}
+                <rect x="108" y="78" width="32" height="30" rx="7" fill="#1e3a8a" />
+                <rect x="112" y="64" width="24" height="18" rx="6" fill="#f59e0b" />
+                <circle cx="104" cy="73" r="6.5" fill="#0f172a" /><circle cx="104" cy="73" r="3" fill="#38bdf8" />
+                <rect x="119" y="52" width="6" height="14" rx="2" fill="#94a3b8" />
+                {/* เลเซอร์ */}
+                <g className="pv-laser" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round">
+                    <line x1="146" y1="92" x2="166" y2="92" /><line x1="150" y1="84" x2="160" y2="79" /><line x1="150" y1="100" x2="160" y2="105" />
+                </g>
+                {/* ตัวการ์ตูน (เด้งเบาๆ) */}
+                <g className="pv-bob">
+                    {/* ขา */}
+                    <rect x="38" y="128" width="14" height="46" rx="7" fill="#1e3a8a" /><rect x="58" y="128" width="14" height="46" rx="7" fill="#1e3a8a" />
+                    <ellipse cx="43" cy="176" rx="12" ry="6" fill="#334155" /><ellipse cx="65" cy="176" rx="12" ry="6" fill="#334155" />
+                    {/* ตัว / เสื้อกั๊กสะท้อนแสง */}
+                    <rect x="30" y="86" width="50" height="50" rx="16" fill="#f59e0b" />
+                    <rect x="30" y="104" width="50" height="6" fill="#fef3c7" /><rect x="47" y="86" width="6" height="50" fill="#fef3c7" opacity=".7" />
+                    {/* แขนขวาเอื้อมไปจับกล้อง */}
+                    <path d="M76 104 Q96 102 108 92" stroke="#ffd6b0" strokeWidth="9" strokeLinecap="round" fill="none" />
+                    {/* แขนซ้าย: โบกมือเมื่ออยู่ฉากท้าย */}
+                    {mood === 'wave'
+                        ? <g className="pv-wave"><path d="M34 98 Q18 84 20 62" stroke="#ffd6b0" strokeWidth="9" strokeLinecap="round" fill="none" /><circle cx="20" cy="58" r="7" fill="#ffd6b0" /></g>
+                        : <path d="M34 98 Q24 112 30 126" stroke="#ffd6b0" strokeWidth="9" strokeLinecap="round" fill="none" />}
+                    {/* หัว */}
+                    <circle cx="68" cy="64" r="26" fill="#ffd6b0" />
+                    {/* หมวกเซฟตี้ */}
+                    <path d="M41 62 A27 27 0 0 1 95 62 Z" fill="#fbbf24" />
+                    <rect x="36" y="60" width="64" height="7" rx="3.5" fill="#f59e0b" />
+                    <rect x="64" y="34" width="8" height="12" rx="3" fill="#f59e0b" />
+                    {/* ตา (ชะโงกไปทางกล้อง) */}
+                    <g className="pv-blink"><ellipse cx="73" cy="73" rx="4.4" ry="5.6" fill="#1f2937" /><circle cx="74.6" cy="71" r="1.7" fill="#fff" /></g>
+                    <g className="pv-blink"><ellipse cx="88" cy="73" rx="4.4" ry="5.6" fill="#1f2937" /><circle cx="89.6" cy="71" r="1.7" fill="#fff" /></g>
+                    {mood === 'worry' && <g stroke="#7c3f00" strokeWidth="2" strokeLinecap="round"><line x1="68" y1="66" x2="77" y2="68" /><line x1="93" y1="66" x2="84" y2="68" /></g>}
+                    {/* แก้ม */}
+                    <circle cx="64" cy="82" r="4.5" fill="#fb7185" opacity=".5" /><circle cx="95" cy="82" r="4.5" fill="#fb7185" opacity=".5" />
+                    {/* ปาก */}
+                    {mood === 'worry'
+                        ? <path d="M74 88 Q80 83 86 88" stroke="#7c2d12" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+                        : <ellipse className={talking ? 'pv-talk' : ''} cx="80" cy="86" rx="5.5" ry="3.6" fill="#be123c" />}
+                    {mood === 'worry' && <path className="pv-sweat" d="M98 52 q5 8 0 11 q-5 -3 0 -11z" fill="#7dd3fc" />}
+                </g>
+            </svg>
+        );
         const PROMO_CSS = `
             .pv-in { opacity: 0; transform: translateY(18px); animation: pvIn .6s ease-out forwards; }
             .pv-pop { opacity: 0; transform: scale(.6); animation: pvPop .5s cubic-bezier(.2,1.4,.4,1) forwards; }
@@ -1960,9 +2020,22 @@
             @keyframes pvLine { to { transform: scaleX(1); } }
             @keyframes pvSlide { to { transform: translate(14px, 11px); } }
             @keyframes pvPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+            .pv-bob { animation: pvBob 1.3s ease-in-out infinite; }
+            .pv-blink { transform-box: fill-box; transform-origin: center; animation: pvBlink 4s infinite; }
+            .pv-wave { transform-box: fill-box; transform-origin: 20% 90%; animation: pvWave .7s ease-in-out infinite alternate; }
+            .pv-laser { animation: pvLaser 1s steps(2, jump-none) infinite; }
+            .pv-sweat { animation: pvSweat 1.6s ease-in infinite; }
+            .pv-talk { transform-box: fill-box; transform-origin: center; animation: pvTalk .35s ease-in-out infinite alternate; }
+            @keyframes pvBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+            @keyframes pvBlink { 0%,94%,100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
+            @keyframes pvWave { from { transform: rotate(-14deg); } to { transform: rotate(18deg); } }
+            @keyframes pvLaser { 0% { opacity: 1; } 100% { opacity: .15; } }
+            @keyframes pvSweat { 0% { transform: translateY(-4px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
+            @keyframes pvTalk { from { transform: scaleY(.55); } to { transform: scaleY(1.25); } }
+            @keyframes pvBubble { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: none; } }
             @media (prefers-reduced-motion: reduce) {
                 .pv-in, .pv-pop, .pv-line { animation-duration: .01s; animation-delay: 0s !important; }
-                .pv-pulse, .pv-slide { animation: none; }
+                .pv-pulse, .pv-slide, .pv-bob, .pv-wave, .pv-laser, .pv-sweat, .pv-talk, .pv-blink { animation: none; }
             }
         `;
 
@@ -1972,6 +2045,23 @@
             const [run, setRun] = useState(0); // เปลี่ยนค่าเพื่อรีสตาร์ทฉากปัจจุบัน
             const rootRef = useRef();
             const TOTAL = 6;
+            const [soundOn, setSoundOn] = useState(false);
+            const [voiceOk, setVoiceOk] = useState(true);
+            const voiceRef = useRef(null);
+            const [talking, setTalking] = useState(false);
+
+            // หาเสียงภาษาไทยในอุปกรณ์ (ไม่มีไฟล์เสียง ใช้ระบบอ่านออกเสียงของเบราว์เซอร์)
+            useEffect(() => {
+                if (!('speechSynthesis' in window)) { setVoiceOk(false); return; }
+                const pick = () => {
+                    const v = window.speechSynthesis.getVoices().filter(x => /^th/i.test(x.lang));
+                    if (v.length) { voiceRef.current = v[0]; setVoiceOk(true); }
+                };
+                pick();
+                window.speechSynthesis.addEventListener && window.speechSynthesis.addEventListener('voiceschanged', pick);
+                const chk = setTimeout(() => { if (!voiceRef.current) setVoiceOk(false); }, 2500);
+                return () => { clearTimeout(chk); window.speechSynthesis.cancel(); };
+            }, []);
 
             // เล่นอัตโนมัติเมื่อเลื่อนมาเห็น และหยุดเมื่อพ้นจอ
             useEffect(() => {
@@ -1984,15 +2074,32 @@
                 return () => obs.disconnect();
             }, []);
 
-            // ไปฉากถัดไปตามเวลา (วนกลับฉากแรก)
+            // ไปฉากถัดไป: เปิดเสียง = รอพากย์จบ, ปิดเสียง = ตามเวลา (วนกลับฉากแรก)
             useEffect(() => {
-                if (!playing) return;
-                const t = setTimeout(() => setScene(s => (s + 1) % TOTAL), PROMO_DUR);
-                return () => clearTimeout(t);
-            }, [playing, scene, run]);
+                if (!playing) { setTalking(false); return; }
+                const next = () => setScene(s => (s + 1) % TOTAL);
+                let cancelled = false, t1 = null, fb = null;
+                if (soundOn && voiceOk && voiceRef.current) {
+                    window.speechSynthesis.cancel();
+                    const u = new SpeechSynthesisUtterance(SCENE_TALK[scene].speak);
+                    u.voice = voiceRef.current; u.lang = voiceRef.current.lang || 'th-TH'; u.rate = 0.95; u.pitch = 1.25;
+                    u.onstart = () => { if (!cancelled) setTalking(true); };
+                    const done = () => { if (cancelled) return; setTalking(false); clearTimeout(fb); t1 = setTimeout(next, 800); };
+                    u.onend = done; u.onerror = done;
+                    fb = setTimeout(() => { if (!cancelled) next(); }, 16000);
+                    window.speechSynthesis.speak(u);
+                } else {
+                    t1 = setTimeout(next, SCENE_MS[scene]);
+                }
+                return () => {
+                    cancelled = true; clearTimeout(t1); clearTimeout(fb); setTalking(false);
+                    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                };
+            }, [playing, scene, run, soundOn, voiceOk]);
 
             const go = (n) => { setScene(n); setRun(r => r + 1); };
             const toggle = () => { setPlaying(p => !p); setRun(r => r + 1); };
+            const toggleSound = () => { setSoundOn(v => !v); setPlaying(true); setRun(r => r + 1); };
             const d = (ms) => ({ animationDelay: `${ms}ms` });
 
             const piles = [];
@@ -2102,8 +2209,17 @@
                     <style>{PROMO_CSS}</style>
                     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div ref={rootRef} className="relative rounded-3xl overflow-hidden shadow-2xl text-white" style={{ background: 'linear-gradient(135deg, #12264a 0%, #1a365d 55%, #234a7d 100%)' }}>
-                            <div className="px-6 pt-10 pb-20 md:px-12 md:pt-12 md:pb-20 min-h-[460px] md:min-h-[480px] flex items-center justify-center">
+                            <div className="px-6 pt-10 pb-2 md:px-12 md:pt-12 min-h-[340px] md:min-h-[360px] flex items-center justify-center">
                                 <div key={`${scene}-${run}`} className="w-full">{scenes[scene]}</div>
+                            </div>
+                            {/* น้องช่างสำรวจ + ช่องคำพูด */}
+                            <div className="px-4 md:px-12 pb-16 flex items-end justify-center gap-3">
+                                <SurveyorMascot mood={SCENE_TALK[scene].mood} talking={talking} />
+                                <div key={`say-${scene}-${run}`} className="relative mb-6 max-w-sm bg-white text-navy font-semibold rounded-2xl px-4 py-3 shadow-lg text-sm md:text-base leading-snug" style={{ animation: 'pvBubble .5s ease-out both' }}>
+                                    <span className="absolute -left-1.5 bottom-5 w-3 h-3 bg-white rotate-45"></span>
+                                    {SCENE_TALK[scene].say}
+                                    {soundOn && !voiceOk && <div className="text-xs text-red-500 mt-1 font-normal">อุปกรณ์นี้ไม่มีเสียงภาษาไทย</div>}
+                                </div>
                             </div>
                             {/* แถบควบคุมแบบวิดีโอ */}
                             <div className="absolute left-0 right-0 bottom-0 bg-black/25 px-4 py-3 flex items-center gap-3">
@@ -2114,10 +2230,13 @@
                                     {Array.from({ length: TOTAL }).map((_, n) => (
                                         <button key={n} onClick={() => go(n)} className="relative h-1.5 flex-1 rounded bg-white/20 overflow-hidden" aria-label={`ไปฉากที่ ${n + 1}`}>
                                             {n < scene && <span className="absolute inset-0 bg-accent"></span>}
-                                            {n === scene && <span key={`${scene}-${run}-${playing}`} className="pv-bar absolute inset-0 bg-accent" style={{ animationDuration: `${PROMO_DUR}ms`, animationPlayState: playing ? 'running' : 'paused' }}></span>}
+                                            {n === scene && <span key={`${scene}-${run}-${playing}`} className="pv-bar absolute inset-0 bg-accent" style={{ animationDuration: `${SCENE_MS[scene]}ms`, animationPlayState: playing ? 'running' : 'paused' }}></span>}
                                         </button>
                                     ))}
                                 </div>
+                                <button onClick={toggleSound} className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${soundOn ? 'bg-accent text-navy' : 'bg-white/15 hover:bg-white/25'}`} aria-label={soundOn ? 'ปิดเสียงบรรยาย' : 'เปิดเสียงบรรยาย'} aria-pressed={soundOn} title="เสียงบรรยายภาษาไทย">
+                                    <i className={`fa-solid ${soundOn ? 'fa-volume-high' : 'fa-volume-xmark'} text-sm`}></i>
+                                </button>
                                 <span className="text-xs text-blue-100 tabular-nums">{scene + 1}/{TOTAL}</span>
                             </div>
                         </div>
