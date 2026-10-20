@@ -1946,6 +1946,38 @@
         };
 
         // --- App Component ---
+        const ARTICLES = [
+            { href: 'blog-piling-layout.html', title: 'วางผังเสาเข็มคืออะไร? ขั้นตอน ราคา อุปกรณ์', desc: 'ทำความเข้าใจงานวางผังเสาเข็มก่อนเริ่มก่อสร้าง', icon: 'fa-location-crosshairs' },
+            { href: 'blog-topo-map.html', title: 'ทำแผนที่ Topo คืออะไร? ทำไมต้องทำก่อนสร้าง', desc: 'แผนที่ภูมิประเทศสำหรับออกแบบและคำนวณงานดิน', icon: 'fa-map' },
+            { href: 'blog-survey-price.html', title: 'ราคางานสำรวจ — วางผัง ทำแผนที่ Topo ถ่ายระดับ', desc: 'ปัจจัยที่ทำให้ราคาต่างกัน และวิธีประเมินงบเบื้องต้น', icon: 'fa-tags' },
+            { href: 'blog-survey-bangkok.html', title: 'รับสำรวจ กรุงเทพ และปริมณฑล', desc: 'บริการสำรวจวางผังและทำแผนที่ในกรุงเทพฯ และปริมณฑล', icon: 'fa-city' },
+            { href: 'blog-survey-korat.html', title: 'รับสำรวจ โคราช นครราชสีมา', desc: 'บริการสำรวจวางผังและทำแผนที่ในพื้นที่โคราช', icon: 'fa-location-dot' },
+            { href: 'blog-earthwork.html', title: 'คำนวณดินตัด-ดินถม (Earthwork)', desc: 'วิธีคำนวณปริมาณดินและการประเมินค่าใช้จ่าย', icon: 'fa-mountain' },
+            { href: 'blog-asbuilt-survey.html', title: 'As-built Survey คืออะไร?', desc: 'สำรวจหลังก่อสร้างเสร็จ สำคัญอย่างไร', icon: 'fa-ruler-combined' },
+            { href: 'blog-leveling.html', title: 'งานถ่ายระดับ (Leveling)', desc: 'เช็คระดับพื้นและการทำ Benchmark', icon: 'fa-arrows-up-down' }
+        ];
+
+        const Articles = () => (
+            <section id="articles" className="py-20 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-navy mb-3">บทความความรู้งานสำรวจ</h2>
+                        <p className="text-gray-600 max-w-2xl mx-auto">คู่มือสั้นๆ ก่อนจ้างงานวางผัง ทำแผนที่ Topo และคำนวณดิน จากประสบการณ์งานสำรวจจริง</p>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {ARTICLES.map((a) => (
+                            <a key={a.href} href={a.href} className="block bg-gray-50 hover:bg-white border border-gray-100 hover:border-accent rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all">
+                                <div className="w-11 h-11 bg-navy text-accent rounded-xl flex items-center justify-center mb-4"><i className={`fa-solid ${a.icon}`}></i></div>
+                                <h3 className="font-bold text-navy mb-2 leading-snug">{a.title}</h3>
+                                <p className="text-sm text-gray-600">{a.desc}</p>
+                                <span className="inline-block mt-3 text-sm font-semibold text-accent">อ่านต่อ →</span>
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
         const App = () => {
             // Global Conversion Tracking for Google Ads + GTM DataLayer
             useEffect(() => {
@@ -2009,6 +2041,7 @@
                         <FadeInSection><FacebookSection /></FadeInSection>
                         <FadeInSection><FAQSection /></FadeInSection>
                         <FadeInSection><Testimonials /></FadeInSection>
+                        <FadeInSection><Articles /></FadeInSection>
                         <FadeInSection><QuotationForm /></FadeInSection>
                     </main>
                     <Footer />

@@ -247,5 +247,18 @@
         <a href="https://line.me/ti/p/~kanathipcharoen" target="_blank" rel="noopener noreferrer" class="w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all"><i class="fa-brands fa-line text-3xl"></i></a>
         <a href="tel:0820025124" class="w-14 h-14 bg-accent text-navy rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all"><i class="fa-solid fa-phone text-2xl"></i></a>
     </div>
+<script>
+document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a');
+    if (!a) return;
+    var h = a.getAttribute('href') || '', m = null, label = null;
+    if (h.indexOf('tel:') === 0) { m = 'phone_call'; label = 'PD9NCPVSnPQbEKS0yehC'; }
+    else if (h.indexOf('line.me') > -1) { m = 'LINE'; label = 'cPI6CPjSmPQbEKS0yehC'; }
+    if (!m) return;
+    if (typeof gtag === 'function') gtag('event', 'conversion', { 'send_to': 'AW-17936046628/' + label });
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ 'event': 'contact_click', 'contact_method': m, 'click_location': 'blog', 'landing_page': location.pathname });
+});
+</script>
 </body>
 </html>
