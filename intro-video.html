@@ -59,39 +59,43 @@
   @keyframes itemIn { to { opacity: 1; transform: none; } }
 
   /* ชิปคำบรรยาย (เหลือง/แดง แบบในวิดีโอตัวอย่าง) */
-  .chips { position: absolute; left: 44cqw; right: 4cqw; bottom: 18cqw; z-index: 4; display: flex; flex-direction: column; align-items: flex-start; gap: 2cqw; }
-  .chip { font-weight: 800; font-size: 5.4cqw; line-height: 1.15; padding: 1.4cqw 3cqw; border: .9cqw solid #fff; border-radius: 1.4cqw; box-shadow: 0 .7cqw 0 rgba(15,23,42,.25), 0 0 0 .35cqw #1f2937; animation: chipIn .45s cubic-bezier(.2,1.6,.4,1) both; transform-origin: left center; }
+  .chips { position: absolute; left: 51cqw; right: 3cqw; bottom: 19cqw; z-index: 4; display: flex; flex-direction: column; align-items: flex-start; gap: 2cqw; }
+  .chip { font-weight: 800; font-size: 5cqw; line-height: 1.15; padding: 1.4cqw 2.6cqw; border: .9cqw solid #fff; border-radius: 1.4cqw; box-shadow: 0 .7cqw 0 rgba(15,23,42,.25), 0 0 0 .35cqw #1f2937; animation: chipIn .45s cubic-bezier(.2,1.6,.4,1) both; transform-origin: left center; }
   .chip.y { background: #fbbf24; color: #1f2937; transform: rotate(-2deg); }
   .chip.r { background: #ef4444; color: #fff; transform: rotate(1.5deg); }
   @keyframes chipIn { from { opacity: 0; transform: scale(.4) rotate(-8deg); } to { opacity: 1; } }
 
-  /* น้องช่างสำรวจ (สติ๊กเกอร์รูปการ์ตูน) */
-  .mascot { position: absolute; left: 3cqw; bottom: 3cqw; width: 38cqw; height: 38cqw; z-index: 4; transform: rotate(-3deg); animation: bob 1.5s ease-in-out infinite; }
-  .mascot img { width: 100%; height: 100%; display: block; object-fit: cover; border: 1cqw solid #fff; border-radius: 5cqw; box-shadow: 0 0 0 .4cqw #1f2937, 0 1.2cqw 0 rgba(15,23,42,.25); background: #fff; }
-  .mascot::before { position: absolute; right: -2.5cqw; top: -3cqw; font-size: 9cqw; z-index: 2; animation: floaty 1.4s ease-in-out infinite; }
+  /* น้องช่างสำรวจ: ตัวการ์ตูนลบพื้นหลัง แยกชั้น (กล้อง/ลำตัว/หัว) ขยับท่าทางอิสระ */
+  .mascot { position: absolute; left: 0; bottom: 0; width: 50cqw; height: 50cqw; z-index: 4;
+    filter: drop-shadow(.7cqw 0 0 #fff) drop-shadow(-.7cqw 0 0 #fff) drop-shadow(0 .7cqw 0 #fff) drop-shadow(0 -.7cqw 0 #fff) drop-shadow(0 1cqw 1.2cqw rgba(15,23,42,.28)); }
   .mascot.worry::before { content: '💦'; }
   .mascot.wave::before { content: '👋'; animation: wave .6s ease-in-out infinite alternate; transform-origin: 70% 80%; }
   .mascot.talk::after { content: '🎵'; position: absolute; left: -3cqw; top: 2cqw; font-size: 8cqw; animation: floaty 1s ease-in-out infinite; }
-  .mascot .live { border: 1cqw solid #fff; border-radius: 5cqw; box-shadow: 0 0 0 .4cqw #1f2937, 0 1.2cqw 0 rgba(15,23,42,.25); background: #fff; }
   .nomascot .mascot { display: none; }
   .nomascot .chips { left: 5cqw; }
   @keyframes bob { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-1.4cqw) rotate(-1deg); } }
   @keyframes wave { from { transform: rotate(-14deg); } to { transform: rotate(18deg); } }
 
-  /* ภาพการ์ตูนมีชีวิต: ซูมกล้องเบาๆ + หัวพยักหน้า + เลเซอร์ + ประกาย/หัวใจ (แยกชั้นด้วย CSS จากรูปเดียว) */
-  .live { position: relative; width: 100%; height: 100%; overflow: hidden; }
-  .live-in { position: absolute; inset: 0; transform-origin: 62% 55%; animation: kb 9s ease-in-out infinite alternate; }
-  .live-in img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; border-radius: 0; box-shadow: none; }
-  .live-in .head { -webkit-mask-image: radial-gradient(ellipse 25% 23% at 62% 27%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 25% 23% at 62% 27%, #000 55%, transparent 100%); transform-origin: 62% 46%; animation: nod 2.4s ease-in-out infinite; }
-  .speaking .live-in .head { animation: nodTalk .42s ease-in-out infinite; }
-  .live-in .fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  /* โครงขยับตัวการ์ตูน: --hd = มุมหัว, --bd = มุมลำตัว (องศา) ปรับท่าได้ทั้งใน CSS/JS และหน้า rig.html */
+  .rig { position: relative; width: 100%; height: 100%; --hd: 0deg; --bd: 0deg; }
+  .rig img, .rig .bodybox, .rig .headbox { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: contain; border: 0; box-shadow: none; border-radius: 0; background: none; }
+  .rig .bodybox { transform-origin: 45.5% 51.8%; transform: rotate(var(--bd)); animation: sway 3.2s ease-in-out infinite; }
+  .rig .headbox { transform-origin: 61.4% 49.8%; transform: rotate(var(--hd)); animation: nod 2.4s ease-in-out infinite; }
+  .rig .fx { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  .speaking .rig .headbox { animation: nodTalk .42s ease-in-out infinite; }
+  .pose-worry .rig, .mascot.worry .rig { --hd: -7deg; }
+  .mascot.wave .rig { --hd: 6deg; }
+  .mascot.wave .rig .bodybox { animation: bounce .5s ease-in-out infinite alternate; }
   .fx .beam { stroke: #ff2d2d; stroke-width: .7; stroke-linecap: round; stroke-dasharray: 2.4 1.4; filter: drop-shadow(0 0 .8px #ff2d2d); animation: beam .5s linear infinite, beamBlink 1.6s ease-in-out infinite; }
   .fx .ring { fill: none; stroke: #ff2d2d; stroke-width: .5; transform-box: fill-box; transform-origin: center; animation: ring 1.6s ease-out infinite; }
   .fx .tw { fill: #fde047; transform-box: fill-box; transform-origin: center; animation: twinkle 1.8s ease-in-out infinite; }
   .fx .heart { fill: #fb7185; transform-box: fill-box; transform-origin: center; opacity: 0; animation: heartUp 3.2s ease-out infinite; }
-  @keyframes kb { from { transform: scale(1) translate(0,0); } to { transform: scale(1.07) translate(-1%, 1%); } }
-  @keyframes nod { 0%,100% { transform: rotate(-1deg) translateY(0); } 50% { transform: rotate(1.3deg) translateY(-.5%); } }
-  @keyframes nodTalk { 0%,100% { transform: rotate(-1.2deg) translateY(.2%); } 50% { transform: rotate(1.6deg) translateY(-.8%); } }
+  .livebg { position: absolute; inset: 0; border-radius: 1.4cqw; background: linear-gradient(#9fd2ff 0%, #d9efff 62%, #c9b28a 62.5%, #d8c39b 100%); overflow: hidden; }
+  .livebg::before { content: ''; position: absolute; left: 0; right: 0; top: 40%; height: 22.5%; background: linear-gradient(#8dc29a, #6fb07f); clip-path: polygon(0 55%, 18% 20%, 38% 45%, 62% 10%, 82% 40%, 100% 25%, 100% 100%, 0 100%); }
+  @keyframes sway { 0%,100% { transform: rotate(calc(var(--bd) - .7deg)); } 50% { transform: rotate(calc(var(--bd) + .7deg)); } }
+  @keyframes bounce { from { transform: rotate(calc(var(--bd) - 1.2deg)) translateY(0); } to { transform: rotate(calc(var(--bd) + 1.2deg)) translateY(-1.2%); } }
+  @keyframes nod { 0%,100% { transform: rotate(calc(var(--hd) - 1.8deg)); } 50% { transform: rotate(calc(var(--hd) + 2.2deg)); } }
+  @keyframes nodTalk { 0%,100% { transform: rotate(calc(var(--hd) - 2.6deg)); } 50% { transform: rotate(calc(var(--hd) + 3.4deg)); } }
   @keyframes beam { to { stroke-dashoffset: -3.8; } }
   @keyframes beamBlink { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
   @keyframes ring { 0% { transform: scale(.3); opacity: 1; } 100% { transform: scale(2.6); opacity: 0; } }
@@ -117,7 +121,7 @@
   .cta { display: flex; align-items: center; justify-content: center; gap: 2.5cqw; padding: 3cqw 4cqw; border-radius: 10cqw; font-weight: 800; font-size: 5.2cqw; text-decoration: none; border: .8cqw solid #fff; box-shadow: 0 0 0 .35cqw #1f2937, 0 .8cqw 0 rgba(15,23,42,.25); width: 100%; }
   .cta.tel { background: var(--accent); color: #1f2937; } .cta.line { background: #22c55e; color: #fff; }
   .rec .cta { pointer-events: none; }
-  @media (prefers-reduced-motion: reduce) { .star, .burst, .note, .mascot, .hint, .live-in, .live-in .head, .fx * { animation: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .star, .burst, .note, .hint, .rig *, .fx * { animation: none !important; } }
 </style>
 </head>
 <body>
@@ -174,21 +178,22 @@
       card: '<div class="col" style="gap:3.4cqw"><a class="cta tel in" style="animation-delay:.3s" href="tel:0820025124" target="_top">📞 082-002-5124</a><a class="cta line in" style="animation-delay:.8s" href="https://line.me/ti/p/~kanathipcharoen" target="_blank" rel="noopener">💬 LINE: kanathipcharoen</a><div class="in" style="animation-delay:1.3s;text-align:center;font-weight:800;color:#1a365d;font-size:4.4cqw">jingjaisurvey.com</div></div>' }
   ];
 
-  // รูปการ์ตูนแยกชั้น: พื้นหลัง + ชั้นหัว (มาสก์ขอบนุ่ม) + เอฟเฟกต์ (เลเซอร์ยิงเป้าปริซึม ประกาย หัวใจ)
-  function liveHTML(alt, id) {
-    return '<div class="live" role="img" aria-label="' + alt + '"><div class="live-in">' +
-      '<img src="images/mascot-surveyor.webp" alt="" decoding="async">' +
-      '<img class="head" src="images/mascot-surveyor.webp" alt="" decoding="async">' +
+  // ตัวการ์ตูนลบพื้นหลัง 3 ชั้น (กล้อง / ลำตัว / หัว) + เอฟเฟกต์ เลเซอร์ยิงเป้าปริซึม ประกาย หัวใจ
+  function liveHTML(alt, bg) {
+    return '<div class="rig" role="img" aria-label="' + alt + '">' + (bg ? '<div class="livebg"></div>' : '') +
+      '<img src="images/char-scope.webp" alt="" decoding="async">' +
+      '<div class="bodybox"><img src="images/char-body.webp" alt="" decoding="async">' +
+      '<div class="headbox"><img src="images/char-head.webp" alt="" decoding="async"></div></div>' +
       '<svg class="fx" viewBox="0 0 100 100" preserveAspectRatio="none">' +
-        '<line class="beam" x1="27" y1="37" x2="9.2" y2="57.5"/>' +
-        '<circle class="ring" cx="9.2" cy="57.5" r="2.2"/>' +
+        '<line class="beam" x1="27" y1="37" x2="9" y2="55"/><circle class="ring" cx="9" cy="55" r="2.2"/>' +
+        '<g><rect x="8.2" y="56" width="1.6" height="18" fill="#fff" stroke="#1f2937" stroke-width=".4"/><rect x="8.2" y="62" width="1.6" height="4" fill="#ef4444"/><rect x="8.2" y="68" width="1.6" height="4" fill="#ef4444"/><rect x="6.6" y="51" width="4.8" height="5" rx=".6" fill="#facc15" stroke="#1f2937" stroke-width=".4"/><path d="M6.8 51.2 L11.2 55.8 M11.2 51.2 L6.8 55.8" stroke="#1f2937" stroke-width=".5"/></g>' +
         '<path class="tw" d="M90 18 l1.2 3.2 3.2 1.2 -3.2 1.2 -1.2 3.2 -1.2 -3.2 -3.2 -1.2 3.2 -1.2z"/>' +
         '<path class="tw" style="animation-delay:.7s" d="M60 7 l1 2.6 2.6 1 -2.6 1 -1 2.6 -1 -2.6 -2.6 -1 2.6 -1z"/>' +
         '<path class="heart" d="M80 44 c-1.6 -2 -4.6 -.4 -3 2 l3 3 3 -3 c1.6 -2.4 -1.4 -4 -3 -2z"/>' +
         '<path class="heart" style="animation-delay:1.6s" d="M74 48 c-1.2 -1.5 -3.4 -.3 -2.2 1.5 l2.2 2.2 2.2 -2.2 c1.2 -1.8 -1 -3 -2.2 -1.5z"/>' +
-      '</svg></div></div>';
+      '</svg></div>';
   }
-  mascot.innerHTML = liveHTML('การ์ตูนช่างสำรวจกำลังส่องกล้อง Trimble');
+  mascot.innerHTML = liveHTML('การ์ตูนช่างสำรวจกำลังส่องกล้อง Trimble', false);
 
   var TOTAL = S.length, cur = Math.min(S.length - 1, parseInt(Q.get('scene') || '0', 10) || 0), sound = false, started = false, timer = null, voice = null, playing = true, finished = false;
 
@@ -211,7 +216,7 @@
   }
   function show() {
     var s = S[cur];
-    var cardHTML = s.card === 'LIVE' ? liveHTML('การ์ตูนช่างสำรวจ สำรวจเพื่ออนาคตที่ดีกว่า') : s.card;
+    var cardHTML = s.card === 'LIVE' ? liveHTML('การ์ตูนช่างสำรวจ สำรวจเพื่ออนาคตที่ดีกว่า', true) : s.card;
     sceneEl.innerHTML = '<div class="banner' + (s.bannerCls ? ' ' + s.bannerCls : '') + (s.banner.length > 14 ? ' sm' : '') + '">' + s.banner + '</div><div class="card"><div class="card-inner">' + cardHTML + '</div></div>';
     chipsEl.innerHTML = s.chips.map(function (c, i) { return '<div class="chip ' + c[0] + '" style="animation-delay:' + (0.5 + i * 0.55) + 's">' + c[1] + '</div>'; }).join('');
     mascot.setAttribute('class', 'mascot ' + (s.mood === 'hide' ? '' : s.mood)); stage.classList.toggle('nomascot', s.mood === 'hide');
@@ -228,7 +233,7 @@
   function stopSpeech() { if ('speechSynthesis' in window) speechSynthesis.cancel(); mascot.classList.remove('talk'); stage.classList.remove('speaking'); }
   function run() {
     clearTimeout(timer); stopSpeech(); show();
-    if (!playing) return;
+    if (!playing || Q.get('hold')) return;
     var s = S[cur], cancelled = false;
     if (sound && voice) {
       var u = new SpeechSynthesisUtterance(s.speak);

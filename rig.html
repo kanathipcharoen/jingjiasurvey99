@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>ปรับท่าทางน้องช่างสำรวจ</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Prompt','Leelawadee UI',Tahoma,sans-serif; background: #e6eefb; color: #1a365d; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 16px; display: grid; grid-template-columns: minmax(0,1fr) 340px; gap: 16px; }
+  @media (max-width: 820px) { .wrap { grid-template-columns: 1fr; } }
+  h1 { font-size: 20px; margin: 0 0 4px; } p.sub { margin: 0 0 12px; color: #475569; font-size: 14px; }
+  .stage { position: relative; aspect-ratio: 1; width: 100%; max-width: 560px; border-radius: 16px; overflow: hidden; margin: 0 auto;
+    background-color: #fff; background-image: linear-gradient(rgba(37,99,235,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,.12) 1px, transparent 1px); background-size: 28px 28px; box-shadow: 0 6px 24px rgba(15,23,42,.18); }
+  .rig { position: absolute; inset: 0; --hd: 0deg; --bd: 0deg; --ds: 0%; --dy: 0%; }
+  .rig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+  .rig .bodybox, .rig .headbox { position: absolute; inset: 0; }
+  .rig .bodybox { transform-origin: 45.5% 51.8%; transform: rotate(var(--bd)); }
+  .rig .headbox { transform-origin: 61.4% 49.8%; transform: rotate(var(--hd)) translate(var(--ds), var(--dy)); }
+  .stage.bgwhite { background: #fff; background-image: none; } .stage.bggreen { background: #3cc83c; background-image: none; } .stage.bgcheck { background-image: linear-gradient(45deg,#ccc 25%,transparent 25%,transparent 75%,#ccc 75%),linear-gradient(45deg,#ccc 25%,transparent 25%,transparent 75%,#ccc 75%); background-size: 24px 24px; background-position: 0 0, 12px 12px; background-color: #fff; }
+  .panel { background: #fff; border-radius: 16px; padding: 14px; box-shadow: 0 6px 24px rgba(15,23,42,.12); align-self: start; }
+  .row { margin: 10px 0; } .row label { display: flex; justify-content: space-between; font-weight: 600; font-size: 14px; } .row input[type=range] { width: 100%; }
+  .btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; } button { font: inherit; font-size: 13px; padding: 7px 11px; border-radius: 10px; border: 1px solid #1a365d; background: #fff; color: #1a365d; cursor: pointer; } button:hover { background: #eaf1ff; }
+  textarea { width: 100%; height: 92px; font-family: ui-monospace, Consolas, monospace; font-size: 12px; border-radius: 10px; border: 1px solid #cbd5e1; padding: 8px; }
+  .note { font-size: 12px; color: #64748b; margin-top: 8px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <h1>ปรับท่าทางน้องช่างสำรวจ</h1>
+    <p class="sub">ตัวการ์ตูนลบพื้นหลังแล้ว แยก 3 ชั้น: กล้อง/ขาตั้ง · ลำตัว · หัว เลื่อนแถบด้านขวาเพื่อจัดท่า</p>
+    <div class="stage" id="stage">
+      <div class="rig" id="rig">
+        <img src="images/char-scope.webp" alt="">
+        <div class="bodybox"><img src="images/char-body.webp" alt=""><div class="headbox"><img src="images/char-head.webp" alt=""></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="row"><label>หัว: เอียง/พยักหน้า <span id="v_hd">0°</span></label><input type="range" id="hd" min="-12" max="12" step="0.5" value="0"></div>
+    <div class="row"><label>หัว: เลื่อนขึ้น-ลง <span id="v_dy">0</span></label><input type="range" id="dy" min="-3" max="3" step="0.1" value="0"></div>
+    <div class="row"><label>ลำตัว: เอนตัว <span id="v_bd">0°</span></label><input type="range" id="bd" min="-2" max="2" step="0.1" value="0"></div>
+    <div class="btns">
+      <button data-p="0,0,0">ท่าปกติ</button><button data-p="6,0,0.4">พยักหน้ารับ</button><button data-p="-8,-0.4,-0.6">ตกใจ/เงยหน้า</button><button data-p="9,0.5,1">ก้มดูกล้อง</button><button data-p="-4,0,1.2">เอนตัวดีใจ</button>
+    </div>
+    <div class="btns"><button id="play">▶ เล่นขยับอัตโนมัติ</button><button id="bgw">พื้นขาว</button><button id="bgc">โปร่งใส</button><button id="bgg">พื้นเขียว</button><button id="bgd">กระดาษกราฟ</button></div>
+    <div class="row"><label>ค่าท่าปัจจุบัน (ก๊อปไปใช้ใน CSS ได้)</label><textarea id="out" readonly></textarea></div>
+    <div class="note">ข้อจำกัด: แยกได้ 3 ชั้นจากรูปเดียว มือและแขนติดกับลำตัว จึงยังยกมือโบกอิสระไม่ได้ ถ้าต้องการให้แขน/มือขยับแยก ต้องมีภาพแขนที่วาดแยกชั้น (หรือสร้างท่าใหม่เพิ่ม)</div>
+  </div>
+</div>
+<script>
+(function () {
+  var rig = document.getElementById('rig'), stage = document.getElementById('stage'), out = document.getElementById('out');
+  var el = { hd: hd, dy: dy, bd: bd };
+  function apply() {
+    rig.style.setProperty('--hd', hd.value + 'deg'); rig.style.setProperty('--bd', bd.value + 'deg'); rig.style.setProperty('--dy', dy.value + '%');
+    v_hd.textContent = hd.value + '°'; v_bd.textContent = bd.value + '°'; v_dy.textContent = dy.value + '%';
+    out.value = '--hd: ' + hd.value + 'deg;\n--bd: ' + bd.value + 'deg;\n/* หัวเลื่อนแนวตั้ง */ --dy: ' + dy.value + '%;';
+  }
+  ['hd', 'dy', 'bd'].forEach(function (k) { el[k].addEventListener('input', apply); });
+  document.querySelectorAll('[data-p]').forEach(function (b) { b.onclick = function () { var a = b.dataset.p.split(','); hd.value = a[0]; dy.value = a[1]; bd.value = a[2]; apply(); }; });
+  var t = null, ph = 0;
+  document.getElementById('play').onclick = function () {
+    if (t) { clearInterval(t); t = null; this.textContent = '▶ เล่นขยับอัตโนมัติ'; return; }
+    this.textContent = '⏸ หยุด';
+    t = setInterval(function () { ph += 0.06; hd.value = (Math.sin(ph) * 6).toFixed(1); bd.value = (Math.sin(ph * 0.7) * 0.8).toFixed(1); dy.value = (Math.sin(ph * 2) * 0.4).toFixed(1); apply(); }, 30);
+  };
+  function bg(c) { return function () { stage.className = 'stage ' + c; }; }
+  bgw.onclick = bg('bgwhite'); bgc.onclick = bg('bgcheck'); bgg.onclick = bg('bggreen'); bgd.onclick = function () { stage.className = 'stage'; };
+  apply();
+})();
+</script>
+</body>
+</html>
